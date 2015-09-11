@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 7, 2015 3:40:07 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+	<class name="edu.tamu.ctv.entity.Columnheaders" table="columnheaders"
+		schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">columnheaders_id_seq</param>
+			</generator>
+		</id>
+		<many-to-one name="columnheaders" class="edu.tamu.ctv.entity.Columnheaders" fetch="select">
+			<column name="parent_id" />
+		</many-to-one>
+		<many-to-one name="columntypes"	class="edu.tamu.ctv.entity.Columntypes" fetch="select">
+			<column name="columntype_id" not-null="true" />
+		</many-to-one>
+		<property name="code" type="string">
+			<column name="code" not-null="true" />
+		</property>
+		<property name="name" type="string">
+			<column name="name" not-null="true" />
+		</property>
+		<property name="notes" type="string">
+			<column name="notes" />
+		</property>
+		<property name="color" type="java.lang.Integer">
+			<column name="color" />
+		</property>
+		<property name="registereddt" type="timestamp">
+			<column name="registereddt" length="29" not-null="true" />
+		</property>
+		<property name="lastvisitdt" type="timestamp">
+			<column name="lastvisitdt" length="29" not-null="true" />
+		</property>
+		<set name="columnheaderses" table="columnheaders" inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="parent_id" not-null="true" />
+			</key>
+			<one-to-many class="edu.tamu.ctv.entity.Columnheaders" />
+		</set>
+		<set name="componentses" table="components" inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="columnheader_id" />
+			</key>
+			<one-to-many class="edu.tamu.ctv.entity.Components" />
+		</set>
+	</class>
+	
+	<query name="findColumnHeadersByCodeAndProject">
+		select res
+		from Columnheaders as res
+		inner join res.columntypes ct
+		inner join ct.projects p
+		where res.code = :code and p.code = :pcode
+	</query>
+</hibernate-mapping>

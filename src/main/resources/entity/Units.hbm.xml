@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="edu.tamu.ctv.entity.Units" table="units" schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">units_id_seq</param>
+			</generator>
+		</id>
+        <many-to-one name="units" class="edu.tamu.ctv.entity.Units" fetch="select">
+            <column name="relatedunit" />
+        </many-to-one>
+        <many-to-one name="users" class="edu.tamu.ctv.entity.Users" fetch="select">
+            <column name="updatedby" not-null="true" />
+        </many-to-one>
+        <property name="code" type="string">
+            <column name="code" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="volumeof" type="big_decimal">
+            <column name="volumeof" precision="131089" scale="0" />
+        </property>
+        <property name="updateddt" type="timestamp">
+            <column name="updateddt" length="29" not-null="true" />
+        </property>
+        <set name="unitses" table="units" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="relatedunit" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Units" />
+        </set>
+        <set name="componentses" table="components" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="unit" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Components" />
+        </set>
+    </class>
+</hibernate-mapping>

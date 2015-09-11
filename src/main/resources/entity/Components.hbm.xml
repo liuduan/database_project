@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="edu.tamu.ctv.entity.Components" table="components" schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">components_id_seq</param>
+			</generator>
+		</id>
+		<many-to-one name="columnheaders" class="edu.tamu.ctv.entity.Columnheaders" fetch="select">
+            <column name="columnheader_id" />
+        </many-to-one>
+        <many-to-one name="projects" class="edu.tamu.ctv.entity.Projects" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="units" class="edu.tamu.ctv.entity.Units" fetch="select">
+            <column name="unit" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="edu.tamu.ctv.entity.Users" fetch="select">
+            <column name="updatedby" not-null="true" />
+        </many-to-one>
+        <property name="code" type="string">
+            <column name="code" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" />
+        </property>
+        <property name="color" type="java.lang.Integer">
+            <column name="color" />
+        </property>
+        <property name="updateddt" type="timestamp">
+            <column name="updateddt" length="29" not-null="true" />
+        </property>
+        <set name="resultses" table="results" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="component_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Results" />
+        </set>
+    </class>
+    
+    <query name="findComponentsByCodeAndProject">
+		select res
+		from Components as res
+		inner join res.projects p
+		where res.code = :code and p.code = :pcode
+	</query>
+	<query name="findComponentsByProject">
+		select res
+		from Components as res
+		inner join res.projects p
+		where p.id = :id
+	</query>
+</hibernate-mapping>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="edu.tamu.ctv.entity.Results" table="results" schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">results_id_seq</param>
+			</generator>
+		</id>
+        <many-to-one name="components" class="edu.tamu.ctv.entity.Components" fetch="select">
+            <column name="component_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="projects" class="edu.tamu.ctv.entity.Projects" fetch="select">
+            <column name="project_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="edu.tamu.ctv.entity.Users" fetch="select">
+            <column name="updatedby" not-null="true" />
+        </many-to-one>
+        <property name="orderId" type="int">
+            <column name="order_id" not-null="true" />
+        </property>
+        <property name="strresult" type="string">
+            <column name="strresult" />
+        </property>
+        <property name="updateddt" type="timestamp">
+            <column name="updateddt" length="29" not-null="true" />
+        </property>
+        <set name="resultshistories" table="resultshistory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="results" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Resultshistory" />
+        </set>
+    </class>
+    <query name="findResultsByProject">
+		select res
+		from Results as res
+		inner join res.projects project
+		where project.id = :id
+	</query>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="edu.tamu.ctv.entity.Orders" table="orders" schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">orders_id_seq</param>
+			</generator>
+		</id>
+        <many-to-one name="rowheaders" class="edu.tamu.ctv.entity.Rowheaders" fetch="select">
+            <column name="rowheader_id" />
+        </many-to-one>
+        <property name="orderId" type="int">
+            <column name="order_id" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

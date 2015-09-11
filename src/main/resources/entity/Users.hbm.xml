@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="edu.tamu.ctv.entity.Users" table="users" schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">users_id_seq</param>
+			</generator>
+		</id>
+         <property name="login" type="string">
+            <column name="login" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" not-null="true" />
+        </property>
+        <property name="firstname" type="string">
+            <column name="firstname" not-null="true" />
+        </property>
+        <property name="lastname" type="string">
+            <column name="lastname" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" not-null="true" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" not-null="true" />
+        </property>
+        <property name="address1" type="string">
+            <column name="address1" not-null="true" />
+        </property>
+        <property name="address2" type="string">
+            <column name="address2" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" not-null="true" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" not-null="true" />
+        </property>
+        <property name="zip" type="string">
+            <column name="zip" not-null="true" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" not-null="true" />
+        </property>
+        <property name="organization" type="string">
+            <column name="organization" />
+        </property>
+        <property name="organaddress" type="string">
+            <column name="organaddress" />
+        </property>
+        <property name="photo" type="binary">
+            <column name="photo" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" />
+        </property>
+        <property name="registereddt" type="timestamp">
+            <column name="registereddt" length="29" not-null="true" />
+        </property>
+        <property name="lastvisitdt" type="timestamp">
+            <column name="lastvisitdt" length="29" not-null="true" />
+        </property>
+        <set name="resultses" table="results" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="updatedby" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Results" />
+        </set>
+        <set name="importinfos" table="importinfo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Importinfo" />
+        </set>
+        <set name="componentses" table="components" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="updatedby" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Components" />
+        </set>
+        <set name="resultshistories" table="resultshistory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="updatedby" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Resultshistory" />
+        </set>
+        <set name="viewtemplatesesForUpdatedby" table="viewtemplates" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="updatedby" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Viewtemplates" />
+        </set>
+        <set name="viewtemplatesesForUserId" table="viewtemplates" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Viewtemplates" />
+        </set>
+        <set name="noteses" table="notes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="updatedby" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Notes" />
+        </set>
+        <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Projectmembers" />
+        </set>
+        <set name="unitses" table="units" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="updatedby" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Units" />
+        </set>
+        <set name="projectses" table="projects" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="owner" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Projects" />
+        </set>
+    </class>
+</hibernate-mapping>

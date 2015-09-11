@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="edu.tamu.ctv.entity.Rowheaders" table="rowheaders" schema="public" optimistic-lock="version">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="sequence">
+				<param name="sequence">rowheaders_id_seq</param>
+			</generator>
+		</id>
+        <many-to-one name="rowtypes" class="edu.tamu.ctv.entity.Rowtypes" fetch="select">
+            <column name="rowtype_id" not-null="true" />
+        </many-to-one>
+        <property name="code" type="string">
+            <column name="code" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" />
+        </property>
+        <property name="color" type="java.lang.Integer">
+            <column name="color" />
+        </property>
+        <property name="registereddt" type="timestamp">
+            <column name="registereddt" length="29" not-null="true" />
+        </property>
+        <property name="lastvisitdt" type="timestamp">
+            <column name="lastvisitdt" length="29" not-null="true" />
+        </property>
+        <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="rowheader_id" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Orders" />
+        </set>
+    </class>
+    
+    <query name="findRowHeadersByCodeAndProject">
+		select res
+		from Rowheaders as res
+		inner join res.rowtypes rt
+		inner join rt.projects p
+		where res.code = :code and p.code = :pcode
+	</query>
+</hibernate-mapping>
