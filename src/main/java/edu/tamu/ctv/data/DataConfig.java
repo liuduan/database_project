@@ -19,9 +19,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-/**
- * Created by Marian_Mykhalchuk on 9/9/2015.
- */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "edu.tamu.ctv.repository" })

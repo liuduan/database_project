@@ -12,7 +12,7 @@ import java.util.Set;
 public class Users implements Serializable
 {
 
-	private int id;
+	private Long id;
 	private String login;
 	private String password;
 	private String firstname;
@@ -42,11 +42,16 @@ public class Users implements Serializable
 	private Set unitses = new HashSet(0);
 	private Set projectses = new HashSet(0);
 
+	public boolean isNew()
+	{
+		return null == id;
+	}
+	
 	public Users()
 	{
 	}
 
-	public Users(int id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String country, String state, String zip, String sex,
+	public Users(Long id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String country, String state, String zip, String sex,
 			Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
@@ -65,7 +70,7 @@ public class Users implements Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Users(int id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String address2, String country, String state, String zip,
+	public Users(Long id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String address2, String country, String state, String zip,
 			String sex, String organization, String organaddress, byte[] photo, String notes, Date registereddt, Date lastvisitdt, Set resultses, Set importinfos, Set componentses, Set resultshistories,
 			Set viewtemplatesesForUpdatedby, Set viewtemplatesesForUserId, Set noteses, Set projectmemberses, Set unitses, Set projectses)
 	{
@@ -100,12 +105,12 @@ public class Users implements Serializable
 		this.projectses = projectses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

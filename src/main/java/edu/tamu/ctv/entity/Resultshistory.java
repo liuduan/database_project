@@ -9,7 +9,7 @@ import java.util.Date;
 public class Resultshistory implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Results results;
 	private Users users;
 	private String oldstrresult;
@@ -20,7 +20,7 @@ public class Resultshistory implements java.io.Serializable
 	{
 	}
 
-	public Resultshistory(int id, Results results, Users users, Date updateddt)
+	public Resultshistory(Long id, Results results, Users users, Date updateddt)
 	{
 		this.id = id;
 		this.results = results;
@@ -28,7 +28,7 @@ public class Resultshistory implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Resultshistory(int id, Results results, Users users, String oldstrresult, String newstrresult, Date updateddt)
+	public Resultshistory(Long id, Results results, Users users, String oldstrresult, String newstrresult, Date updateddt)
 	{
 		this.id = id;
 		this.results = results;
@@ -38,12 +38,12 @@ public class Resultshistory implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

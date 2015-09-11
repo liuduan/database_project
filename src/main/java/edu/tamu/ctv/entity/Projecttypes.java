@@ -11,7 +11,7 @@ import java.util.Set;
 public class Projecttypes implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private String code;
 	private String name;
 	private String notes;
@@ -23,7 +23,7 @@ public class Projecttypes implements java.io.Serializable
 	{
 	}
 
-	public Projecttypes(int id, String code, String name, Date registereddt, Date lastvisitdt)
+	public Projecttypes(Long id, String code, String name, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.code = code;
@@ -32,7 +32,7 @@ public class Projecttypes implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Projecttypes(int id, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set projectses)
+	public Projecttypes(Long id, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set projectses)
 	{
 		this.id = id;
 		this.code = code;
@@ -43,12 +43,12 @@ public class Projecttypes implements java.io.Serializable
 		this.projectses = projectses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

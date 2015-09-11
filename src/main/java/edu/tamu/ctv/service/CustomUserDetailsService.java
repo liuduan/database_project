@@ -15,9 +15,6 @@ import org.springframework.stereotype.Service;
 import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.UsersRepository;
 
-/**
- * Created by Marian_Mykhalchuk on 9/9/2015.
- */
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService, Serializable {
 

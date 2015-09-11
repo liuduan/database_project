@@ -4,7 +4,7 @@
 <!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
 <hibernate-mapping>
     <class name="edu.tamu.ctv.entity.Components" table="components" schema="public" optimistic-lock="version">
-		<id name="id" type="int">
+		<id name="id" type="long">
 			<column name="id" />
 			<generator class="sequence">
 				<param name="sequence">components_id_seq</param>

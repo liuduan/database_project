@@ -11,7 +11,7 @@ import java.util.Set;
 public class Columntypes implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Columntypes columntypes;
 	private Projects projects;
 	private String code;
@@ -26,7 +26,7 @@ public class Columntypes implements java.io.Serializable
 	{
 	}
 
-	public Columntypes(int id, Projects projects, String code, String name, Date registereddt, Date lastvisitdt)
+	public Columntypes(Long id, Projects projects, String code, String name, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.projects = projects;
@@ -36,7 +36,7 @@ public class Columntypes implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Columntypes(int id, Columntypes columntypes, Projects projects, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set columnheaderses, Set columntypeses)
+	public Columntypes(Long id, Columntypes columntypes, Projects projects, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set columnheaderses, Set columntypeses)
 	{
 		this.id = id;
 		this.columntypes = columntypes;
@@ -50,12 +50,12 @@ public class Columntypes implements java.io.Serializable
 		this.columntypeses = columntypeses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

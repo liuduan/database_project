@@ -4,7 +4,7 @@
 <!-- Generated Sep 6, 2015 12:46:57 PM by Hibernate Tools 4.3.1.Final -->
 <hibernate-mapping>
     <class name="edu.tamu.ctv.entity.Projecttypes" table="projecttypes" schema="public" optimistic-lock="version">
-		<id name="id" type="int">
+		<id name="id" type="long">
 			<column name="id" />
 			<generator class="sequence">
 				<param name="sequence">projecttypes_id_seq</param>

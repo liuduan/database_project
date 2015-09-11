@@ -12,7 +12,7 @@ import java.util.Set;
 public class Units implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Units units;
 	private Users users;
 	private String code;
@@ -26,7 +26,7 @@ public class Units implements java.io.Serializable
 	{
 	}
 
-	public Units(int id, Users users, String code, Date updateddt)
+	public Units(Long id, Users users, String code, Date updateddt)
 	{
 		this.id = id;
 		this.users = users;
@@ -34,7 +34,7 @@ public class Units implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Units(int id, Units units, Users users, String code, String name, BigDecimal volumeof, Date updateddt, Set unitses, Set componentses)
+	public Units(Long id, Units units, Users users, String code, String name, BigDecimal volumeof, Date updateddt, Set unitses, Set componentses)
 	{
 		this.id = id;
 		this.units = units;
@@ -47,12 +47,12 @@ public class Units implements java.io.Serializable
 		this.componentses = componentses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

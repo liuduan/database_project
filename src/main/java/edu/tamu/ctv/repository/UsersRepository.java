@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 
 import edu.tamu.ctv.entity.Users;
 
-/**
- * Created by Marian_Mykhalchuk on 9/9/2015.
- */
 @Component
-public interface UsersRepository extends CrudRepository<Users, Integer> {
+public interface UsersRepository extends CrudRepository<Users, Long> {
     List<Users> findByLogin(String login);
 }

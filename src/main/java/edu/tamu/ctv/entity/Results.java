@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class Results implements java.io.Serializable
 {
-	private int id;
+	private Long id;
 	private Components components;
 	private Projects projects;
 	private Users users;
@@ -23,7 +23,7 @@ public class Results implements java.io.Serializable
 	{
 	}
 
-	public Results(int id, Components components, Projects projects, Users users, int orderId, Date updateddt)
+	public Results(Long id, Components components, Projects projects, Users users, int orderId, Date updateddt)
 	{
 		this.id = id;
 		this.components = components;
@@ -33,7 +33,7 @@ public class Results implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Results(int id, Components components, Projects projects, Users users, int orderId, String strresult, Date updateddt, Set resultshistories)
+	public Results(Long id, Components components, Projects projects, Users users, int orderId, String strresult, Date updateddt, Set resultshistories)
 	{
 		this.id = id;
 		this.components = components;
@@ -45,12 +45,12 @@ public class Results implements java.io.Serializable
 		this.resultshistories = resultshistories;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

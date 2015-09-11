@@ -11,7 +11,7 @@ import java.util.Set;
 public class Projects implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Projecttypes projecttypes;
 	private Users users;
 	private String code;
@@ -30,7 +30,7 @@ public class Projects implements java.io.Serializable
 	{
 	}
 
-	public Projects(int id, Projecttypes projecttypes, Users users, String code, String name, int access, Date registereddt, Date lastvisitdt)
+	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.projecttypes = projecttypes;
@@ -42,7 +42,7 @@ public class Projects implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Projects(int id, Projecttypes projecttypes, Users users, String code, String name, int access, String notes, Date registereddt, Date lastvisitdt, Set projectmemberses, Set rowtypeses,
+	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, String notes, Date registereddt, Date lastvisitdt, Set projectmemberses, Set rowtypeses,
 			Set componentses, Set columntypeses, Set resultses)
 	{
 		this.id = id;
@@ -62,12 +62,17 @@ public class Projects implements java.io.Serializable
 		this.resultses = resultses;
 	}
 	
-	public int getId()
+	public boolean isNew()
+	{
+		return null == id;
+	}
+	
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

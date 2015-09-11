@@ -11,7 +11,7 @@ import java.util.Set;
 public class Columnheaders implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Columnheaders columnheaders;
 	private Columntypes columntypes;
 	private String code;
@@ -27,7 +27,7 @@ public class Columnheaders implements java.io.Serializable
 	{
 	}
 
-	public Columnheaders(int id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, Date registereddt, Date lastvisitdt)
+	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.columnheaders = columnheaders;
@@ -38,7 +38,7 @@ public class Columnheaders implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Columnheaders(int id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, String notes, Integer color, Date registereddt, Date lastvisitdt, Set columnheaderses,
+	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, String notes, Integer color, Date registereddt, Date lastvisitdt, Set columnheaderses,
 			Set componentses)
 	{
 		this.id = id;
@@ -54,12 +54,12 @@ public class Columnheaders implements java.io.Serializable
 		this.componentses = componentses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

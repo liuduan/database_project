@@ -10,7 +10,7 @@ import java.util.Date;
 public class Viewtemplates implements Serializable
 {
 
-	private int id;
+	private Long id;
 	private Users usersByUpdatedby;
 	private Users usersByUserId;
 	private String code;
@@ -22,7 +22,7 @@ public class Viewtemplates implements Serializable
 	{
 	}
 
-	public Viewtemplates(int id, Users usersByUpdatedby, Users usersByUserId, String code, String name, Date updateddt)
+	public Viewtemplates(Long id, Users usersByUpdatedby, Users usersByUserId, String code, String name, Date updateddt)
 	{
 		this.id = id;
 		this.usersByUpdatedby = usersByUpdatedby;
@@ -32,7 +32,7 @@ public class Viewtemplates implements Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Viewtemplates(int id, Users usersByUpdatedby, Users usersByUserId, String code, String name, Serializable objectxml, Date updateddt)
+	public Viewtemplates(Long id, Users usersByUpdatedby, Users usersByUserId, String code, String name, Serializable objectxml, Date updateddt)
 	{
 		this.id = id;
 		this.usersByUpdatedby = usersByUpdatedby;
@@ -43,12 +43,12 @@ public class Viewtemplates implements Serializable
 		this.updateddt = updateddt;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

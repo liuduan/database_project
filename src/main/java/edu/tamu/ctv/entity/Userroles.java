@@ -11,7 +11,7 @@ import java.util.Set;
 public class Userroles implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private String code;
 	private String name;
 	private String notes;
@@ -23,7 +23,7 @@ public class Userroles implements java.io.Serializable
 	{
 	}
 
-	public Userroles(int id, String code, String name, Date registereddt, Date lastvisitdt)
+	public Userroles(Long id, String code, String name, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.code = code;
@@ -32,7 +32,7 @@ public class Userroles implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Userroles(int id, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set projectmemberses)
+	public Userroles(Long id, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set projectmemberses)
 	{
 		this.id = id;
 		this.code = code;
@@ -43,12 +43,12 @@ public class Userroles implements java.io.Serializable
 		this.projectmemberses = projectmemberses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

@@ -10,7 +10,7 @@ import java.util.Date;
 public class Notes implements Serializable
 {
 
-	private int id;
+	private Long id;
 	private Users users;
 	private String code;
 	private String note;
@@ -23,7 +23,7 @@ public class Notes implements Serializable
 	{
 	}
 
-	public Notes(int id, Users users, String code, int ownerId, Serializable ownertype, boolean visible, Date updateddt)
+	public Notes(Long id, Users users, String code, int ownerId, Serializable ownertype, boolean visible, Date updateddt)
 	{
 		this.id = id;
 		this.users = users;
@@ -34,7 +34,7 @@ public class Notes implements Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Notes(int id, Users users, String code, String note, int ownerId, Serializable ownertype, boolean visible, Date updateddt)
+	public Notes(Long id, Users users, String code, String note, int ownerId, Serializable ownertype, boolean visible, Date updateddt)
 	{
 		this.id = id;
 		this.users = users;
@@ -46,12 +46,12 @@ public class Notes implements Serializable
 		this.updateddt = updateddt;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

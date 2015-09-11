@@ -11,7 +11,7 @@ import java.util.Set;
 public class Rowtypes implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Projects projects;
 	private String code;
 	private String name;
@@ -25,7 +25,7 @@ public class Rowtypes implements java.io.Serializable
 	{
 	}
 
-	public Rowtypes(int id, Projects projects, String code, String name, int showorder, Date registereddt, Date lastvisitdt)
+	public Rowtypes(Long id, Projects projects, String code, String name, int showorder, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.projects = projects;
@@ -36,7 +36,7 @@ public class Rowtypes implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Rowtypes(int id, Projects projects, String code, String name, int showorder, String notes, Date registereddt, Date lastvisitdt, Set rowheaderses)
+	public Rowtypes(Long id, Projects projects, String code, String name, int showorder, String notes, Date registereddt, Date lastvisitdt, Set rowheaderses)
 	{
 		this.id = id;
 		this.projects = projects;
@@ -49,12 +49,12 @@ public class Rowtypes implements java.io.Serializable
 		this.rowheaderses = rowheaderses;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

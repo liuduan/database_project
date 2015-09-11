@@ -5,9 +5,6 @@ import edu.tamu.ctv.repository.UsersRepository;
 
 import java.util.Date;
 
-/**
- * Created by Marian_Mykhalchuk on 9/9/2015.
- */
 public class InitUserCreateService {
     public InitUserCreateService(UsersRepository usersRepository) {
         createAdmin(usersRepository);

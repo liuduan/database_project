@@ -9,7 +9,7 @@ import java.util.Date;
 public class Projectmembers implements java.io.Serializable
 {
 
-	private int id;
+	private Long id;
 	private Projects projects;
 	private Userroles userroles;
 	private Users users;
@@ -21,7 +21,7 @@ public class Projectmembers implements java.io.Serializable
 	{
 	}
 
-	public Projectmembers(int id, Projects projects, Userroles userroles, Users users, Date registereddt, Date lastvisitdt)
+	public Projectmembers(Long id, Projects projects, Userroles userroles, Users users, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.projects = projects;
@@ -31,7 +31,7 @@ public class Projectmembers implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Projectmembers(int id, Projects projects, Userroles userroles, Users users, String notes, Date registereddt, Date lastvisitdt)
+	public Projectmembers(Long id, Projects projects, Userroles userroles, Users users, String notes, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.projects = projects;
@@ -42,12 +42,12 @@ public class Projectmembers implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public int getId()
+	public Long getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(Long id)
 	{
 		this.id = id;
 	}
