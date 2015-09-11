@@ -1,7 +1,0 @@
-.checkbox-inline label, .radio-inline label{
-  font-weight: normal;
-}
-#proj {
-	pointer-events: none;
-   cursor: default;
-}
