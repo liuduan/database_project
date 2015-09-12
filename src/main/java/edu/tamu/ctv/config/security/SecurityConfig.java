@@ -1,7 +1,10 @@
 package edu.tamu.ctv.config.security;
 
+import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.UsersRepository;
-import edu.tamu.ctv.service.InitUserCreateService;
+import edu.tamu.ctv.service.defaultdata.InitProjectTypeCreateService;
+import edu.tamu.ctv.service.defaultdata.InitUserCreateService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +28,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/users/**").access("isAuthenticated()").antMatchers("/results/**")
-                .access("isAuthenticated()").and().formLogin();
+        http.authorizeRequests()
+        .antMatchers("/**").access("isAuthenticated()")
+/*        .antMatchers("/results/**").access("isAuthenticated()")
+        .antMatchers("/analysis/**").access("isAuthenticated()")*/
+        .and().formLogin();
     }
 
     @Autowired
     @Bean
     public InitUserCreateService initUserCreateService(UsersRepository userRepository) {
         return new InitUserCreateService(userRepository);
+    }
+    
+    @Autowired
+    @Bean
+    public InitProjectTypeCreateService initProjectTypesCreateService(ProjectTypesRepository projectTypesRepository) {
+        return new InitProjectTypeCreateService(projectTypesRepository);
     }
 }

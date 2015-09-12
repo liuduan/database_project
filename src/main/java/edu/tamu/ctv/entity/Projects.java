@@ -20,7 +20,9 @@ public class Projects implements java.io.Serializable
 	private String notes;
 	private Date registereddt;
 	private Date lastvisitdt;
-	private Set projectmemberses = new HashSet(0);
+	private Set<Projectmanagers> projectmanagerses = new HashSet<Projectmanagers>(0);
+	private Set<Projectreviewers> projectreviewerses = new HashSet<Projectreviewers>(0);
+	private Set<Projectmembers> projectmemberses = new HashSet<Projectmembers>(0);
 	private Set rowtypeses = new HashSet(0);
 	private Set componentses = new HashSet(0);
 	private Set columntypeses = new HashSet(0);
@@ -157,12 +159,32 @@ public class Projects implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Set getProjectmemberses()
+	public Set<Projectmanagers> getProjectmanagerses()
+	{
+		return this.projectmanagerses;
+	}
+
+	public void setProjectmanagerses(Set<Projectmanagers> projectmanagerses)
+	{
+		this.projectmanagerses = projectmanagerses;
+	}
+	
+	public Set<Projectreviewers> getProjectreviewerses()
+	{
+		return this.projectreviewerses;
+	}
+
+	public void setProjectreviewerses(Set<Projectreviewers> projectreviewerses)
+	{
+		this.projectreviewerses = projectreviewerses;
+	}
+	
+	public Set<Projectmembers> getProjectmemberses()
 	{
 		return this.projectmemberses;
 	}
 
-	public void setProjectmemberses(Set projectmemberses)
+	public void setProjectmemberses(Set<Projectmembers> projectmemberses)
 	{
 		this.projectmemberses = projectmemberses;
 	}

@@ -42,8 +42,8 @@
 					<td>${user.email}</td>
 					<td>
 						<spring:url value="/users/${user.id}" var="userUrl" />
-						<spring:url value="/users/${user.id}/delete" var="deleteUrl" /> 
-						<spring:url value="/users/${user.id}/update" var="updateUrl" />
+						<spring:url value="/users/delete/${user.id}" var="deleteUrl" /> 
+						<spring:url value="/users/update/${user.id}" var="updateUrl" />
 
 						<button class="btn btn-info" onclick="location.href='${userUrl}'">Query</button>
 						<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>

@@ -41,9 +41,9 @@
 					<td>${project.name}</td>
 					<td>
 						<spring:url value="/projects/${project.id}" var="projectUrl" />
-						<spring:url value="/projects/${project.id}/delete" var="deleteUrl" /> 
-						<spring:url value="/projects/${project.id}/update" var="updateUrl" />
-						<spring:url value="/projects/${project.id}/select" var="selectUrl" />
+						<spring:url value="/projects/delete/${project.id}" var="deleteUrl" /> 
+						<spring:url value="/projects/update/${project.id}" var="updateUrl" />
+						<spring:url value="/projects/select/${project.id}" var="selectUrl" />
 
 						<button class="btn btn-info" onclick="location.href='${projectUrl}'">Query</button>
 						<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>

@@ -14,7 +14,7 @@ public class Results implements java.io.Serializable
 	private Components components;
 	private Projects projects;
 	private Users users;
-	private int orderId;
+	private Long orderId;
 	private String strresult;
 	private Date updateddt;
 	private Set resultshistories = new HashSet(0);
@@ -23,7 +23,7 @@ public class Results implements java.io.Serializable
 	{
 	}
 
-	public Results(Long id, Components components, Projects projects, Users users, int orderId, Date updateddt)
+	public Results(Long id, Components components, Projects projects, Users users, Long orderId, Date updateddt)
 	{
 		this.id = id;
 		this.components = components;
@@ -33,7 +33,7 @@ public class Results implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Results(Long id, Components components, Projects projects, Users users, int orderId, String strresult, Date updateddt, Set resultshistories)
+	public Results(Long id, Components components, Projects projects, Users users, Long orderId, String strresult, Date updateddt, Set resultshistories)
 	{
 		this.id = id;
 		this.components = components;
@@ -85,12 +85,12 @@ public class Results implements java.io.Serializable
 		this.users = users;
 	}
 
-	public int getOrderId()
+	public Long getOrderId()
 	{
 		return this.orderId;
 	}
 
-	public void setOrderId(int orderId)
+	public void setOrderId(Long orderId)
 	{
 		this.orderId = orderId;
 	}

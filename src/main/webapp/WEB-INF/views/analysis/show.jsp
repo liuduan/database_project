@@ -9,8 +9,6 @@
 
 <jsp:include page="../fragments/header.jsp" />
 
-        
-        
 <spring:url value="/ctvproject/css/analysis.css" var="analysisCss" />
 <spring:url value="/ctvproject/js/analysis.js" var="analysisJs" />
 <script src="${analysisJs}"></script>

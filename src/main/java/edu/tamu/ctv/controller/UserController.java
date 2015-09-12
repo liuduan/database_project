@@ -55,7 +55,7 @@ public class UserController
 	}
 	
 	@RequestMapping(value = "/userslist", method = RequestMethod.GET)
-	public @ResponseBody List<Users> getUsersRest() {
+	public @ResponseBody List<Users> getUsersList() {
 		return (List<Users>)userRepository.findAll();
 	}
 
@@ -88,7 +88,7 @@ public class UserController
 	}
 
 	// delete user
-	@RequestMapping(value = "/users/{id}/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
 	public String deleteUser(@PathVariable("id") Long id, final RedirectAttributes redirectAttributes)
 	{
 
@@ -148,7 +148,7 @@ public class UserController
 	}
 
 	// show update form
-	@RequestMapping(value = "/users/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/update/{id}", method = RequestMethod.GET)
 	public String showUpdateUserForm(@PathVariable("id") Long id, Model model)
 	{
 		logger.debug("showUpdateUserForm() : {}", id);

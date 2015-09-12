@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.tamu.ctv.entity.*;
 import edu.tamu.ctv.repository.*;
+import edu.tamu.ctv.utils.Auth;
+import edu.tamu.ctv.utils.DateUtil;
 import edu.tamu.ctv.utils.importdata.toxpi.DataTransformation;
 
 public class ImportManager implements Runnable
@@ -19,9 +21,20 @@ public class ImportManager implements Runnable
 	
 	@Autowired
 	private ProjectsRepository projectRepository;
-	
 	@Autowired
 	private RowTypesRepository rowTypesRepository;
+	@Autowired
+	private ColumnTypesRepository columnTypesRepository;
+	@Autowired
+	private OrdersRepository ordersRepository;
+	@Autowired
+	private RowHeadersRepository rowHeaderRepository;
+	@Autowired
+	private ColumnHeadersRepository columnHeaderRepository;
+	@Autowired
+	private ComponentsRepository componentsRepository;
+	@Autowired
+	private ResultsRepository resultsRepository;
 	
 	
 	private String fileLocation = "";
@@ -58,12 +71,12 @@ public class ImportManager implements Runnable
 		{
 			if (data != null)
 			{
-				/*
-				Map<String, Integer> orderMap = new LinkedHashMap<String, Integer>();
+
+				Map<String, Long> orderMap = new LinkedHashMap<String, Long>();
 				
 				Projects currentProject = projectRepository.findOne(projectId);
-				List<Rowtypes> rowTypes = DAOManager.getInstance().getRowTypeDAO().selectByProject(currentProject.getCode());
-				List<Columntypes> columnTypes = DAOManager.getInstance().getColumnTypeDAO().selectByProject(currentProject.getCode());
+				List<Rowtypes> rowTypes = rowTypesRepository.findByProjectsCode(currentProject.getCode());
+				List<Columntypes> columnTypes = columnTypesRepository.findByProjectsCode(currentProject.getCode());
 				
 				List<Rowheaders> rowHeaderList = new ArrayList<Rowheaders>();
 				List<Columnheaders> columnHeaderList = new ArrayList<Columnheaders>();
@@ -73,14 +86,14 @@ public class ImportManager implements Runnable
 				
 				for (ImportResult result : data.getResults())
 				{
-					Integer orderId = -1;
+					Long orderId = -1l;
 					if (orderMap.containsKey(result.getOrderKey()))
 					{
 						orderId = orderMap.get(result.getOrderKey());
 					}
 					else
 					{
-						orderId = DAOManager.getInstance().getOrderDAO().getNextOrderId();
+						orderId = ordersRepository.getNextOrderId();
 						
 						List<Rowheaders> rowHeaders = new ArrayList<Rowheaders>();
 						for (int rowCounter = 0; rowCounter < rowTypes.size(); rowCounter++)
@@ -97,11 +110,11 @@ public class ImportManager implements Runnable
 							}
 							if (null == currentRowHeader)
 							{
-								currentRowHeader = DAOManager.getInstance().getRowHeaderDAO().findByCodeAndProject(rowCode, currentProject.getCode());
+								currentRowHeader = rowHeaderRepository.findByCodeAndRowTypesProjectsCode(rowCode, currentProject.getCode());
 							}
 							if (null == currentRowHeader)
 							{
-								currentRowHeader = new Rowheaders(0, rowTypes.get(rowCounter), rowCode, rowCode, DateUtil.GetCurrentDate(), DateUtil.GetCurrentDate());
+								currentRowHeader = new Rowheaders(null, rowTypes.get(rowCounter), rowCode, rowCode, DateUtil.GetCurrentDate(), DateUtil.GetCurrentDate());
 								rowHeaderList.add(currentRowHeader);
 							}
 							rowHeaders.add(currentRowHeader);
@@ -109,7 +122,7 @@ public class ImportManager implements Runnable
 						
 						for (Rowheaders rowHeader : rowHeaders)
 						{
-							orderList.add(new Orders(0, rowHeader, orderId));
+							orderList.add(new Orders(null, rowHeader, orderId));
 						}
 						
 						orderMap.put(result.getOrderKey(), orderId);
@@ -135,11 +148,11 @@ public class ImportManager implements Runnable
 						}
 						if (null == currentColumnHeader)
 						{
-							currentColumnHeader = DAOManager.getInstance().getColumnHeaderDAO().findByCodeAndProject(columnCode, currentProject.getCode());
+							currentColumnHeader = columnHeaderRepository.findByCodeAndHeaderTypesProjectsCode(columnCode, currentProject.getCode());
 						}
 						if (null == currentColumnHeader)
 						{
-							currentColumnHeader = new Columnheaders(0, parentColumnHeader, columnTypes.get(columnLevel), level.getCode(), level.getCode(), DateUtil.GetCurrentDate(), DateUtil.GetCurrentDate());
+							currentColumnHeader = new Columnheaders(null, parentColumnHeader, columnTypes.get(columnLevel), level.getCode(), level.getCode(), DateUtil.GetCurrentDate(), DateUtil.GetCurrentDate());
 							columnHeaderList.add(currentColumnHeader);
 						}
 						parentColumnHeader = currentColumnHeader;
@@ -159,16 +172,16 @@ public class ImportManager implements Runnable
 					}
 					if (null == currentComponent)
 					{
-						currentComponent = DAOManager.getInstance().getComponentDAO().findByCodeAndProject(component.getCode(), currentProject.getCode());
+						currentComponent = componentsRepository.findByCodeAndProjectsCode(component.getCode(), currentProject.getCode());
 					}
 					if (null == currentComponent)
 					{
-						currentComponent = new Components(0, currentProject, Auth.getDefaultUnit(), Auth.getCurrentUser(), component.getCode(), component.getCode(), DateUtil.GetCurrentDate());
+						currentComponent = new Components(null, currentProject, Auth.getDefaultUnit(), Auth.getCurrentUser(), component.getCode(), component.getCode(), DateUtil.GetCurrentDate());
 						currentComponent.setColumnheaders(parentColumnHeader);
 						componentList.add(currentComponent);
 					}
 					
-					Results currentResult = new Results(0, currentComponent, currentProject, Auth.getCurrentUser(), orderId, DateUtil.GetCurrentDate());
+					Results currentResult = new Results(null, currentComponent, currentProject, Auth.getCurrentUser(), orderId, DateUtil.GetCurrentDate());
 					currentResult.setStrresult(result.getValue());
 					resultList.add(currentResult);
 					
@@ -179,25 +192,25 @@ public class ImportManager implements Runnable
 				//Save to DB
 				for (Rowheaders header : rowHeaderList)
 				{
-					DAOManager.getInstance().getRowHeaderDAO().save(header);
+					rowHeaderRepository.save(header);
 				}
 				for (Columnheaders header : columnHeaderList)
 				{
-					DAOManager.getInstance().getColumnHeaderDAO().save(header);
+					columnHeaderRepository.save(header);
 				}
 				for (Components component : componentList)
 				{
-					DAOManager.getInstance().getComponentDAO().save(component);
+					componentsRepository.save(component);
 				}
 				for (Results result : resultList)
 				{
-					DAOManager.getInstance().getResultDAO().save(result);
+					resultsRepository.save(result);
 				}
 				for (Orders order : orderList)
 				{
-					DAOManager.getInstance().getOrderDAO().save(order);
+					ordersRepository.save(order);
 				}
-				*/
+
 			}
 		}
 		catch (Exception e)

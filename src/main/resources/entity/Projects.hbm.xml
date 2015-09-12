@@ -34,6 +34,18 @@
         <property name="lastvisitdt" type="timestamp">
             <column name="lastvisitdt" length="29" not-null="true" />
         </property>
+        <set name="projectreviewerses" table="projectreviewers" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Projectreviewers" />
+        </set>
+        <set name="projectmanagerses" table="projectmanagers" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Projectmanagers" />
+        </set>
         <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="project_id" not-null="true" />

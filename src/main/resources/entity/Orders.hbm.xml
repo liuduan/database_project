@@ -13,7 +13,7 @@
         <many-to-one name="rowheaders" class="edu.tamu.ctv.entity.Rowheaders" fetch="select">
             <column name="rowheader_id" />
         </many-to-one>
-        <property name="orderId" type="int">
+        <property name="orderId" type="long">
             <column name="order_id" not-null="true" />
         </property>
     </class>

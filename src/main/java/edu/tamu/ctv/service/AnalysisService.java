@@ -35,14 +35,14 @@ public class AnalysisService
 			Collections.sort(results, new Comparator<Results>() {
 	
 		        public int compare(Results o1, Results o2) {
-		            return o1.getOrderId() - o2.getOrderId();
+		            return o1.getOrderId().compareTo(o2.getOrderId());
 		        }
 		    });
 			
 			ArrayList<Map<String, String>> arrmResults  = new ArrayList<Map<String, String>>();
 			 Map<String, String> mResults = new HashMap<String, String>();
-			int ordId = results.get(0).getOrderId();
-			mResults.put("id", Integer.toString(ordId));
+			Long ordId = results.get(0).getOrderId();
+			mResults.put("id", Long.toString(ordId));
 			for(Results result : results) 
 			{				
 				if (result.getOrderId() != ordId)
@@ -50,7 +50,7 @@ public class AnalysisService
 					arrmResults.add(mResults);
 					mResults = new HashMap<String, String>();
 					ordId = result.getOrderId();
-					mResults.put("id", Integer.toString(ordId));
+					mResults.put("id", Long.toString(ordId));
 				}
 				mResults.put(result.getComponents().getCode(), result.getStrresult());
 			}

@@ -1,4 +1,4 @@
-package edu.tamu.ctv.service;
+package edu.tamu.ctv.service.defaultdata;
 
 import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.UsersRepository;

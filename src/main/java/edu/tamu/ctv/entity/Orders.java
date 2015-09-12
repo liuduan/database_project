@@ -9,13 +9,13 @@ public class Orders implements java.io.Serializable
 
 	private Long id;
 	private Rowheaders rowheaders;
-	private int orderId;
+	private Long orderId;
 
 	public Orders()
 	{
 	}
 
-	public Orders(Long id, Rowheaders rowheaders, int orderId)
+	public Orders(Long id, Rowheaders rowheaders, Long orderId)
 	{
 		this.id = id;
 		this.rowheaders = rowheaders;
@@ -42,12 +42,12 @@ public class Orders implements java.io.Serializable
 		this.rowheaders = rowheaders;
 	}
 
-	public int getOrderId()
+	public Long getOrderId()
 	{
 		return this.orderId;
 	}
 
-	public void setOrderId(int orderId)
+	public void setOrderId(Long orderId)
 	{
 		this.orderId = orderId;
 	}

@@ -19,7 +19,7 @@
         <many-to-one name="users" class="edu.tamu.ctv.entity.Users" fetch="select">
             <column name="updatedby" not-null="true" />
         </many-to-one>
-        <property name="orderId" type="int">
+        <property name="orderId" type="long">
             <column name="order_id" not-null="true" />
         </property>
         <property name="strresult" type="string">

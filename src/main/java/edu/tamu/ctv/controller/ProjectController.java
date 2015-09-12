@@ -1,7 +1,10 @@
 package edu.tamu.ctv.controller;
 
+import java.beans.PropertyEditorSupport;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,12 +12,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +29,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.tamu.ctv.entity.Projects;
+import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
+import edu.tamu.ctv.repository.UsersRepository;
 
 @Controller
 public class ProjectController
@@ -37,6 +45,9 @@ public class ProjectController
 	@Autowired
 	private ProjectTypesRepository projectTypesRepository;
 
+	@Autowired
+	private UsersRepository userRepository;
+	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String showAllProjects(Model model)
 	{
@@ -52,7 +63,7 @@ public class ProjectController
 
 		if (result.hasErrors())
 		{
-			populateDefaultModel(model);
+			populateDefaultModel(model, project);
 			return "projects/projectform";
 		}
 		else
@@ -74,7 +85,7 @@ public class ProjectController
 	}
 
 	// delete project
-	@RequestMapping(value = "/projects/{id}/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/projects/delete/{id}", method = RequestMethod.POST)
 	public String deleteProject(@PathVariable("id") Long id, final RedirectAttributes redirectAttributes)
 	{
 		logger.debug("deleteProject() : {}", id);
@@ -119,7 +130,6 @@ public class ProjectController
 		return model;
 	}
 
-	// show add project form
 	@RequestMapping(value = "/projects/add", method = RequestMethod.GET)
 	public String showAddProjectForm(Model model)
 	{
@@ -127,12 +137,12 @@ public class ProjectController
 		Projects project = new Projects();
 		// set default value
 		model.addAttribute("projectForm", project);
-		populateDefaultModel(model);
+		populateDefaultModel(model, project);
 		return "projects/projectform";
 
 	}
 
-	@RequestMapping(value = "/projects/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/projects/update/{id}", method = RequestMethod.GET)
 	public String showUpdateProjectForm(@PathVariable("id") Long id, Model model)
 	{
 
@@ -141,21 +151,13 @@ public class ProjectController
 		Projects project = projectRepository.findOne(id);
 		model.addAttribute("projectForm", project);
 
-		populateDefaultModel(model);
+		populateDefaultModel(model, project);
 
 		return "projects/projectform";
 
 	}
 
-//	@RequestMapping(value = "/projects/{id}/select", method = RequestMethod.POST)
-//    public String selectProject(@PathVariable("id") int id, Model model, HttpSession session)
-//    {
-//		Project project = projectService.findById(id);
-//		model.addAttribute("projectForm", project);
-//		session.setAttribute("projectId" , id);   
-//		return "projects/projectform";
-//    }
-	@RequestMapping(value = "/projects/{id}/select", method = RequestMethod.GET)
+	@RequestMapping(value = "/projects/select/{id}", method = RequestMethod.GET)
     public String selectProject(@PathVariable("id") Long id, Model model, HttpServletRequest request)
     {
 		Projects project = projectRepository.findOne(id);
@@ -164,7 +166,7 @@ public class ProjectController
 		session.setAttribute("projectId" , id);   
 		return "projects/projectform";
     }
-	private void populateDefaultModel(Model model)
+	private void populateDefaultModel(Model model, Projects project)
 	{
 		Map<Integer, String> access = new LinkedHashMap<Integer, String>();
 		access.put(0, "Private");
@@ -176,5 +178,26 @@ public class ProjectController
 		model.addAttribute("accessList", access);
 
 		model.addAttribute("projectTypeList", projectTypesRepository.findAll());
+		
+		model.addAttribute("userList", getUsers());
+		
 	}
+	
+	@ModelAttribute("usersCache")
+    public List<Users> getUsers(){
+        return (List<Users>)userRepository.findAll();
+    }
+	
+	@InitBinder
+    protected void initBinder(WebDataBinder binder) throws Exception{
+        binder.registerCustomEditor(Set.class,"projectmemberses", new CustomCollectionEditor(Set.class){
+            protected Object convertElement(Object element){
+                if (element instanceof String) {
+                    Users user = userRepository.findOne(Long.parseLong(element.toString()));
+                    return user;
+                }
+                return null;
+            }
+        });
+    }
 }
