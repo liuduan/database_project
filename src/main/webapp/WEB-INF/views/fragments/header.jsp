@@ -16,10 +16,15 @@
 </head>
 
 <spring:url value="/" var="urlHome" />
-<spring:url value="/upload" var="urlImport" />
+
 <spring:url value="/users/add" var="urlAddUser" />
 <spring:url value="/projects/add" var="urlAddProject" />
+
+<spring:url value="/upload" var="urlImport" />
+<spring:url value="/upload" var="urlExport" />
+
 <spring:url value="/analysis/${projectId}" var="urlDisplayAnalysis" />
+<spring:url value="/profile/1" var="urlProfile" />
 
 <nav class="navbar navbar-inverse ">
 	<div class="container">
@@ -28,11 +33,14 @@
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="${urlImport}">Import</a></li>
 				<li class="active"><a href="${urlAddUser}">Add User</a></li>
-				<li class="active"><a href="${urlAddProject}">Export</a></li>
+				<li class="active"><a href="${urlAddProject}">Add Project</a></li>
+				
+				<li class="active"><a href="${urlImport}">Import</a></li>
+				<li class="active"><a href="${urlExport}">Export</a></li>
+				
 				<li class="active"><a href="${urlDisplayAnalysis}">Analysis</a></li>
-				<li class="active"><a href="${urlAddProject}">My Page</a></li>			
+				<li class="active"><a href="${urlProfile}">My Page</a></li>			
 				<li class="not-active"><a href="#" id="proj">         selected project: ${projectId}	</a></li>	
 			</ul>
 		</div>

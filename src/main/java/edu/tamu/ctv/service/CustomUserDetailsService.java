@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService, Serializabl
 
 				public Collection<? extends GrantedAuthority> getAuthorities()
 				{
-					return Arrays.asList(new SimpleGrantedAuthority("ADMIN_VASYA"));
+					return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
 				}
 
 				public String getPassword()

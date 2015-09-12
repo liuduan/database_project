@@ -28,21 +28,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService);
+        authenticationManagerBuilder.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");;
     }
+    
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //TODO: Upload file temporary
-        //http.csrf().disable();
-        
-    	//http
-    	//.csrf().disable()
-    	//.authorizeRequests()
-        //.antMatchers("/**").access("isAuthenticated()")
-/*        .antMatchers("/results/**").access("isAuthenticated()")
-        .antMatchers("/analysis/**").access("isAuthenticated()")*/
-        //.and().formLogin();
-        
+
+	    http.authorizeRequests()
+	    //.csrf().disable()
+	    .antMatchers("/**").access("permitAll")
+	    //.antMatchers("/**").access("isAuthenticated()")
+		.and().formLogin()
+		.loginPage("/login").failureUrl("/login?error").usernameParameter("username").passwordParameter("password")		
+		.and().logout().logoutSuccessUrl("/login?logout");
+		//.and().csrf(); 
 
     }
 

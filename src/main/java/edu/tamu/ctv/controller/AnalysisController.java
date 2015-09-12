@@ -28,6 +28,7 @@ public class AnalysisController
 {
 	private final Logger logger = LoggerFactory.getLogger(AnalysisController.class);
 	
+	@Autowired
 	private AnalysisService analysisService;
 
 	@Autowired

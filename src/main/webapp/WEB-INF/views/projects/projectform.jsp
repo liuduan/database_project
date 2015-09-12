@@ -1,6 +1,7 @@
 <%@ page session="false"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -9,18 +10,15 @@
 <jsp:include page="../fragments/header.jsp" />
 
 
-<link href="/ctvproject/scripts/external/select2/css/select2.css"
-	rel="stylesheet" />
+<link href="/ctvproject/scripts/external/select2/css/select2.css" rel="stylesheet" />
 <script src="/ctvproject/scripts/external/select2/js/select2.js"></script>
+<script src="/ctvproject/scripts/external/ckeditor/ckeditor.js"></script>
 
 <script type="text/javascript">
 	function formatValues(data) {
 		return data.firstname + ' ' + data.lastname;
 	}
 </script>
-
-
-
 
 <div class="container">
 
@@ -68,7 +66,6 @@
 				<label class="col-sm-2 control-label">Access Level</label>
 				<div class="col-sm-5">
 					<form:select path="access" class="form-control">
-						<form:option value="0" label="--- Select ---" />
 						<form:options items="${accessList}" />
 					</form:select>
 					<form:errors path="access" class="control-label" />
@@ -77,65 +74,113 @@
 			</div>
 		</spring:bind>
 
-		<spring:bind path="projecttypes">
+  		<spring:bind path="projecttypes">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Type</label>
 				<div class="col-sm-5">
-					<form:select path="projecttypes" class="form-control">
-						<form:option value="0" label="--- Select ---" />
-						<form:options itemValue="id" itemLabel="name" items="${projectTypeList}" />
+					<form:select path="projecttypes">
+						<c:forEach items="${projectTypesCache}" var="pt">
+			                <c:choose>
+			                    <c:when test="${projecttypes.getId()==pt.id}">
+			                        <option value="${pt.id}" selected="selected">${pt.name}</option>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <option value="${pt.id}">${pt.name}</option>
+			                    </c:otherwise>
+			                </c:choose>
+						</c:forEach>
+						
 					</form:select>
-					<form:errors path="projecttypes" class="control-label" />
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
-		</spring:bind>
+		</spring:bind>  
 
 		<spring:bind path="notes">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Description</label>
 				<div class="col-sm-10">
-					<form:textarea path="notes" rows="5" class="form-control"
-						id="state" placeholder="Description" />
+					<form:textarea path="notes" rows="5" class="form-control" id="ckeditornotes" placeholder="Description" />
 					<form:errors path="notes" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
-
+		<script type="text/javascript">CKEDITOR.replace('ckeditornotes');</script>
 
 		<spring:bind path="projectmanagerses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Managers</label>
 				<div class="col-sm-10">
-					<form:select id="projectmanagerses" path="projectmanagerses"
-						class="form-control">
+					<form:select multiple="true" path="projectmanagerses">
+						<c:forEach items="${usersCache}" var="user">
+			                <c:set var="isSelected" value="false" />
+			                <c:forEach items="${projectmanagerses}" var="pr">
+			                    <c:if test="${pr.getUsers().getId()==user.id}">
+			                        <c:set var="isSelected" value="true" />
+			                    </c:if>
+			                </c:forEach>
+			                <c:choose>
+			                    <c:when test="${isSelected}">
+			                        <option value="${user.id}" selected="selected">${user.firstname}</option>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <option value="${user.id}">${user.firstname}</option>
+			                    </c:otherwise>
+			                </c:choose>
+						</c:forEach>
 					</form:select>
-					<form:errors path="projectmanagerses" class="control-label" />
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
 		</spring:bind>
-
+		
 		<spring:bind path="projectreviewerses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Project Managers</label>
+				<label class="col-sm-2 control-label">Project Reviewers</label>
 				<div class="col-sm-10">
-					<form:select id="projectreviewerses" path="projectreviewerses"
-						class="form-control">
+					<form:select multiple="true" path="projectreviewerses">
+						<c:forEach items="${usersCache}" var="user">
+			                <c:set var="isSelected" value="false" />
+			                <c:forEach items="${projectreviewerses}" var="pr">
+			                    <c:if test="${pr.getUsers().getId()==user.id}">
+			                        <c:set var="isSelected" value="true" />
+			                    </c:if>
+			                </c:forEach>
+			                <c:choose>
+			                    <c:when test="${isSelected}">
+			                        <option value="${user.id}" selected="selected">${user.firstname}</option>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <option value="${user.id}">${user.firstname}</option>
+			                    </c:otherwise>
+			                </c:choose>
+						</c:forEach>
 					</form:select>
-					<form:errors path="projectreviewerses" class="control-label" />
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
 		</spring:bind>
-
+		
 		<spring:bind path="projectmemberses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Members</label>
 				<div class="col-sm-10">
 					<form:select multiple="true" path="projectmemberses">
-						<c:forEach items="${usersCache}" var="rol">
-							<option value="${rol.id}" selected="selected">${rol.firstname}</option>
+						<c:forEach items="${usersCache}" var="user">
+			                <c:set var="isSelected" value="false" />
+			                <c:forEach items="${projectmemberses}" var="pm">
+			                    <c:if test="${pm.getUsers().getId()==user.id}">
+			                        <c:set var="isSelected" value="true" />
+			                    </c:if>
+			                </c:forEach>
+			                <c:choose>
+			                    <c:when test="${isSelected}">
+			                        <option value="${user.id}" selected="selected">${user.firstname}</option>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <option value="${user.id}">${user.firstname}</option>
+			                    </c:otherwise>
+			                </c:choose>
 						</c:forEach>
 					</form:select>
 				</div>
@@ -143,39 +188,12 @@
 			</div>
 		</spring:bind>
 
-
-
-
 		<script type="text/javascript">
 			function select2function(selectObject, desc) {
-				selectObject
-						.select2({
+				selectObject.select2({
 							placeholder : "Search for a " + desc,
 							multiple : true,
-							minimumInputLength : 2,
-							formatResult : function(item) {
-								return ('<div>' + item.id + ' - ' + item.text + '</div>');
-							},
-							formatSelection : function(item) {
-								return (item.text);
-							},
-							ajax : {
-								url : "http://localhost:8080/ctvproject/userslistbyfilter",
-								dataType : 'json',
-								quietMillis : 250,
-								cache : true,
-								processResults : function(data) {
-									return {
-										results : $.map(data, function(item) {
-											return {
-												id : item.id,
-												text : item.firstname + ' '
-														+ item.lastname
-											}
-										})
-									};
-								}
-							}
+							minimumInputLength : 2
 						});
 			};
 

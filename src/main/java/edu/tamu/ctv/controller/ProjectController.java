@@ -29,25 +29,27 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.tamu.ctv.entity.Projects;
+import edu.tamu.ctv.entity.Projecttypes;
 import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.utils.Auth;
 
 @Controller
 public class ProjectController
 {
 	private final Logger logger = LoggerFactory.getLogger(ProjectController.class);
-	
+
 	@Autowired
 	private ProjectsRepository projectRepository;
-	
+
 	@Autowired
 	private ProjectTypesRepository projectTypesRepository;
 
 	@Autowired
 	private UsersRepository userRepository;
-	
+
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String showAllProjects(Model model)
 	{
@@ -78,6 +80,9 @@ public class ProjectController
 				redirectAttributes.addFlashAttribute("msg", "Project updated successfully!");
 			}
 
+			project.setUsers(userRepository.findOne(1l));
+			project.setRegistereddt(Auth.getCurrentDate());
+			project.setLastvisitdt(Auth.getCurrentDate());
 			projectRepository.save(project);
 
 			return "redirect:/projects/" + project.getId();
@@ -158,14 +163,17 @@ public class ProjectController
 	}
 
 	@RequestMapping(value = "/projects/select/{id}", method = RequestMethod.GET)
-    public String selectProject(@PathVariable("id") Long id, Model model, HttpServletRequest request)
-    {
+	public String selectProject(@PathVariable("id") Long id, Model model, HttpServletRequest request)
+	{
 		Projects project = projectRepository.findOne(id);
 		model.addAttribute("projectForm", project);
 		HttpSession session = request.getSession();
-		session.setAttribute("projectId" , id);   
+		session.setAttribute("projectId", id);
+		
+		populateDefaultModel(model, project);
 		return "projects/projectform";
-    }
+	}
+
 	private void populateDefaultModel(Model model, Projects project)
 	{
 		Map<Integer, String> access = new LinkedHashMap<Integer, String>();
@@ -177,27 +185,73 @@ public class ProjectController
 		access.put(5, "Public (allow edit)");
 		model.addAttribute("accessList", access);
 
-		model.addAttribute("projectTypeList", projectTypesRepository.findAll());
-		
+		model.addAttribute("projTypes", getProjectTypes());
 		model.addAttribute("userList", getUsers());
-		
+
 	}
-	
+
 	@ModelAttribute("usersCache")
-    public List<Users> getUsers(){
-        return (List<Users>)userRepository.findAll();
-    }
-	
+	public List<Users> getUsers()
+	{
+		return (List<Users>) userRepository.findAll();
+	}
+
+	@ModelAttribute("projectTypesCache")
+	public List<Projecttypes> getProjectTypes()
+	{
+		return (List<Projecttypes>) projectTypesRepository.findAll();
+	}
+
 	@InitBinder
-    protected void initBinder(WebDataBinder binder) throws Exception{
-        binder.registerCustomEditor(Set.class,"projectmemberses", new CustomCollectionEditor(Set.class){
-            protected Object convertElement(Object element){
-                if (element instanceof String) {
-                    Users user = userRepository.findOne(Long.parseLong(element.toString()));
-                    return user;
-                }
-                return null;
-            }
-        });
-    }
+	protected void initBinder(WebDataBinder binder) throws Exception
+	{
+		binder.registerCustomEditor(Set.class, "projectmanagerses", new CustomCollectionEditor(Set.class)
+		{
+			protected Object convertElement(Object element)
+			{
+				if (element instanceof String)
+				{
+					Users user = userRepository.findOne(Long.parseLong(element.toString()));
+					return user;
+				}
+				return null;
+			}
+		});
+
+		binder.registerCustomEditor(Set.class, "projectreviewerses", new CustomCollectionEditor(Set.class)
+		{
+			protected Object convertElement(Object element)
+			{
+				if (element instanceof String)
+				{
+					Users user = userRepository.findOne(Long.parseLong(element.toString()));
+					return user;
+				}
+				return null;
+			}
+		});
+
+		binder.registerCustomEditor(Set.class, "projectmemberses", new CustomCollectionEditor(Set.class)
+		{
+			protected Object convertElement(Object element)
+			{
+				if (element instanceof String)
+				{
+					Users user = userRepository.findOne(Long.parseLong(element.toString()));
+					return user;
+				}
+				return null;
+			}
+		});
+
+		binder.registerCustomEditor(Projecttypes.class, "projecttypes", new PropertyEditorSupport()
+		{
+			@Override
+			public void setAsText(String text)
+			{
+				Projecttypes ch = projectTypesRepository.findOne(Long.parseLong(text));
+				setValue(ch);
+			}
+		});
+	}
 }

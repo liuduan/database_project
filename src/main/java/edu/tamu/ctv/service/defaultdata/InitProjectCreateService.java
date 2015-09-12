@@ -18,7 +18,7 @@ public class InitProjectCreateService
 		Projects projectTypes = new Projects();
 		projectTypes.setCode("ProjectCode");
 		projectTypes.setName("ProjectName");
-		projectTypes.setAccess(0);
+		projectTypes.setAccess(2);
 		projectTypes.setProjecttypes(projectTypesRepository.findOne(1l));
 		projectTypes.setUsers(usersRepository.findOne(1l));
 		projectTypes.setRegistereddt(Auth.getCurrentDate());

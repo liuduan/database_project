@@ -41,7 +41,7 @@ public class Users implements Serializable
 	private Set noteses = new HashSet(0);
 	private Set projectmemberses = new HashSet(0);
 	private Set unitses = new HashSet(0);
-	private Set projectses = new HashSet(0);
+	private Set<Projects> projectses = new HashSet<Projects>(0);
 
 	public boolean isNew()
 	{
@@ -73,7 +73,7 @@ public class Users implements Serializable
 
 	public Users(Long id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String address2, String country, String state, String zip,
 			String sex, String organization, String organaddress, byte[] photo, String notes, Date registereddt, Date lastvisitdt, Set resultses, Set importinfos, Set componentses, Set resultshistories,
-			Set viewtemplatesesForUpdatedby, Set viewtemplatesesForUserId, Set noteses, Set projectmemberses, Set unitses, Set projectses)
+			Set viewtemplatesesForUpdatedby, Set viewtemplatesesForUserId, Set noteses, Set projectmemberses, Set unitses, Set<Projects> projectses)
 	{
 		this.id = id;
 		this.login = login;
@@ -397,12 +397,12 @@ public class Users implements Serializable
 		this.unitses = unitses;
 	}
 
-	public Set getProjectses()
+	public Set<Projects> getProjectses()
 	{
 		return this.projectses;
 	}
 
-	public void setProjectses(Set projectses)
+	public void setProjectses(Set<Projects> projectses)
 	{
 		this.projectses = projectses;
 	}

@@ -8,6 +8,8 @@
 <html lang="en">
 <jsp:include page="../fragments/header.jsp" />
 
+<script src="/ctvproject/scripts/external/ckeditor/ckeditor.js"></script>
+
 <div class="container">
 
 	<c:choose>
@@ -40,7 +42,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-10">
-					<form:password path="password" class="form-control" id="password" placeholder="password" />
+					<form:password path="password" class="form-control" id="password" placeholder="Password" />
 					<form:errors path="password" class="control-label" />
 				</div>
 			</div>
@@ -48,9 +50,9 @@
 
 		<spring:bind path="confirmPassword">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">confirm Password</label>
+				<label class="col-sm-2 control-label">Confirm Password</label>
 				<div class="col-sm-10">
-					<form:password path="confirmPassword" class="form-control" id="password" placeholder="password" />
+					<form:password path="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" />
 					<form:errors path="confirmPassword" class="control-label" />
 				</div>
 			</div>
@@ -152,7 +154,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Zip Code</label>
 				<div class="col-sm-10">
-					<form:input path="zip" type="text" class="form-control" id="state" placeholder="Zip" />
+					<form:input path="zip" type="text" class="form-control" id="zip" placeholder="Zip" />
 					<form:errors path="zip" class="control-label" />
 				</div>
 			</div>
@@ -162,7 +164,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Organization Name</label>
 				<div class="col-sm-10">
-					<form:input path="organization" type="text" class="form-control" id="state" placeholder="Organization" />
+					<form:input path="organization" type="text" class="form-control" id="organization" placeholder="Organization" />
 					<form:errors path="organization" class="control-label" />
 				</div>
 			</div>
@@ -172,7 +174,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Organization Address</label>
 				<div class="col-sm-10">
-					<form:input path="organaddress" type="text" class="form-control" id="state" placeholder="Organization Address" />
+					<form:input path="organaddress" type="text" class="form-control" id="organaddress" placeholder="Organization Address" />
 					<form:errors path="organaddress" class="control-label" />
 				</div>
 			</div>
@@ -182,11 +184,12 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Notes</label>
 				<div class="col-sm-10">
-					<form:textarea path="notes" rows="5" class="form-control" id="state" placeholder="Notes" />
+					<form:textarea path="notes" rows="5" class="form-control" id="ckeditornotes" placeholder="Notes" />
 					<form:errors path="notes" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
+		<script type="text/javascript">CKEDITOR.replace('ckeditornotes');</script>
 		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

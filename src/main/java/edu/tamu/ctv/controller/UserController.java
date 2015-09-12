@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.service.validator.UserFormValidator;
+import edu.tamu.ctv.utils.Auth;
 
 @Controller
 public class UserController
@@ -81,6 +82,8 @@ public class UserController
 				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
 			}
 
+			user.setRegistereddt(Auth.getCurrentDate());
+			user.setLastvisitdt(Auth.getCurrentDate());
 			userRepository.save(user);
 
 			return "redirect:/users/" + user.getId();

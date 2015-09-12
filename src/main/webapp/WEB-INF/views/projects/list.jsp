@@ -34,9 +34,7 @@
 
 			<c:forEach var="project" items="${projects}">
 				<tr>
-					<td>
-						${project.id}
-					</td>
+					<td>${project.id}</td>
 					<td>${project.code}</td>
 					<td>${project.name}</td>
 					<td>
