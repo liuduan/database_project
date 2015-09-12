@@ -43,8 +43,20 @@
         <property name="zip" type="string">
             <column name="zip" not-null="true" />
         </property>
+        <property name="city" type="string">
+            <column name="city" not-null="true" />
+        </property>
         <property name="sex" type="string">
             <column name="sex" not-null="true" />
+        </property>
+        <property name="website" type="string">
+            <column name="website" />
+        </property>
+        <property name="interests" type="string">
+            <column name="interests" />
+        </property>
+        <property name="birthday" type="timestamp">
+            <column name="birthday" length="29" not-null="true" />
         </property>
         <property name="organization" type="string">
             <column name="organization" />

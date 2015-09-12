@@ -130,6 +130,16 @@
 			</div>
 		</spring:bind>
 		
+		<spring:bind path="city">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Country</label>
+				<div class="col-sm-10">
+					<form:input path="city" type="text" class="form-control" id="city" placeholder="City" />
+					<form:errors path="city" class="control-label" />
+				</div>
+			</div>
+		</spring:bind>
+		
 		<spring:bind path="country">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Country</label>

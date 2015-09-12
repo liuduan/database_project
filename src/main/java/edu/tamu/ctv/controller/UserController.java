@@ -84,6 +84,8 @@ public class UserController
 
 			user.setRegistereddt(Auth.getCurrentDate());
 			user.setLastvisitdt(Auth.getCurrentDate());
+			//TODO: implement in GUI
+			user.setBirthday(Auth.getCurrentDate());
 			userRepository.save(user);
 
 			return "redirect:/users/" + user.getId();

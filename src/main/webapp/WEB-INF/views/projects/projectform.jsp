@@ -74,7 +74,7 @@
 			</div>
 		</spring:bind>
 
-  		<spring:bind path="projecttypes">
+   		<spring:bind path="projecttypes">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Type</label>
 				<div class="col-sm-5">
@@ -89,12 +89,11 @@
 			                    </c:otherwise>
 			                </c:choose>
 						</c:forEach>
-						
 					</form:select>
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
-		</spring:bind>  
+		</spring:bind>
 
 		<spring:bind path="notes">
 			<div class="form-group ${status.error ? 'has-error' : ''}">

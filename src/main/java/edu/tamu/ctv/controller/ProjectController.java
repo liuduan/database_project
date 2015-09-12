@@ -193,13 +193,17 @@ public class ProjectController
 	@ModelAttribute("usersCache")
 	public List<Users> getUsers()
 	{
-		return (List<Users>) userRepository.findAll();
+		List<Users> users = (List<Users>) userRepository.findAll();
+	    //Hibernate.initialize(users);
+		return users;
 	}
 
 	@ModelAttribute("projectTypesCache")
 	public List<Projecttypes> getProjectTypes()
 	{
-		return (List<Projecttypes>) projectTypesRepository.findAll();
+		List<Projecttypes> projecttypes = (List<Projecttypes>) projectTypesRepository.findAll();
+		//Hibernate.initialize(projecttypes);
+		return projecttypes;
 	}
 
 	@InitBinder

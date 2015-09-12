@@ -23,6 +23,10 @@ public class Users implements Serializable
 	private String address1;
 	private String address2;
 	private String country;
+	private String city;
+	private String website;
+	private String interests;
+	private Date   birthday;
 	private String state;
 	private String zip;
 	private String sex;
@@ -53,7 +57,7 @@ public class Users implements Serializable
 	}
 
 	public Users(Long id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String country, String state, String zip, String sex,
-			Date registereddt, Date lastvisitdt)
+			Date registereddt, Date lastvisitdt, Date birthday, String city)
 	{
 		this.id = id;
 		this.login = login;
@@ -64,11 +68,14 @@ public class Users implements Serializable
 		this.phone = phone;
 		this.address1 = address1;
 		this.country = country;
+		this.city = city;
 		this.state = state;
 		this.zip = zip;
 		this.sex = sex;
 		this.registereddt = registereddt;
 		this.lastvisitdt = lastvisitdt;
+		this.birthday = birthday;
+		
 	}
 
 	public Users(Long id, String login, String password, String firstname, String lastname, String email, String phone, String address1, String address2, String country, String state, String zip,
@@ -405,6 +412,46 @@ public class Users implements Serializable
 	public void setProjectses(Set<Projects> projectses)
 	{
 		this.projectses = projectses;
+	}
+
+	public String getCity()
+	{
+		return city;
+	}
+
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
+
+	public String getWebsite()
+	{
+		return website;
+	}
+
+	public void setWebsite(String website)
+	{
+		this.website = website;
+	}
+
+	public String getInterests()
+	{
+		return interests;
+	}
+
+	public void setInterests(String interests)
+	{
+		this.interests = interests;
+	}
+
+	public Date getBirthday()
+	{
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday)
+	{
+		this.birthday = birthday;
 	}
 
 }

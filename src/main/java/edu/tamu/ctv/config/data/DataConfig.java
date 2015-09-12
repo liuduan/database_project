@@ -65,6 +65,8 @@ public class DataConfig {
         properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        //TODO: Check enable_lazy_load_no_trans option
+        properties.put("hibernate.enable_lazy_load_no_trans", env.getProperty("hibernate.enable_lazy_load_no_trans"));
 
         entityManagerFactoryBean.setJpaProperties(properties);
 

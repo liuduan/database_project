@@ -14,17 +14,19 @@ public class InitUserCreateService {
         Users admin = new Users();
         admin.setLogin("admin");
         admin.setFirstname("admin");
-        admin.setLastname("adminovych");
+        admin.setLastname("admin");
         admin.setCountry("Ukraine");
         admin.setPassword("admin");
         admin.setSex("M");
-        admin.setEmail("my1@mail.box");
-        admin.setPhone("+380935648216");
+        admin.setEmail("admin@mail.box");
+        admin.setPhone("+380000000000");
         admin.setAddress1("Lviv");
         admin.setState("Lviv");
+        admin.setCity("Lviv");
         admin.setZip("79000");
         admin.setRegistereddt(new Date());
         admin.setLastvisitdt(new Date());
+        admin.setBirthday(new Date());
         usersRepository.save(admin);
     }
 }

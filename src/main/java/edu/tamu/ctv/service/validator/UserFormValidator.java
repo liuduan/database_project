@@ -32,6 +32,7 @@ public class UserFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "NotEmpty.userForm.phone");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address1", "NotEmpty.userForm.address1");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "NotEmpty.userForm.city");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "NotEmpty.userForm.country");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "state", "NotEmpty.userForm.state");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zip", "NotEmpty.userForm.zip");
