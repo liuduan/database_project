@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="eee.eee.eee">
+	<logger name="edu.tamu.ctv">
 		<level value="info" />
 	</logger>
 	

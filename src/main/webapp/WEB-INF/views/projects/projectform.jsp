@@ -71,15 +71,15 @@ function formatValues(data) {return data.firstname + ' ' + data.lastname;}
 			</div>
 		</spring:bind>
 		
-		<spring:bind path="projecttype">
+		<spring:bind path="projecttypes">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Type</label>
 				<div class="col-sm-5">
-					<form:select path="projecttype" class="form-control">
+					<form:select path="projecttypes" class="form-control">
 						<form:option value="0" label="--- Select ---" />
 						<form:options items="${projectTypeList}" />
 					</form:select>
-					<form:errors path="projecttype" class="control-label" />
+					<form:errors path="projecttypes" class="control-label" />
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
@@ -96,41 +96,18 @@ function formatValues(data) {return data.firstname + ' ' + data.lastname;}
 		</spring:bind>
 
 
-		<spring:bind path="projectmanagers">
+		<spring:bind path="projectmemberses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Managers</label>
 				<div class="col-sm-10">
-					<form:select id="projectmanagers" path="projectmanagers" class="form-control">
+					<form:select id="projectmemberses" path="projectmemberses" class="form-control">
 					</form:select>
-					<form:errors path="projectmanagers" class="control-label" />
+					<form:errors path="projectmemberses" class="control-label" />
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
 		</spring:bind>
 		
-		<spring:bind path="projectmembers">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Project Members</label>
-				<div class="col-sm-10">
-					<form:select id="projectmembers" path="projectmembers" class="form-control">
-					</form:select>
-					<form:errors path="projectmembers" class="control-label" />
-				</div>
-				<div class="col-sm-5"></div>
-			</div>
-		</spring:bind>
-		
-		<spring:bind path="projectreviewers">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Project Reviewers</label>
-				<div class="col-sm-10">
-					<form:select id="projectreviewers" path="projectreviewers" class="form-control">
-					</form:select>
-					<form:errors path="projectreviewers" class="control-label" />
-				</div>
-				<div class="col-sm-5"></div>
-			</div>
-		</spring:bind>
 
 
 

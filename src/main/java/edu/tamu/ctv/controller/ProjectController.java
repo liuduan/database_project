@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.tamu.ctv.entity.Projects;
+import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 
 @Controller
@@ -31,13 +32,16 @@ public class ProjectController
 	private final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 	
 	@Autowired
-	private ProjectsRepository projectService;
+	private ProjectsRepository projectRepository;
+	
+	@Autowired
+	private ProjectTypesRepository projectTypesRepository;
 
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String showAllProjects(Model model)
 	{
 		logger.debug("showAllProjects()");
-		model.addAttribute("projects", projectService.findAll());
+		model.addAttribute("projects", projectRepository.findAll());
 		return "projects/list";
 	}
 
@@ -63,7 +67,7 @@ public class ProjectController
 				redirectAttributes.addFlashAttribute("msg", "Project updated successfully!");
 			}
 
-			projectService.save(project);
+			projectRepository.save(project);
 
 			return "redirect:/projects/" + project.getId();
 		}
@@ -75,7 +79,7 @@ public class ProjectController
 	{
 		logger.debug("deleteProject() : {}", id);
 
-		projectService.delete(id);
+		projectRepository.delete(id);
 		redirectAttributes.addFlashAttribute("css", "success");
 		redirectAttributes.addFlashAttribute("msg", "Project is deleted!");
 
@@ -89,7 +93,7 @@ public class ProjectController
 
 		logger.debug("showProject() id: {}", id);
 
-		Projects project = projectService.findOne(id);
+		Projects project = projectRepository.findOne(id);
 		if (project == null)
 		{
 			model.addAttribute("css", "danger");
@@ -134,7 +138,7 @@ public class ProjectController
 
 		logger.debug("showUpdateProjectForm() : {}", id);
 
-		Projects project = projectService.findOne(id);
+		Projects project = projectRepository.findOne(id);
 		model.addAttribute("projectForm", project);
 
 		populateDefaultModel(model);
@@ -154,7 +158,7 @@ public class ProjectController
 	@RequestMapping(value = "/projects/{id}/select", method = RequestMethod.GET)
     public String selectProject(@PathVariable("id") Long id, Model model, HttpServletRequest request)
     {
-		Projects project = projectService.findOne(id);
+		Projects project = projectRepository.findOne(id);
 		model.addAttribute("projectForm", project);
 		HttpSession session = request.getSession();
 		session.setAttribute("projectId" , id);   
@@ -171,12 +175,6 @@ public class ProjectController
 		access.put(5, "Public (allow edit)");
 		model.addAttribute("accessList", access);
 
-		//ProjectTypeManager ptm = new ProjectTypeManager();
-		Map<Integer, String> projectTypes = new LinkedHashMap<Integer, String>();
-/*		for (ProjectType projectType : ptm.findAll())
-		{
-			projectTypes.put(projectType.getId(), projectType.getName());
-		}*/
-		model.addAttribute("projectTypeList", projectTypes);
+		model.addAttribute("projectTypeList", projectTypesRepository.findAll());
 	}
 }

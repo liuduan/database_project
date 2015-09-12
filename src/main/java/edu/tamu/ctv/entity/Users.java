@@ -15,6 +15,7 @@ public class Users implements Serializable
 	private Long id;
 	private String login;
 	private String password;
+	private String confirmPassword;
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -134,6 +135,17 @@ public class Users implements Serializable
 	{
 		this.password = password;
 	}
+	
+	public String getConfirmPassword()
+	{
+		return this.confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword)
+	{
+		this.confirmPassword = confirmPassword;
+	}
+	
 
 	public String getFirstname()
 	{
