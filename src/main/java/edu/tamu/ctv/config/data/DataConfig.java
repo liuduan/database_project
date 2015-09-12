@@ -1,4 +1,4 @@
-package edu.tamu.ctv.data;
+package edu.tamu.ctv.config.data;
 
 import java.util.Properties;
 
@@ -48,8 +48,7 @@ public class DataConfig {
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan("edu.tamu.ctv.entity");
         // added for scanning hbm files
-        ClasspathScanningPersistenceUnitPostProcessor classpathScanningPersistenceUnitPostProcessor = new ClasspathScanningPersistenceUnitPostProcessor(
-                "edu.tamu.ctv.entity");
+        ClasspathScanningPersistenceUnitPostProcessor classpathScanningPersistenceUnitPostProcessor = new ClasspathScanningPersistenceUnitPostProcessor("edu.tamu.ctv.entity");
         classpathScanningPersistenceUnitPostProcessor.setMappingFileNamePattern("*.hbm.xml");
         entityManagerFactoryBean.setPersistenceUnitPostProcessors(classpathScanningPersistenceUnitPostProcessor);
 

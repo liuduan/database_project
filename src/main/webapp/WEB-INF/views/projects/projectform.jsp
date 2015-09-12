@@ -9,8 +9,8 @@
 <jsp:include page="../fragments/header.jsp" />
 
  
-<link href="/webtoxpi/resources/external/select2/css/select2.css" rel="stylesheet" />
-<script src="/webtoxpi/resources/external/select2/js/select2.js"></script>
+<link href="/ctvproject/resources/external/select2/css/select2.css" rel="stylesheet" />
+<script src="/ctvproject/resources/external/select2/js/select2.js"></script>
 
 <script type="text/javascript">
 function formatValues(data) {return data.firstname + ' ' + data.lastname;}

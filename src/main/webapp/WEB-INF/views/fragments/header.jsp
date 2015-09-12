@@ -3,13 +3,8 @@
 <head>
 <title>Web ToxPi</title>
 
-<spring:url value="/resources/css/hello.css" var="coreCss" />
-
-<spring:url value="/resources/external/bootstrap/css/bootstrap.min.css"
-	var="bootstrapCss" />
-
-<link href="${bootstrapCss}" rel="stylesheet" />
-<link href="${coreCss}" rel="stylesheet" />
+<link href="/ctvproject/scripts/external/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/ctvproject/scripts/css/hello.css" rel="stylesheet" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
@@ -19,7 +14,6 @@
 <link rel="stylesheet" type="text/css" href="http://cdn3.devexpress.com/jslib/15.1.6/css/dx.dark.css" />
         
 </head>
-
 
 <spring:url value="/" var="urlHome" />
 <spring:url value="/users/add" var="urlAddUser" />

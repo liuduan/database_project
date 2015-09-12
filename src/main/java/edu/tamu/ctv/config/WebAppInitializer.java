@@ -9,7 +9,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import edu.tamu.ctv.web.MvcConfig;
+import edu.tamu.ctv.config.web.MvcConfig;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
@@ -22,8 +22,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		container.addListener(new ContextLoaderListener(dispatcherServlet));
 
 		// Register and map the dispatcher servlet
-		ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(
-				dispatcherServlet));
+		ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherServlet));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
 	}

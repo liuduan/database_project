@@ -16,45 +16,61 @@ import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.UsersRepository;
 
 @Service("userDetailsService")
-public class CustomUserDetailsService implements UserDetailsService, Serializable {
+public class CustomUserDetailsService implements UserDetailsService, Serializable
+{
 
-    @Autowired
-    private UsersRepository usersRepository;
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private UsersRepository usersRepository;
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Users user = usersRepository.findByLogin(username).get(0);
-        if (user == null) {
-            return null;
-        } else {
-            return new UserDetails() {
-                public Collection<? extends GrantedAuthority> getAuthorities() {
-                    return Arrays.asList(new SimpleGrantedAuthority("ADMIN_VASYA"));
-                }
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+	{
+		final Users user = usersRepository.findByLogin(username).get(0);
+		if (user == null)
+		{
+			return null;
+		}
+		else
+		{
+			return new UserDetails()
+			{
+				private static final long serialVersionUID = 1L;
 
-                public String getPassword() {
-                    return user.getPassword();
-                }
+				public Collection<? extends GrantedAuthority> getAuthorities()
+				{
+					return Arrays.asList(new SimpleGrantedAuthority("ADMIN_VASYA"));
+				}
 
-                public String getUsername() {
-                    return user.getFirstname();
-                }
+				public String getPassword()
+				{
+					return user.getPassword();
+				}
 
-                public boolean isAccountNonExpired() {
-                    return true;
-                }
+				public String getUsername()
+				{
+					return user.getFirstname();
+				}
 
-                public boolean isAccountNonLocked() {
-                    return true;
-                }
+				public boolean isAccountNonExpired()
+				{
+					return true;
+				}
 
-                public boolean isCredentialsNonExpired() {
-                    return true;
-                }
+				public boolean isAccountNonLocked()
+				{
+					return true;
+				}
 
-                public boolean isEnabled() {
-                    return true;
-                }
-            };
-        }
-    }
+				public boolean isCredentialsNonExpired()
+				{
+					return true;
+				}
+
+				public boolean isEnabled()
+				{
+					return true;
+				}
+			};
+		}
+	}
 }

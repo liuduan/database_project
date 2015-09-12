@@ -22,7 +22,6 @@
 		</c:if>
 
 		<h1>All Users</h1>
-
 		<table class="table table-striped">
 			<thead>
 				<tr>

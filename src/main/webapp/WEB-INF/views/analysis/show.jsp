@@ -11,8 +11,8 @@
 
         
         
-<spring:url value="/resources/css/analysis.css" var="analysisCss" />
-<spring:url value="/resources/js/analysis.js" var="analysisJs" />
+<spring:url value="/ctvproject/css/analysis.css" var="analysisCss" />
+<spring:url value="/ctvproject/js/analysis.js" var="analysisJs" />
 <script src="${analysisJs}"></script>
 <link href="${analysisCss}" rel="stylesheet" />
 <div class="container">

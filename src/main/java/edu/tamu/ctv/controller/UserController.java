@@ -49,7 +49,6 @@ public class UserController
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showAllUsers(Model model)
 	{
-
 		logger.debug("showAllUsers()");
 		model.addAttribute("users", userRepository.findAll());
 		return "users/list";

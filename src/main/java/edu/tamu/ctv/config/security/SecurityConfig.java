@@ -1,4 +1,4 @@
-package edu.tamu.ctv.security;
+package edu.tamu.ctv.config.security;
 
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.service.InitUserCreateService;

@@ -6,14 +6,8 @@
 	</footer>
 </div>
 
-
-
-<spring:url value="/resources/js/hello.js" var="coreJs" />
-<spring:url value="/resources/external/bootstrap/js/bootstrap.min.js"
-	var="bootstrapJs" />
-
-<script src="${coreJs}"></script>
-<script src="${bootstrapJs}"></script>
+<script src="/ctvproject/scripts/js/hello.js"></script>
+<script src="/ctvproject/scripts/external/bootstrap/js/bootstrap.min.js"></script>
 
 
 
