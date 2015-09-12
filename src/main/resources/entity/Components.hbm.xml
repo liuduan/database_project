@@ -50,11 +50,5 @@
 		from Components as res
 		inner join res.projects p
 		where res.code = :code and p.code = :pcode
-	</query>
-	<query name="findComponentsByProject">
-		select res
-		from Components as res
-		inner join res.projects p
-		where p.id = :id
-	</query>
+	</query>	
 </hibernate-mapping>
