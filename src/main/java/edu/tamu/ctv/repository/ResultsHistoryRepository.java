@@ -2,10 +2,11 @@ package edu.tamu.ctv.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import edu.tamu.ctv.entity.Resultshistory;
 
-@Component
+@Repository
 public interface ResultsHistoryRepository extends CrudRepository<Resultshistory, Long> {
 
 }

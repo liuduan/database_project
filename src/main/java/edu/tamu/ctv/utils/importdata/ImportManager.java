@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.tamu.ctv.entity.*;
 import edu.tamu.ctv.repository.*;
@@ -15,10 +16,13 @@ import edu.tamu.ctv.utils.Auth;
 import edu.tamu.ctv.utils.DateUtil;
 import edu.tamu.ctv.utils.importdata.toxpi.DataTransformation;
 
+@Service("importManager")
 public class ImportManager implements Runnable
 {
 	private final Logger logger = LoggerFactory.getLogger(ImportManager.class);
-	
+
+    @Autowired
+    private ComponentsRepository componentsRepository;
 	@Autowired
 	private ProjectsRepository projectRepository;
 	@Autowired
@@ -32,9 +36,13 @@ public class ImportManager implements Runnable
 	@Autowired
 	private ColumnHeadersRepository columnHeaderRepository;
 	@Autowired
-	private ComponentsRepository componentsRepository;
-	@Autowired
 	private ResultsRepository resultsRepository;
+	@Autowired
+	private UnitsRepository unitsRepository;
+	@Autowired
+	private UsersRepository usersRepository;
+	@Autowired
+	private SequencesRepository sequencesRepository;
 	
 	
 	private String fileLocation = "";
@@ -44,7 +52,7 @@ public class ImportManager implements Runnable
 	public ImportManager()
 	{}
 	
-	public ImportManager(String fileLocation)
+	public void setFile(String fileLocation)
 	{
 		this.fileLocation = fileLocation;
 	}
@@ -71,12 +79,36 @@ public class ImportManager implements Runnable
 		{
 			if (data != null)
 			{
-
 				Map<String, Long> orderMap = new LinkedHashMap<String, Long>();
 				
 				Projects currentProject = projectRepository.findOne(projectId);
 				List<Rowtypes> rowTypes = rowTypesRepository.findByProjectsCode(currentProject.getCode());
+				if (rowTypes.size() == 0)
+				{
+					Rowtypes rt = new Rowtypes(null, currentProject, "Source", "Source", 1, Auth.getCurrentDate(), Auth.getCurrentDate());
+					rowTypes.add(rt);
+					rt = new Rowtypes(null, currentProject, "CASRN", "CASRN", 2, Auth.getCurrentDate(), Auth.getCurrentDate());
+					rowTypes.add(rt);
+					rt = new Rowtypes(null, currentProject, "Chemical", "Chemical", 3, Auth.getCurrentDate(), Auth.getCurrentDate());
+					rowTypes.add(rt);
+					rowTypesRepository.save(rowTypes);
+				}
 				List<Columntypes> columnTypes = columnTypesRepository.findByProjectsCode(currentProject.getCode());
+				if (columnTypes.size() == 0)
+				{
+					Columntypes ct1 = new Columntypes(null, currentProject, "Weight", "Weight", Auth.getCurrentDate(), Auth.getCurrentDate());
+					Columntypes ct2 = new Columntypes(null, currentProject, "Group", "Group", Auth.getCurrentDate(), Auth.getCurrentDate());
+					ct2.setColumntypes(ct1);
+					Columntypes ct3 = new Columntypes(null, currentProject, "Type", "Type", Auth.getCurrentDate(), Auth.getCurrentDate());
+					ct2.setColumntypes(ct2);
+					Columntypes ct4 = new Columntypes(null, currentProject, "Source", "Source", Auth.getCurrentDate(), Auth.getCurrentDate());
+					ct2.setColumntypes(ct3);
+					columnTypes.add(ct1);
+					columnTypes.add(ct2);
+					columnTypes.add(ct3);
+					columnTypes.add(ct4);
+					columnTypesRepository.save(columnTypes);
+				}
 				
 				List<Rowheaders> rowHeaderList = new ArrayList<Rowheaders>();
 				List<Columnheaders> columnHeaderList = new ArrayList<Columnheaders>();
@@ -93,7 +125,10 @@ public class ImportManager implements Runnable
 					}
 					else
 					{
-						orderId = ordersRepository.getNextOrderId();
+						//TODO: !!! CHANGE !!!
+						Sequences seq = new Sequences();
+						sequencesRepository.save(seq);
+						orderId = seq.getId();
 						
 						List<Rowheaders> rowHeaders = new ArrayList<Rowheaders>();
 						for (int rowCounter = 0; rowCounter < rowTypes.size(); rowCounter++)
@@ -110,7 +145,11 @@ public class ImportManager implements Runnable
 							}
 							if (null == currentRowHeader)
 							{
-								currentRowHeader = rowHeaderRepository.findByCodeAndRowTypesProjectsCode(rowCode, currentProject.getCode());
+								List<Rowheaders> list = rowHeaderRepository.findByCodeAndRowTypesProjectsCode(rowCode, currentProject.getCode());
+								if (list.size() > 0)
+								{
+									currentRowHeader = list.get(0);
+								}
 							}
 							if (null == currentRowHeader)
 							{
@@ -148,7 +187,11 @@ public class ImportManager implements Runnable
 						}
 						if (null == currentColumnHeader)
 						{
-							currentColumnHeader = columnHeaderRepository.findByCodeAndHeaderTypesProjectsCode(columnCode, currentProject.getCode());
+							List<Columnheaders> list = columnHeaderRepository.findByCodeAndHeaderTypesProjectsCode(columnCode, currentProject.getCode());
+							if (list.size() > 0)
+							{
+								currentColumnHeader = list.get(0);
+							}
 						}
 						if (null == currentColumnHeader)
 						{
@@ -176,12 +219,12 @@ public class ImportManager implements Runnable
 					}
 					if (null == currentComponent)
 					{
-						currentComponent = new Components(null, currentProject, Auth.getDefaultUnit(), Auth.getCurrentUser(), component.getCode(), component.getCode(), DateUtil.GetCurrentDate());
+						currentComponent = new Components(null, currentProject, unitsRepository.findOne(1l), usersRepository.findOne(1l), component.getCode(), component.getCode(), DateUtil.GetCurrentDate());
 						currentComponent.setColumnheaders(parentColumnHeader);
 						componentList.add(currentComponent);
 					}
 					
-					Results currentResult = new Results(null, currentComponent, currentProject, Auth.getCurrentUser(), orderId, DateUtil.GetCurrentDate());
+					Results currentResult = new Results(null, currentComponent, currentProject, usersRepository.findOne(1l), orderId, DateUtil.GetCurrentDate());
 					currentResult.setStrresult(result.getValue());
 					resultList.add(currentResult);
 					
@@ -190,27 +233,11 @@ public class ImportManager implements Runnable
 				
 				
 				//Save to DB
-				for (Rowheaders header : rowHeaderList)
-				{
-					rowHeaderRepository.save(header);
-				}
-				for (Columnheaders header : columnHeaderList)
-				{
-					columnHeaderRepository.save(header);
-				}
-				for (Components component : componentList)
-				{
-					componentsRepository.save(component);
-				}
-				for (Results result : resultList)
-				{
-					resultsRepository.save(result);
-				}
-				for (Orders order : orderList)
-				{
-					ordersRepository.save(order);
-				}
-
+				rowHeaderRepository.save(rowHeaderList);
+				columnHeaderRepository.save(columnHeaderList);
+				componentsRepository.save(componentList);
+				resultsRepository.save(resultList);
+				ordersRepository.save(orderList);
 			}
 		}
 		catch (Exception e)

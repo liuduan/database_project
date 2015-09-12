@@ -16,6 +16,7 @@
 </head>
 
 <spring:url value="/" var="urlHome" />
+<spring:url value="/upload" var="urlImport" />
 <spring:url value="/users/add" var="urlAddUser" />
 <spring:url value="/projects/add" var="urlAddProject" />
 <spring:url value="/analysis/${projectId}" var="urlDisplayAnalysis" />
@@ -27,7 +28,8 @@
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="${urlAddUser}">Import</a></li>
+				<li class="active"><a href="${urlImport}">Import</a></li>
+				<li class="active"><a href="${urlAddUser}">Add User</a></li>
 				<li class="active"><a href="${urlAddProject}">Export</a></li>
 				<li class="active"><a href="${urlDisplayAnalysis}">Analysis</a></li>
 				<li class="active"><a href="${urlAddProject}">My Page</a></li>			

@@ -1,8 +1,12 @@
 package edu.tamu.ctv.config.security;
 
 import edu.tamu.ctv.repository.ProjectTypesRepository;
+import edu.tamu.ctv.repository.ProjectsRepository;
+import edu.tamu.ctv.repository.UnitsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.service.defaultdata.InitProjectCreateService;
 import edu.tamu.ctv.service.defaultdata.InitProjectTypeCreateService;
+import edu.tamu.ctv.service.defaultdata.InitUnitCreateService;
 import edu.tamu.ctv.service.defaultdata.InitUserCreateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +32,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-        .antMatchers("/**").access("isAuthenticated()")
+        //TODO: Upload file temporary
+        //http.csrf().disable();
+        
+    	//http
+    	//.csrf().disable()
+    	//.authorizeRequests()
+        //.antMatchers("/**").access("isAuthenticated()")
 /*        .antMatchers("/results/**").access("isAuthenticated()")
         .antMatchers("/analysis/**").access("isAuthenticated()")*/
-        .and().formLogin();
+        //.and().formLogin();
+        
+
     }
 
     @Autowired
@@ -45,5 +56,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public InitProjectTypeCreateService initProjectTypesCreateService(ProjectTypesRepository projectTypesRepository) {
         return new InitProjectTypeCreateService(projectTypesRepository);
+    }
+    
+    @Autowired
+    @Bean
+    public InitProjectCreateService initProjectsCreateService(ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository) {
+        return new InitProjectCreateService(projectsRepository, usersRepository, projectTypesRepository);
+    }
+    
+    @Autowired
+    @Bean
+    public InitUnitCreateService initUnitsCreateService(UnitsRepository unitRepository, UsersRepository usersRepository) {
+        return new InitUnitCreateService(unitRepository, usersRepository);
     }
 }

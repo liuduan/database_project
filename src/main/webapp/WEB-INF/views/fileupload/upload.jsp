@@ -4,10 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-	
 <title>Upload File Request Page</title>
 </head>
 <body>
@@ -15,7 +11,7 @@
         File to upload: <input type="file" name="file"><br /> 
         Name: <input type="text" name="name"><br /> <br /> 
         <input type="submit" value="Upload"> Press here to upload the file!
-  		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </body>
 </html>

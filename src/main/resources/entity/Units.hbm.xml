@@ -11,7 +11,7 @@
 			</generator>
 		</id>
         <many-to-one name="units" class="edu.tamu.ctv.entity.Units" fetch="select">
-            <column name="relatedunit" />
+            <column name="parent_id" />
         </many-to-one>
         <many-to-one name="users" class="edu.tamu.ctv.entity.Users" fetch="select">
             <column name="updatedby" not-null="true" />
@@ -23,7 +23,7 @@
             <column name="name" />
         </property>
         <property name="volumeof" type="big_decimal">
-            <column name="volumeof" precision="131089" scale="0" />
+            <column name="volumeof" precision="7" scale="0" />
         </property>
         <property name="updateddt" type="timestamp">
             <column name="updateddt" length="29" not-null="true" />

@@ -11,7 +11,6 @@ import java.util.Set;
  */
 public class Units implements java.io.Serializable
 {
-
 	private Long id;
 	private Units units;
 	private Users users;

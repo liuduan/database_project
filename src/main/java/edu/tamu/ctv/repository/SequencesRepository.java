@@ -1,12 +1,11 @@
 package edu.tamu.ctv.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import edu.tamu.ctv.entity.Notes;
+import edu.tamu.ctv.entity.Sequences;
 
 @Repository
-public interface NotesRepository extends CrudRepository<Notes, Long> {
-
+public interface SequencesRepository extends CrudRepository<Sequences, Long>
+{
 }

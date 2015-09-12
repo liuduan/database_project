@@ -18,8 +18,8 @@ import edu.tamu.ctv.repository.UsersRepository;
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService, Serializable
 {
-
 	private static final long serialVersionUID = 1L;
+	
 	@Autowired
 	private UsersRepository usersRepository;
 

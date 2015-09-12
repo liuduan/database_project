@@ -2,10 +2,11 @@ package edu.tamu.ctv.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import edu.tamu.ctv.entity.Userroles;
 
-@Component
+@Repository
 public interface UserRolesRepository extends CrudRepository<Userroles, Long> {
 
 }

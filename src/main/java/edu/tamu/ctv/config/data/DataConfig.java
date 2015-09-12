@@ -19,6 +19,14 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import edu.tamu.ctv.repository.ProjectTypesRepository;
+import edu.tamu.ctv.repository.ProjectsRepository;
+import edu.tamu.ctv.repository.UnitsRepository;
+import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.service.defaultdata.InitProjectCreateService;
+import edu.tamu.ctv.service.defaultdata.InitProjectTypeCreateService;
+import edu.tamu.ctv.service.defaultdata.InitUnitCreateService;
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "edu.tamu.ctv.repository" })

@@ -6,13 +6,17 @@ import java.io.FileOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.tamu.ctv.repository.ComponentsRepository;
+import edu.tamu.ctv.service.ComponentService;
 import edu.tamu.ctv.utils.importdata.ImportManager;
 
 @Controller
@@ -20,6 +24,16 @@ public class FileUploadController
 {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
+	@Autowired
+	private ImportManager importManager;
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.GET)
+	public String upload(Model model)
+	{
+		logger.debug("upload()");
+		return "fileupload/upload";
+	}
+	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file)
 	{
@@ -99,8 +113,9 @@ public class FileUploadController
 	{
 		try
 		{
-			Runnable func = new ImportManager(serverFile.getPath());
-			Thread thread = new Thread(func);
+			importManager.setFile(serverFile.getPath());
+			//Runnable func = new ImportManager();
+			Thread thread = new Thread(importManager);
 			thread.start();
 		}
 		catch (Exception e)
