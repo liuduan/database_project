@@ -1,17 +1,53 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Upload File Request Page</title>
-</head>
+<%@ page session="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<jsp:include page="../fragments/header.jsp" />
+
+
 <body>
-    <form method="POST" action="uploadFile" enctype="multipart/form-data">
-        File to upload: <input type="file" name="file"><br /> 
-        Name: <input type="text" name="name"><br /> <br /> 
-        <input type="submit" value="Upload"> Press here to upload the file!
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="well well-sm">
+					<form method="POST" action="uploadFile"	enctype="multipart/form-data">
+						<fieldset>
+							<input	type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">File to upload:</label>
+								<div class="col-sm-10">
+									<input type="file" name="file" class="form-control"  placeholder="File to upload" />
+								</div>
+                        	</div>
+                        	<div class="form-group">
+								<label class="col-sm-2 control-label">File Name:</label>
+								<div class="col-sm-10">
+									<input type="text" name="file" class="form-control"  placeholder="File Name" />
+								</div>
+                        	</div>
+                        	<br/>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<input type="submit" value="Upload"	class="btn-lg btn-primary pull-right">
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 </body>
+<jsp:include page="../fragments/footer.jsp" />
 </html>

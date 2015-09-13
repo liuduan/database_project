@@ -106,18 +106,30 @@
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Notes" />
         </set>
-
-        <set name="projectreviewerses" table="projectreviewers" cascade="all">
-            <key column="user_id"/>
-            <many-to-many column="project_id" class="edu.tamu.ctv.entity.Projects" />
+        
+        <set name="projectmanagerses" table="projectmanagers" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id"  />
+            </key>
+            <many-to-many class="edu.tamu.ctv.entity.Users">
+                <column name="user_id" />
+            </many-to-many>
         </set>
-         <set name="projectmanagerses" table="projectmanagers" cascade="all">
-            <key column="user_id"/>
-            <many-to-many column="project_id" class="edu.tamu.ctv.entity.Projects" />
+        <set name="projectreviewerses" table="projectreviewers" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id"  />
+            </key>
+            <many-to-many class="edu.tamu.ctv.entity.Users">
+                <column name="user_id" />
+            </many-to-many>
         </set>
-        <set name="projectmemberses" table="projectmembers" cascade="all">
-            <key column="user_id"/>
-            <many-to-many column="project_id" class="edu.tamu.ctv.entity.Projects" />
+        <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="project_id"  />
+            </key>
+            <many-to-many class="edu.tamu.ctv.entity.Users">
+                <column name="user_id" />
+            </many-to-many>
         </set> 
         
         <set name="unitses" table="units" inverse="true" lazy="true" fetch="select">

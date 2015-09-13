@@ -44,17 +44,29 @@
             <column name="lastvisitdt" length="29" not-null="true" default="current_date"/>
         </property>
         
-        <set name="projectreviewerses" table="projectreviewers" inverse="true">
-            <key column="project_id"/>
-            <many-to-many column="user_id" class="edu.tamu.ctv.entity.Users" />
+        <set name="projectmanagerses" table="projectmanagers" inverse="false" lazy="true" fetch="select" cascade="all">
+            <key>
+            	<column name="project_id" />
+            </key>
+            <many-to-many class="edu.tamu.ctv.entity.Users">
+                <column name="user_id"/>
+            </many-to-many>
         </set>
-         <set name="projectmanagerses" table="projectmanagers" inverse="true">
-            <key column="project_id"/>
-            <many-to-many column="user_id" class="edu.tamu.ctv.entity.Users" />
+        <set name="projectreviewerses" table="projectreviewers" inverse="false" lazy="true" fetch="select" cascade="all">
+            <key>
+            	<column name="project_id" />
+            </key>
+            <many-to-many class="edu.tamu.ctv.entity.Users">
+                <column name="user_id"/>
+            </many-to-many>
         </set>
-        <set name="projectmemberses" table="projectmembers" inverse="true">
-            <key column="project_id"/>
-            <many-to-many column="user_id" class="edu.tamu.ctv.entity.Users" />
+        <set name="projectmemberses" table="projectmembers" inverse="false" lazy="true" fetch="select" cascade="all">
+            <key>
+            	<column name="project_id" />
+            </key>
+            <many-to-many class="edu.tamu.ctv.entity.Users">
+                <column name="user_id"/>
+            </many-to-many>
         </set> 
 
         <set name="rowtypeses" table="rowtypes" inverse="true" lazy="true" fetch="select" cascade="all">

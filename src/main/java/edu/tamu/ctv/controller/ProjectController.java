@@ -1,15 +1,20 @@
 package edu.tamu.ctv.controller;
 
 import java.beans.PropertyEditorSupport;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +37,7 @@ import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.utils.Auth;
+import scala.collection.immutable.HashMap;
 
 @Controller
 public class ProjectController
@@ -77,10 +83,48 @@ public class ProjectController
 				redirectAttributes.addFlashAttribute("msg", "Project updated successfully!");
 			}
 
+			Set<Users> projectmanagers = new HashSet<Users>();
+			if (project.getProjectmanagerses() != null)
+			{
+				projectmanagers.addAll(project.getProjectmanagerses());
+				project.getProjectmanagerses().clear();
+			}
+			Set<Users> projectreviewers = new HashSet<Users>();
+			if (project.getProjectreviewerses() != null)
+			{
+				projectreviewers.addAll(project.getProjectreviewerses());
+				project.getProjectreviewerses().clear();
+			}
+			Set<Users> projectmembers = new HashSet<Users>();
+			if (project.getProjectmemberses() != null)
+			{
+				projectmembers.addAll(project.getProjectmemberses());
+				project.getProjectmemberses().clear();
+			}
+			
 			project.setUsers(userRepository.findOne(1l));
 			project.setRegistereddt(Auth.getCurrentDate());
 			project.setLastvisitdt(Auth.getCurrentDate());
+
 			projectRepository.save(project);
+			
+			if (projectmanagers.size() > 0)
+			{
+				project.setProjectmanagerses(projectmanagers);
+				projectRepository.save(project);
+			}
+			if (projectreviewers.size() > 0)
+			{
+				project.setProjectreviewerses(projectreviewers);
+				projectRepository.save(project);
+			}
+			if (projectmembers.size() > 0)
+			{
+				project.setProjectmemberses(projectmembers);
+				projectRepository.save(project);
+			}
+
+			
 
 			return "redirect:/projects/" + project.getId();
 		}
@@ -212,12 +256,6 @@ public class ProjectController
 			{
 				if (element instanceof String)
 				{
-
-					Projectmanagers pm = projectManagersRepository.findOne(Long.parseLong(element.toString()));
-					if (null == pm)
-					{
-												
-					}
 					Users user = userRepository.findOne(Long.parseLong(element.toString()));
 					return user;
 				}

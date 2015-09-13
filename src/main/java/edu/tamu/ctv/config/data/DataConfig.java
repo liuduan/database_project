@@ -19,14 +19,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import edu.tamu.ctv.repository.ProjectTypesRepository;
-import edu.tamu.ctv.repository.ProjectsRepository;
-import edu.tamu.ctv.repository.UnitsRepository;
-import edu.tamu.ctv.repository.UsersRepository;
-import edu.tamu.ctv.service.defaultdata.InitProjectCreateService;
-import edu.tamu.ctv.service.defaultdata.InitProjectTypeCreateService;
-import edu.tamu.ctv.service.defaultdata.InitUnitCreateService;
-
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "edu.tamu.ctv.repository" })
@@ -67,7 +59,8 @@ public class DataConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         //TODO: Check enable_lazy_load_no_trans option
         properties.put("hibernate.enable_lazy_load_no_trans", env.getProperty("hibernate.enable_lazy_load_no_trans"));
-
+        properties.put("hibernate.event.merge.entity_copy_observer", env.getProperty("hibernate.event.merge.entity_copy_observer"));
+        
         entityManagerFactoryBean.setJpaProperties(properties);
 
         return entityManagerFactoryBean;

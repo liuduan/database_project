@@ -6,9 +6,20 @@
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
 
-<body>
+<style>
+    .header {
+        color: #36A0FF;
+        font-size: 27px;
+        padding: 10px;
+    }
 
-<div class="container">
+    .bigicon {
+        font-size: 35px;
+        color: #36A0FF;
+    }
+</style>
+
+<body>
 
 <div class="container">
     <div class="row">
@@ -63,23 +74,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<style>
-    .header {
-        color: #36A0FF;
-        font-size: 27px;
-        padding: 10px;
-    }
-
-    .bigicon {
-        font-size: 35px;
-        color: #36A0FF;
-    }
-</style>
-
-<!-- Contact Form - END -->
-
 </div>
 
 </body>

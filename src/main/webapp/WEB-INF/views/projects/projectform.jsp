@@ -7,6 +7,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <jsp:include page="../fragments/header.jsp" />
 
 
@@ -14,11 +15,7 @@
 <script src="/ctvproject/scripts/external/select2/js/select2.js"></script>
 <script src="/ctvproject/scripts/external/ckeditor/ckeditor.js"></script>
 
-<script type="text/javascript">
-	function formatValues(data) {
-		return data.firstname + ' ' + data.lastname;
-	}
-</script>
+<body>
 
 <div class="container">
 
@@ -120,44 +117,15 @@
 		<script type="text/javascript">CKEDITOR.replace('ckeditornotes');</script>
 
 
-
-		<spring:bind path="projectmanagerses">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Project Managers</label>
-				<div class="col-sm-10">
-                    <form:select path="projectmanagerses" items="${usersCache}" multiple="true" itemValue="id" itemLabel="firstname" class="form-control input-sm" />
-				</div>
-				<div class="col-sm-5"></div>
-			</div>
-		</spring:bind>
-		<spring:bind path="projectreviewerses">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Project Managers</label>
-				<div class="col-sm-10">
-                    <form:select path="projectreviewerses" items="${usersCache}" multiple="true" itemValue="id" itemLabel="firstname" class="form-control input-sm" />
-				</div>
-				<div class="col-sm-5"></div>
-			</div>
-		</spring:bind>
-		<spring:bind path="projectmemberses">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Project Managers</label>
-				<div class="col-sm-10">
-                    <form:select path="projectmemberses" items="${usersCache}" multiple="true" itemValue="id" itemLabel="firstname" class="form-control input-sm" />
-				</div>
-				<div class="col-sm-5"></div>
-			</div>
-		</spring:bind>
-		
-<%-- 		<spring:bind path="projectmanagerses">
+ 		<spring:bind path="projectmanagerses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Managers</label>
 				<div class="col-sm-10">
 					<form:select multiple="true" path="projectmanagerses" class="form-control">
 						<c:forEach items="${usersCache}" var="user">
 			                <c:set var="isSelected" value="false" />
-			                <c:forEach items="${projectmanagerses}" var="pr">
-			                    <c:if test="${pr.getUsers().getId()==user.id}">
+			                <c:forEach items="${projectForm.projectmanagerses}" var="pr">
+			                    <c:if test="${pr.id eq user.id}">
 			                        <c:set var="isSelected" value="true" />
 			                    </c:if>
 			                </c:forEach>
@@ -183,8 +151,8 @@
 					<form:select multiple="true" path="projectreviewerses" class="form-control">
 						<c:forEach items="${usersCache}" var="user">
 			                <c:set var="isSelected" value="false" />
-			                <c:forEach items="${projectreviewerses}" var="pr">
-			                    <c:if test="${pr.getUsers().getId()==user.id}">
+			                <c:forEach items="${projectForm.projectreviewerses}" var="pr">
+			                    <c:if test="${pr.getId()==user.id}">
 			                        <c:set var="isSelected" value="true" />
 			                    </c:if>
 			                </c:forEach>
@@ -210,8 +178,8 @@
 					<form:select multiple="true" path="projectmemberses" class="form-control">
 						<c:forEach items="${usersCache}" var="user">
 			                <c:set var="isSelected" value="false" />
-			                <c:forEach items="${projectmemberses}" var="pm">
-			                    <c:if test="${pm.getUsers().getId()==user.id}">
+			                <c:forEach items="${projectForm.projectmemberses}" var="pm">
+			                    <c:if test="${pm.getId()==user.id}">
 			                        <c:set var="isSelected" value="true" />
 			                    </c:if>
 			                </c:forEach>
@@ -228,7 +196,7 @@
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
-		</spring:bind>--%>
+		</spring:bind>
 
 		<script type="text/javascript">
 			function select2function(selectObject, desc) {
@@ -261,6 +229,6 @@
 
 </div>
 
-<jsp:include page="../fragments/footer.jsp" />
 </body>
+<jsp:include page="../fragments/footer.jsp" />
 </html>
