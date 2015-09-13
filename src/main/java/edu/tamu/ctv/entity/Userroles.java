@@ -17,7 +17,6 @@ public class Userroles implements java.io.Serializable
 	private String notes;
 	private Date registereddt;
 	private Date lastvisitdt;
-	private Set projectmemberses = new HashSet(0);
 
 	public Userroles()
 	{
@@ -32,7 +31,7 @@ public class Userroles implements java.io.Serializable
 		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Userroles(Long id, String code, String name, String notes, Date registereddt, Date lastvisitdt, Set projectmemberses)
+	public Userroles(Long id, String code, String name, String notes, Date registereddt, Date lastvisitdt)
 	{
 		this.id = id;
 		this.code = code;
@@ -40,7 +39,6 @@ public class Userroles implements java.io.Serializable
 		this.notes = notes;
 		this.registereddt = registereddt;
 		this.lastvisitdt = lastvisitdt;
-		this.projectmemberses = projectmemberses;
 	}
 
 	public Long getId()
@@ -102,15 +100,4 @@ public class Userroles implements java.io.Serializable
 	{
 		this.lastvisitdt = lastvisitdt;
 	}
-
-	public Set getProjectmemberses()
-	{
-		return this.projectmemberses;
-	}
-
-	public void setProjectmemberses(Set projectmemberses)
-	{
-		this.projectmemberses = projectmemberses;
-	}
-
 }

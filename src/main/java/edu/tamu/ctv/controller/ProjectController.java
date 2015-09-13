@@ -4,15 +4,12 @@ import java.beans.PropertyEditorSupport;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +46,7 @@ public class ProjectController
 
 	@Autowired
 	private UsersRepository userRepository;
-
+	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String showAllProjects(Model model)
 	{
@@ -178,7 +175,7 @@ public class ProjectController
 	{
 		Map<Integer, String> access = new LinkedHashMap<Integer, String>();
 		access.put(0, "Private");
-		access.put(1, "Selected");
+		access.put(1, "Protected");
 		access.put(2, "For registered users (readonly)");
 		access.put(3, "For registered users (allow edit)");
 		access.put(4, "Public (readonly)");
@@ -209,12 +206,18 @@ public class ProjectController
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception
 	{
-		binder.registerCustomEditor(Set.class, "projectmanagerses", new CustomCollectionEditor(Set.class)
+/*		binder.registerCustomEditor(Set.class, "projectmanagerses", new CustomCollectionEditor(Set.class)
 		{
 			protected Object convertElement(Object element)
 			{
 				if (element instanceof String)
 				{
+
+					Projectmanagers pm = projectManagersRepository.findOne(Long.parseLong(element.toString()));
+					if (null == pm)
+					{
+												
+					}
 					Users user = userRepository.findOne(Long.parseLong(element.toString()));
 					return user;
 				}
@@ -246,7 +249,7 @@ public class ProjectController
 				}
 				return null;
 			}
-		});
+		});*/
 
 		binder.registerCustomEditor(Projecttypes.class, "projecttypes", new PropertyEditorSupport()
 		{

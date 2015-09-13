@@ -25,11 +25,5 @@
         <property name="lastvisitdt" type="timestamp">
             <column name="lastvisitdt" length="29" not-null="true" />
         </property>
-        <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="userrole_id" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Projectmembers" />
-        </set>
     </class>
 </hibernate-mapping>

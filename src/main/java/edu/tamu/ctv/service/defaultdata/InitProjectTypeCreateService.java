@@ -18,15 +18,15 @@ public class InitProjectTypeCreateService
 	private void createDefault(ProjectTypesRepository projectTypesRepository)
 	{
 		Projecttypes projectTypes = new Projecttypes();
-		projectTypes.setCode("code1");
-		projectTypes.setName("name1");
+		projectTypes.setCode("INVIVO");
+		projectTypes.setName("In Vivo");
 		projectTypes.setRegistereddt(Auth.getCurrentDate());
 		projectTypes.setLastvisitdt(Auth.getCurrentDate());
 		projectTypesRepository.save(projectTypes);
 		
 		projectTypes = new Projecttypes();
-		projectTypes.setCode("code2");
-		projectTypes.setName("name2");
+		projectTypes.setCode("INVITRO");
+		projectTypes.setName("In Vitro");
 		projectTypes.setRegistereddt(Auth.getCurrentDate());
 		projectTypes.setLastvisitdt(Auth.getCurrentDate());
 		projectTypesRepository.save(projectTypes);

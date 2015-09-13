@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" type="text/css" href="http://cdn3.devexpress.com/jslib/15.1.6/css/dx.common.css" />
 <link rel="stylesheet" type="text/css" href="http://cdn3.devexpress.com/jslib/15.1.6/css/dx.dark.css" />
-        
+<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/font-awesome/css/font-awesome.min.css" />   
 </head>
 
 <spring:url value="/" var="urlHome" />
@@ -25,6 +25,7 @@
 
 <spring:url value="/analysis/${projectId}" var="urlDisplayAnalysis" />
 <spring:url value="/profile/1" var="urlProfile" />
+<spring:url value="/contact" var="urlContact" />
 
 <nav class="navbar navbar-inverse ">
 	<div class="container">
@@ -41,7 +42,7 @@
 				
 				<li class="active"><a href="${urlDisplayAnalysis}">Analysis</a></li>
 				
-				<li class="active"><a href="${urlProfile}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a></li>	
+				<li class="active"><a href="${urlContact}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a></li>	
 				<li class="active"><a href="${urlProfile}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Page</a></li>			
 				<li class="not-active"><a href="#" id="proj">         selected project: ${projectId}	</a></li>	
 			</ul>

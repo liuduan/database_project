@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="edu.tamu.ctv.entity.Users" table="users" schema="public" optimistic-lock="version">
 		<id name="id" type="long">
-			<column name="id" />
+			<column name="user_id" />
 			<generator class="sequence">
 				<param name="sequence">users_id_seq</param>
 			</generator>
@@ -100,30 +100,26 @@
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Resultshistory" />
         </set>
-        <set name="viewtemplatesesForUpdatedby" table="viewtemplates" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="updatedby" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Viewtemplates" />
-        </set>
-        <set name="viewtemplatesesForUserId" table="viewtemplates" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="user_id" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Viewtemplates" />
-        </set>
         <set name="noteses" table="notes" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="updatedby" not-null="true" />
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Notes" />
         </set>
-        <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="user_id" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Projectmembers" />
+
+        <set name="projectreviewerses" table="projectreviewers" cascade="all">
+            <key column="user_id"/>
+            <many-to-many column="project_id" class="edu.tamu.ctv.entity.Projects" />
         </set>
+         <set name="projectmanagerses" table="projectmanagers" cascade="all">
+            <key column="user_id"/>
+            <many-to-many column="project_id" class="edu.tamu.ctv.entity.Projects" />
+        </set>
+        <set name="projectmemberses" table="projectmembers" cascade="all">
+            <key column="user_id"/>
+            <many-to-many column="project_id" class="edu.tamu.ctv.entity.Projects" />
+        </set> 
+        
         <set name="unitses" table="units" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="updatedby" not-null="true" />

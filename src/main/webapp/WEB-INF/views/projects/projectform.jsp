@@ -73,12 +73,25 @@
 				<div class="col-sm-5"></div>
 			</div>
 		</spring:bind>
+		
+		<spring:bind path="status">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Status</label>
+				<div class="col-sm-5">
+					<form:select path="status" class="form-control">
+						<form:options items="${accessList}" />
+					</form:select>
+					<form:errors path="status" class="control-label" />
+				</div>
+				<div class="col-sm-5"></div>
+			</div>
+		</spring:bind>
 
    		<spring:bind path="projecttypes">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Type</label>
 				<div class="col-sm-5">
-					<form:select path="projecttypes">
+					<form:select path="projecttypes" class="form-control">
 						<c:forEach items="${projectTypesCache}" var="pt">
 			                <c:choose>
 			                    <c:when test="${projecttypes.getId()==pt.id}">
@@ -106,11 +119,41 @@
 		</spring:bind>
 		<script type="text/javascript">CKEDITOR.replace('ckeditornotes');</script>
 
+
+
 		<spring:bind path="projectmanagerses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Managers</label>
 				<div class="col-sm-10">
-					<form:select multiple="true" path="projectmanagerses">
+                    <form:select path="projectmanagerses" items="${usersCache}" multiple="true" itemValue="id" itemLabel="firstname" class="form-control input-sm" />
+				</div>
+				<div class="col-sm-5"></div>
+			</div>
+		</spring:bind>
+		<spring:bind path="projectreviewerses">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Project Managers</label>
+				<div class="col-sm-10">
+                    <form:select path="projectreviewerses" items="${usersCache}" multiple="true" itemValue="id" itemLabel="firstname" class="form-control input-sm" />
+				</div>
+				<div class="col-sm-5"></div>
+			</div>
+		</spring:bind>
+		<spring:bind path="projectmemberses">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Project Managers</label>
+				<div class="col-sm-10">
+                    <form:select path="projectmemberses" items="${usersCache}" multiple="true" itemValue="id" itemLabel="firstname" class="form-control input-sm" />
+				</div>
+				<div class="col-sm-5"></div>
+			</div>
+		</spring:bind>
+		
+<%-- 		<spring:bind path="projectmanagerses">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Project Managers</label>
+				<div class="col-sm-10">
+					<form:select multiple="true" path="projectmanagerses" class="form-control">
 						<c:forEach items="${usersCache}" var="user">
 			                <c:set var="isSelected" value="false" />
 			                <c:forEach items="${projectmanagerses}" var="pr">
@@ -131,13 +174,13 @@
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
-		</spring:bind>
-		
+		</spring:bind> 
+
 		<spring:bind path="projectreviewerses">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Reviewers</label>
 				<div class="col-sm-10">
-					<form:select multiple="true" path="projectreviewerses">
+					<form:select multiple="true" path="projectreviewerses" class="form-control">
 						<c:forEach items="${usersCache}" var="user">
 			                <c:set var="isSelected" value="false" />
 			                <c:forEach items="${projectreviewerses}" var="pr">
@@ -164,7 +207,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Project Members</label>
 				<div class="col-sm-10">
-					<form:select multiple="true" path="projectmemberses">
+					<form:select multiple="true" path="projectmemberses" class="form-control">
 						<c:forEach items="${usersCache}" var="user">
 			                <c:set var="isSelected" value="false" />
 			                <c:forEach items="${projectmemberses}" var="pm">
@@ -185,7 +228,7 @@
 				</div>
 				<div class="col-sm-5"></div>
 			</div>
-		</spring:bind>
+		</spring:bind>--%>
 
 		<script type="text/javascript">
 			function select2function(selectObject, desc) {

@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="edu.tamu.ctv.entity.Projects" table="projects" schema="public" optimistic-lock="version">
 		<id name="id" type="long">
-			<column name="id" />
+			<column name="project_id" />
 			<generator class="sequence">
 				<param name="sequence">projects_id_seq</param>
 			</generator>
@@ -43,37 +43,33 @@
         <property name="lastvisitdt" type="timestamp">
             <column name="lastvisitdt" length="29" not-null="true" default="current_date"/>
         </property>
-        <set name="projectreviewerses" table="projectreviewers" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="project_id" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Projectreviewers" />
+        
+        <set name="projectreviewerses" table="projectreviewers" inverse="true">
+            <key column="project_id"/>
+            <many-to-many column="user_id" class="edu.tamu.ctv.entity.Users" />
         </set>
-        <set name="projectmanagerses" table="projectmanagers" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="project_id" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Projectmanagers" />
+         <set name="projectmanagerses" table="projectmanagers" inverse="true">
+            <key column="project_id"/>
+            <many-to-many column="user_id" class="edu.tamu.ctv.entity.Users" />
         </set>
-        <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="project_id" not-null="true" />
-            </key>
-            <one-to-many class="edu.tamu.ctv.entity.Projectmembers" />
-        </set>
-        <set name="rowtypeses" table="rowtypes" inverse="true" lazy="true" fetch="select">
+        <set name="projectmemberses" table="projectmembers" inverse="true">
+            <key column="project_id"/>
+            <many-to-many column="user_id" class="edu.tamu.ctv.entity.Users" />
+        </set> 
+
+        <set name="rowtypeses" table="rowtypes" inverse="true" lazy="true" fetch="select" cascade="all">
             <key>
                 <column name="project_id" not-null="true" />
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Rowtypes" />
         </set>
-        <set name="componentses" table="components" inverse="true" lazy="true" fetch="select">
+        <set name="componentses" table="components" inverse="true" lazy="true" fetch="select" cascade="all">
             <key>
                 <column name="project_id" not-null="true" />
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Components" />
         </set>
-        <set name="columntypeses" table="columntypes" inverse="true" lazy="true" fetch="select">
+        <set name="columntypeses" table="columntypes" inverse="true" lazy="true" fetch="select" cascade="all">
             <key>
                 <column name="project_id" not-null="true" />
             </key>

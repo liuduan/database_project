@@ -11,6 +11,8 @@ import java.util.Set;
  */
 public class Units implements java.io.Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private Units units;
 	private Users users;
@@ -18,8 +20,8 @@ public class Units implements java.io.Serializable
 	private String name;
 	private BigDecimal volumeof;
 	private Date updateddt;
-	private Set unitses = new HashSet(0);
-	private Set componentses = new HashSet(0);
+	private Set<Units> unitses = new HashSet<Units>(0);
+	private Set<Components> componentses = new HashSet<Components>(0);
 
 	public Units()
 	{
@@ -33,7 +35,7 @@ public class Units implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Units(Long id, Units units, Users users, String code, String name, BigDecimal volumeof, Date updateddt, Set unitses, Set componentses)
+	public Units(Long id, Units units, Users users, String code, String name, BigDecimal volumeof, Date updateddt, Set<Units> unitses, Set<Components> componentses)
 	{
 		this.id = id;
 		this.units = units;
@@ -48,7 +50,7 @@ public class Units implements java.io.Serializable
 
 	public Long getId()
 	{
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id)
@@ -58,7 +60,7 @@ public class Units implements java.io.Serializable
 
 	public Units getUnits()
 	{
-		return this.units;
+		return units;
 	}
 
 	public void setUnits(Units units)
@@ -68,7 +70,7 @@ public class Units implements java.io.Serializable
 
 	public Users getUsers()
 	{
-		return this.users;
+		return users;
 	}
 
 	public void setUsers(Users users)
@@ -78,7 +80,7 @@ public class Units implements java.io.Serializable
 
 	public String getCode()
 	{
-		return this.code;
+		return code;
 	}
 
 	public void setCode(String code)
@@ -88,7 +90,7 @@ public class Units implements java.io.Serializable
 
 	public String getName()
 	{
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name)
@@ -98,7 +100,7 @@ public class Units implements java.io.Serializable
 
 	public BigDecimal getVolumeof()
 	{
-		return this.volumeof;
+		return volumeof;
 	}
 
 	public void setVolumeof(BigDecimal volumeof)
@@ -108,7 +110,7 @@ public class Units implements java.io.Serializable
 
 	public Date getUpdateddt()
 	{
-		return this.updateddt;
+		return updateddt;
 	}
 
 	public void setUpdateddt(Date updateddt)
@@ -116,24 +118,25 @@ public class Units implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Set getUnitses()
+	public Set<Units> getUnitses()
 	{
-		return this.unitses;
+		return unitses;
 	}
 
-	public void setUnitses(Set unitses)
+	public void setUnitses(Set<Units> unitses)
 	{
 		this.unitses = unitses;
 	}
 
-	public Set getComponentses()
+	public Set<Components> getComponentses()
 	{
-		return this.componentses;
+		return componentses;
 	}
 
-	public void setComponentses(Set componentses)
+	public void setComponentses(Set<Components> componentses)
 	{
 		this.componentses = componentses;
 	}
+
 
 }

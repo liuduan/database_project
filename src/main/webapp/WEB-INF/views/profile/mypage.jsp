@@ -223,48 +223,6 @@
 											</td>
 										</tr>
 									</c:forEach>
-<!-- 										<tr>
-											<td>1</td>
-											<td><img height="80" src="img/avatar/avatar.jpg"
-												alt="example image"></td>
-											<td>Zoe Corp</td>
-											<td class="center">2010/02/03</td>
-											<td class="center"><span class="label label-success">Finish</span>
-											</td>
-											<td class="center"><strong>$ 250</strong></td>
-											<td class="menu-action rounded-btn"><a
-												class="btn menu-icon vd_bg-green" data-placement="top"
-												data-toggle="tooltip" data-original-title="view"> <i
-													class="fa fa-eye"></i>
-											</a> <a class="btn menu-icon vd_bg-yellow" data-placement="top"
-												data-toggle="tooltip" data-original-title="edit"> <i
-													class="fa fa-pencil"></i>
-											</a> <a class="btn menu-icon vd_bg-red" data-placement="top"
-												data-toggle="tooltip" data-original-title="delete"> <i
-													class="fa fa-times"></i>
-											</a></td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td><img height="80" src="img/avatar/avatar-2.jpg"
-												alt="example image"></td>
-											<td>Zoe Corp</td>
-											<td class="center">2010/02/03</td>
-											<td class="center"><span class="label label-success">Finish</span>
-											</td>
-											<td class="center"><strong>$ 250</strong></td>
-											<td class="menu-action rounded-btn"><a
-												class="btn menu-icon vd_bg-green" data-placement="top"
-												data-toggle="tooltip" data-original-title="view"> <i
-													class="fa fa-eye"></i>
-											</a> <a class="btn menu-icon vd_bg-yellow" data-placement="top"
-												data-toggle="tooltip" data-original-title="edit"> <i
-													class="fa fa-pencil"></i>
-											</a> <a class="btn menu-icon vd_bg-red" data-placement="top"
-												data-toggle="tooltip" data-original-title="delete"> <i
-													class="fa fa-times"></i>
-											</a></td>
-										</tr> -->
 									</tbody>
 								</table>
 								<div class=""></div>
@@ -275,16 +233,6 @@
 				</div>
 			</div>
 		</div>
-
-
-
-
-
-
-
-
-
-
 	</div>
 
 	<jsp:include page="../fragments/footer.jsp" />

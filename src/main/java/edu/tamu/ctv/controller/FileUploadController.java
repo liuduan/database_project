@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.tamu.ctv.repository.ComponentsRepository;
-import edu.tamu.ctv.service.ComponentService;
 import edu.tamu.ctv.utils.importdata.ImportManager;
 
 @Controller
