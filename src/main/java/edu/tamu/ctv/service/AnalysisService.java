@@ -84,7 +84,7 @@ public class AnalysisService
 			}
 			arrmColumnHeaders.add(arrmColumnHeader);
 			
-			for (int i = 0; i < levelCount; i++)
+			for (int i = 0; i < levelCount - 1; i++)
 			{
 				arrmColumnHeader  = new ArrayList<Columnheaders>();
 				for(Columnheaders Columnheader : arrmColumnHeaders.get(i)) 
