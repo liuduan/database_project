@@ -18,6 +18,9 @@ public class Projects implements java.io.Serializable
 	private String name;
 	private int access;
 	private String notes;
+	private Date starts;
+	private Date ends;
+	private Long status;
 	private Date registereddt;
 	private Date lastvisitdt;
 	private Set<Projectmanagers> projectmanagerses = new HashSet<Projectmanagers>(0);
@@ -227,6 +230,36 @@ public class Projects implements java.io.Serializable
 	public void setResultses(Set resultses)
 	{
 		this.resultses = resultses;
+	}
+
+	public Date getStarts()
+	{
+		return starts;
+	}
+
+	public void setStarts(Date starts)
+	{
+		this.starts = starts;
+	}
+
+	public Date getEnds()
+	{
+		return ends;
+	}
+
+	public void setEnds(Date ends)
+	{
+		this.ends = ends;
+	}
+
+	public Long getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(Long status)
+	{
+		this.status = status;
 	}
 
 }

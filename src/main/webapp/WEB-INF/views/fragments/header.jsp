@@ -29,7 +29,7 @@
 <nav class="navbar navbar-inverse ">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${urlHome}">Home</a>
+			<a class="navbar-brand" href="${urlHome}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
@@ -40,7 +40,9 @@
 				<li class="active"><a href="${urlExport}">Export</a></li>
 				
 				<li class="active"><a href="${urlDisplayAnalysis}">Analysis</a></li>
-				<li class="active"><a href="${urlProfile}">My Page</a></li>			
+				
+				<li class="active"><a href="${urlProfile}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a></li>	
+				<li class="active"><a href="${urlProfile}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Page</a></li>			
 				<li class="not-active"><a href="#" id="proj">         selected project: ${projectId}	</a></li>	
 			</ul>
 		</div>

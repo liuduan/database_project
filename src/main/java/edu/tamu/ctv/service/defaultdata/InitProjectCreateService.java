@@ -23,7 +23,7 @@ public class InitProjectCreateService
 		projectTypes.setUsers(usersRepository.findOne(1l));
 		projectTypes.setRegistereddt(Auth.getCurrentDate());
 		projectTypes.setLastvisitdt(Auth.getCurrentDate());
-		
+		projectTypes.setStatus(0l);
 		projectsRepository.save(projectTypes);
 
 	}

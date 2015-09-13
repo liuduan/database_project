@@ -28,11 +28,20 @@
         <property name="notes" type="string">
             <column name="notes" />
         </property>
+        <property name="starts" type="timestamp">
+            <column name="starts" length="29" />
+        </property>
+        <property name="ends" type="timestamp">
+            <column name="ends" length="29" />
+        </property>
+        <property name="status" type="long">
+            <column name="status" not-null="true"/>
+        </property>
         <property name="registereddt" type="timestamp">
-            <column name="registereddt" length="29" not-null="true" />
+            <column name="registereddt" length="29" not-null="true" default="current_date"/>
         </property>
         <property name="lastvisitdt" type="timestamp">
-            <column name="lastvisitdt" length="29" not-null="true" />
+            <column name="lastvisitdt" length="29" not-null="true" default="current_date"/>
         </property>
         <set name="projectreviewerses" table="projectreviewers" inverse="true" lazy="true" fetch="select">
             <key>
