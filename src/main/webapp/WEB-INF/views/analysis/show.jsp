@@ -3,14 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.Collection" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <jsp:include page="../fragments/header.jsp" />
 
-<spring:url value="/ctvproject/css/analysis.css" var="analysisCss" />
-<spring:url value="/ctvproject/js/analysis.js" var="analysisJs" />
+        
+        
+<spring:url value="/resources/css/analysis.css" var="analysisCss" />
+<spring:url value="/resources/js/analysis.js" var="analysisJs" />
 <script src="${analysisJs}"></script>
 <link href="${analysisCss}" rel="stylesheet" />
 <div class="container">
@@ -24,18 +27,49 @@
 		</div>
 	</c:if>
 
+<div id="MyEdit">
+    This text will change
+</div>
+ <div id="MyEdit1">
+    this fuckin text is CHANGING RIGHT NOW
+</div>
+	 <script>
+var countries = [
+<c:forEach items="${components}" var="component" varStatus="status">  
+    {component: '${component.code}',
+    columnheader: '${component.columnheaders.id}',
+    columnheaderCode: '${component.columnheaders.code}'}
+    
+    <c:if test="${!status.last}">    
+      ,    
+    </c:if>  
+    </c:forEach>  
+];	 
+document.getElementById("MyEdit1").innerHTML=countries;
+</script> 
 	<h1>Analysis:</h1>
-	<strong>'${results}'</strong>
+	
+	
+  <c:forEach var="listValue1" items="${components}">
+	<li>${listValue1.columnheaders.id}</li>
+	</c:forEach>
+	
+
 	<br />
  <script>
+//  var currentColumns;
+//  currentColumns = $("#gridContainer").dxDataGrid('instance').columns;
+//  document.getElementById("MyEdit").innerHTML=currentColumns;
+//  $("#MyEdit").html(columnHeaders.val());
  $(function () {
+	 
 		$("#gridContainer").dxDataGrid({
 			allowColumnReordering: true,
 		    allowColumnResizing: true,
 		    columnAutoWidth: true,
-		    columnChooser: {
-		        enabled: true
-		    },
+// 		    columnChooser: {
+// 		        enabled: true
+// 		    },
 		    columnFixing: { 
 		        enabled: true
 		    }, 
@@ -57,23 +91,71 @@
 	
  
  var ddd = function () {
-     var tr1 = '<tr id="headerId" class="dx-row dx-column-lines" >';        
-     tr1 += '       <td class="dx-datagrid-action" colspan="1">Some text header</td>';
-     tr1 += '       <td class="dx-datagrid-action" colspan="1">Some text header</td>';
-     tr1 += '</tr>'
+	 var dataGridInstance = $("#gridContainer").dxDataGrid("instance"), 
+     columnCount = dataGridInstance.columnCount(), 
+     currentColumns = [],
+     currentColumnCodes = [], 
+     i,j,column;
+     
+ 	 for(i = 0; i < columnCount; i++) 
+ 	 { 
+	     if(dataGridInstance.columnOption(i, "visible"))
+	     {
+	    	 currentColumns.push(dataGridInstance.columnOption(i)/*.dataField*/);
+	     }
+     }
+ 	 
+ 	for(j = 0; j < columnCount; j++) 
+ 	for(i = 0; i < columnCount-1; i++) 
+	{ 
+	     if(currentColumns[i].visibleIndex > currentColumns[i+1].visibleIndex)
+	     {
+	    	 column = currentColumns[i];
+	    	 currentColumns[i] = currentColumns[i+1];
+	    	 currentColumns[i+1] = column;	    	 
+	     }
+    }
+ 	for(i = 0; i < columnCount; i++) 
+	{ 
+ 		currentColumnCodes.push(currentColumns[i].dataField);
+    }
+ 	
+//  	currentColumnCodes.push(${components}[0].columnheaders.id);
 
-     var tr = $("#gridContainer").find('.dx-header-row')[0];
+var tr1 = '<tr id="headerId" class="dx-row dx-column-lines" >';  
+ 	for(i = 0; i < columnCount; i++) 
+	{
+ 		var result  = $.grep(countries, function(e){ return e.component == currentColumns[i].dataField; })
+ 		tr1 += '       <td class="dx-datagrid-action" colspan="1">' + result[0].columnheaderCode + '</td>' ;
+ 		
+	}
+ 	tr1 += '</tr>'
+//  		${listValue1.columnheaders.id} find by currentColumns[i].dataField
+var tr = $("#gridContainer").find('.dx-header-row')[0];
      var ele = document.getElementById("headerId");
      if (tr && !ele) $(tr1).insertBefore(tr.parentElement);
+ 	
+ 	
+ document.getElementById("MyEdit").innerHTML=currentColumnCodes;
+ 
+ 
+//      var tr1 = '<tr id="headerId" class="dx-row dx-column-lines" >';        
+//      tr1 += '       <td class="dx-datagrid-action" colspan="1">11</td>';
+//      tr1 += '       <td class="dx-datagrid-action" colspan="1">Some text header</td>';
+//      tr1 += '</tr>'
+
+//      var tr = $("#gridContainer").find('.dx-header-row')[0];
+//      var ele = document.getElementById("headerId");
+//      if (tr && !ele) $(tr1).insertBefore(tr.parentElement);
+     
+     
+
 }
   setTimeout(function () {
 // 	  ddd();
 }, 100); 
  </script> 
-	<div class="row">
-		<label class="col-sm-2">ID</label>
-
-	</div>
+	
 
 </div>
 <h1>THIS IS A TEST GRID:</h1>

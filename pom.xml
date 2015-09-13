@@ -101,7 +101,12 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.0.2.RELEASE</version>
 		</dependency>
-
+        
+        <dependency>
+	        <groupId>commons-collections</groupId>
+	        <artifactId>commons-collections</artifactId>
+	        <version>3.2.1</version>
+        </dependency>
 		<!-- DB / String Data -->
 		<dependency>
 			<groupId>org.postgresql</groupId>

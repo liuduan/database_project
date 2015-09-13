@@ -12,7 +12,9 @@ import edu.tamu.ctv.entity.Columnheaders;
 @Repository
 public interface ColumnHeadersRepository extends CrudRepository<Columnheaders, Long>
 {
-	@Query("from Columnheaders as res inner join res.columntypes ct inner join ct.projects p where res.code = :code and p.code = :projectCode")
+	@Query("select res from Columnheaders as res inner join res.columntypes ct inner join ct.projects p where res.code = :code and p.code = :projectCode")
 	List<Columnheaders> findByCodeAndHeaderTypesProjectsCode(@Param("code")String code, @Param("projectCode")String projectCode);
-
+	
+	@Query("select res from Columnheaders as res inner join res.columntypes ct inner join ct.projects p where p.id = :id")
+	List<Columnheaders> findByHeaderTypesProjectsId(@Param("id")Long id);
 }

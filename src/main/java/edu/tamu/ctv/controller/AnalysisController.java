@@ -63,7 +63,8 @@ public class AnalysisController
 		
 		json = ow.writeValueAsString(analysis.columns); 
 		model.addAttribute("columns",  json);
-		
+		model.addAttribute("columnheaders",  analysis.columnheaders);
+		model.addAttribute("components",  analysis.components);
 		return "analysis/show";
 
 	}

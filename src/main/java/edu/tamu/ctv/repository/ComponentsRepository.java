@@ -12,7 +12,8 @@ import edu.tamu.ctv.entity.Rowtypes;
 @Repository("componentsRepository")
 public interface ComponentsRepository extends CrudRepository<Components, Long>
 {
-	List<Components> findByProjectsId(Long id);
 
+		List<Components> findByProjectsId(Long id);
+	
 	Components findByCodeAndProjectsCode(String code, String pCode);
 }
