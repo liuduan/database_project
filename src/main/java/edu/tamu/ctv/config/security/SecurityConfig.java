@@ -30,8 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.userDetailsService(userDetailsService);
         authenticationManagerBuilder.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");;
     }
-    
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,12 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	    http.authorizeRequests()
 	    //.csrf().disable()
-	    .antMatchers("/**").access("permitAll");
+	    //.antMatchers("/**").access("permitAll");
+	    .antMatchers("/login").access("permitAll()")
 	    //.antMatchers("/**").access("isAuthenticated()")
 		//.and().formLogin()
-		//.loginPage("/login").failureUrl("/login?error").usernameParameter("username").passwordParameter("password")		
+		//.loginPage("/login").failureUrl("/login?error");
+		//.usernameParameter("username").passwordParameter("password")		
 		//.and().logout().logoutSuccessUrl("/login?logout")
-		//.and().csrf(); 
+		.and().csrf(); 
 
     }
 

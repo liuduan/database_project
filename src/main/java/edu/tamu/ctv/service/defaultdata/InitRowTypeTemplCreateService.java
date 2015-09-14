@@ -7,8 +7,6 @@ import edu.tamu.ctv.entity.Projecttypes;
 import edu.tamu.ctv.entity.Rowtypestempl;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.RowTypesTemplRepository;
-import edu.tamu.ctv.utils.Auth;
-
 
 public class InitRowTypeTemplCreateService
 {
@@ -24,11 +22,12 @@ public class InitRowTypeTemplCreateService
 		Projecttypes projectType = projectTypesRepository.findOne(1l);
 		if (0 == rowTypesTemplRepository.findByProjecttypeId(projectType.getId()).size())
 		{
-			list.add(new Rowtypestempl(null, projectType, "SOURCE", "Source", 1));
-			list.add(new Rowtypestempl(null, projectType, "CASRN", "CASR Number", 2));
-			list.add(new Rowtypestempl(null, projectType, "CHEMICAL", "Chemical", 3));
+			int counter = 1;
+			list.add(new Rowtypestempl(null, projectType, "SOURCE", "Source", counter++));
+			list.add(new Rowtypestempl(null, projectType, "CASRN", "CASR Number", counter++));
+			list.add(new Rowtypestempl(null, projectType, "CHEMICAL", "Chemical", counter++));
+			
+			rowTypesTemplRepository.save(list);
 		}
-
-
 	}
 }
