@@ -59,7 +59,6 @@ public class DataConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         //TODO: Check enable_lazy_load_no_trans option
         properties.put("hibernate.enable_lazy_load_no_trans", env.getProperty("hibernate.enable_lazy_load_no_trans"));
-        properties.put("hibernate.event.merge.entity_copy_observer", env.getProperty("hibernate.event.merge.entity_copy_observer"));
         
         entityManagerFactoryBean.setJpaProperties(properties);
 
