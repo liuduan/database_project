@@ -33,25 +33,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService);
-        authenticationManagerBuilder.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        //TODO: Upload file temporary
-
-	    http.authorizeRequests()
-	    //.csrf().disable()
-	    //.antMatchers("/**").access("permitAll");
-	    .antMatchers("/login").access("permitAll()")
-	    //.antMatchers("/**").access("isAuthenticated()")
-		//.and().formLogin()
-		//.loginPage("/login").failureUrl("/login?error");
-		//.usernameParameter("username").passwordParameter("password")		
-		//.and().logout().logoutSuccessUrl("/login?logout")
-		.and().csrf(); 
-
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception
+	{
+        http.authorizeRequests()
+        .antMatchers("/").permitAll()
+        //.antMatchers("/users/**").hasRole("ADMIN")
+        .and()
+            .formLogin().loginPage("/login")
+            .failureUrl("/login?error")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .defaultSuccessUrl("/users")
+        .and()
+            .logout().logoutSuccessUrl("/login?logout")
+        .and().csrf();
+	}
 
     @Autowired
     @Bean

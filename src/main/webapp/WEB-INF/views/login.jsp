@@ -1,8 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<meta name="_csrf" content="${_csrf.token}" />
-<meta name="_csrf_header" content="${_csrf.headerName}" />
+
 <style>
 .error {
 	padding: 15px;
@@ -35,10 +34,9 @@
 }
 </style>
 </head>
-<c:url value="/j_spring_security_check" var="loginUrl" />
 <body onload='document.loginForm.username.focus();'>
 
-	<h1>Spring Security Custom Login Form (XML)</h1>
+	<h1>Spring Security Custom Login Form (Annotation)</h1>
 
 	<div id="login-box">
 
@@ -51,23 +49,26 @@
 			<div class="msg">${msg}</div>
 		</c:if>
 
-		<form name='loginForm' action="${loginUrl}" method="POST">
-			<table>
-				<tr>
-					<td>User:</td>
-					<td><input type='text' name='username' value=''></td>
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type='password' name='password' /></td>
-				</tr>
-				<tr>
-					<td colspan='2'><input name="submit" type="submit" value="submit" /></td>
-				</tr>
-			</table>
+		<c:url value="/login" var="loginUrl" />
+		<form name='loginForm' action='${loginUrl}' method='POST'>
 
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		    <table>
+			<tr>
+				<td>User:</td>
+				<td><input type='text' name='username' value=''></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type='password' name='password' /></td>
+			</tr>
+			<tr>
+		        <td colspan='2'>
+	                <input name="submit" type="submit" value="submit" />
+	            </td>
+			</tr>
+		   </table>
 
+		   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 	</div>
 

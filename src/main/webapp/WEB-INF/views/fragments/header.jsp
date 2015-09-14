@@ -21,7 +21,7 @@
 <spring:url value="/projects/add" var="urlAddProject" />
 
 <spring:url value="/upload" var="urlImport" />
-<spring:url value="/upload" var="urlExport" />
+<spring:url value="/export" var="urlExport" />
 
 <spring:url value="/analysis/${projectId}" var="urlDisplayAnalysis" />
 <spring:url value="/profile/1" var="urlProfile" />

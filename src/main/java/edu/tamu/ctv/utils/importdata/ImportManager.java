@@ -97,9 +97,7 @@ public class ImportManager implements Runnable
 					else
 					{
 						//TODO: !!! CHANGE !!!
-						Sequences seq = new Sequences();
-						sequencesRepository.save(seq);
-						orderId = seq.getId();
+						orderId = sequencesRepository.save(new Sequences()).getId();
 						
 						List<Rowheaders> rowHeaders = new ArrayList<Rowheaders>();
 						for (int rowCounter = 0; rowCounter < rowTypes.size(); rowCounter++)

@@ -18,7 +18,7 @@ import edu.tamu.ctv.repository.UsersRepository;
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService, Serializable
 {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1340607602118264243L;
 	
 	@Autowired
 	private UsersRepository usersRepository;
@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService, Serializabl
 
 				public Collection<? extends GrantedAuthority> getAuthorities()
 				{
-					return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
+					return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 				}
 
 				public String getPassword()
