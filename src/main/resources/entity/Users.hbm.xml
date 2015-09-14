@@ -109,26 +109,26 @@
         
         <set name="projectmanagerses" table="projectmanagers" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="project_id"  />
+                <column name="user_id"  />
             </key>
-            <many-to-many class="edu.tamu.ctv.entity.Users">
-                <column name="user_id" />
+            <many-to-many class="edu.tamu.ctv.entity.Projects">
+                <column name="project_id" />
             </many-to-many>
         </set>
         <set name="projectreviewerses" table="projectreviewers" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="project_id"  />
+                <column name="user_id"  />
             </key>
-            <many-to-many class="edu.tamu.ctv.entity.Users">
-                <column name="user_id" />
+            <many-to-many class="edu.tamu.ctv.entity.Projects">
+                <column name="project_id" />
             </many-to-many>
         </set>
         <set name="projectmemberses" table="projectmembers" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="project_id"  />
+                <column name="user_id"  />
             </key>
-            <many-to-many class="edu.tamu.ctv.entity.Users">
-                <column name="user_id" />
+            <many-to-many class="edu.tamu.ctv.entity.Projects">
+                <column name="project_id" />
             </many-to-many>
         </set> 
         

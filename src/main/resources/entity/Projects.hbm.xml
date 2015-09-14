@@ -44,7 +44,7 @@
             <column name="lastvisitdt" length="29" not-null="true" default="current_date"/>
         </property>
         
-        <set name="projectmanagerses" table="projectmanagers" inverse="false" lazy="true" fetch="select" cascade="all">
+        <set name="projectmanagerses" table="projectmanagers" inverse="false" lazy="true" fetch="select" cascade="none">
             <key>
             	<column name="project_id" />
             </key>
@@ -52,7 +52,7 @@
                 <column name="user_id"/>
             </many-to-many>
         </set>
-        <set name="projectreviewerses" table="projectreviewers" inverse="false" lazy="true" fetch="select" cascade="all">
+        <set name="projectreviewerses" table="projectreviewers" inverse="false" lazy="true" fetch="select" cascade="none">
             <key>
             	<column name="project_id" />
             </key>
@@ -60,7 +60,7 @@
                 <column name="user_id"/>
             </many-to-many>
         </set>
-        <set name="projectmemberses" table="projectmembers" inverse="false" lazy="true" fetch="select" cascade="all">
+        <set name="projectmemberses" table="projectmembers" inverse="false" lazy="true" fetch="select" cascade="none">
             <key>
             	<column name="project_id" />
             </key>
