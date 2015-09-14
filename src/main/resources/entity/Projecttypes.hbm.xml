@@ -31,5 +31,17 @@
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Projects" />
         </set>
+        <set name="rowtypestempl" table="rowtypestempl" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="projecttype_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Rowtypestempl" />
+        </set>
+        <set name="columntypestempl" table="columntypestempl" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="projecttype_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.tamu.ctv.entity.Columntypestempl" />
+        </set>
     </class>
 </hibernate-mapping>

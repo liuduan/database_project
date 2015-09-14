@@ -91,7 +91,7 @@ public class Rowtypes implements java.io.Serializable
 		return this.showorder;
 	}
 
-	public void setShoworder(int id)
+	public void setShoworder(int showorder)
 	{
 		this.showorder = showorder;
 	}

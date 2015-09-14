@@ -3,9 +3,9 @@ package edu.tamu.ctv.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import edu.tamu.ctv.entity.Importinfo;
+import edu.tamu.ctv.entity.Columntypestempl;
 
 @Repository
-public interface ImportInfoRepository extends CrudRepository<Importinfo, Long> {
-
+public interface ColumnTypesTemplRepository extends CrudRepository<Columntypestempl, Long>
+{
 }

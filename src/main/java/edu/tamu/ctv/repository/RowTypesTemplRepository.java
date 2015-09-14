@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import edu.tamu.ctv.entity.Rowtypes;
+import edu.tamu.ctv.entity.Rowtypestempl;
 
 @Repository
-public interface RowTypesRepository extends CrudRepository<Rowtypes, Long>
+public interface RowTypesTemplRepository extends CrudRepository<Rowtypestempl, Long>
 {
-	List<Rowtypes> findByProjectsCode(String pCode);
+	List<Rowtypestempl> findByProjecttypeId(Long id);
 }
