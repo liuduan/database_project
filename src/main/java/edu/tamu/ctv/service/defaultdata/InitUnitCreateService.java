@@ -9,12 +9,15 @@ public class InitUnitCreateService
 {
 	public InitUnitCreateService(UnitsRepository unitsRepository, UsersRepository usersRepository)
 	{
-		createDefault(unitsRepository, usersRepository);
+		if (0 == unitsRepository.findByCode("DEFAULT").size())
+		{
+			createDefault(unitsRepository, usersRepository);			
+		}
 	}
 
 	private void createDefault(UnitsRepository unitsRepository, UsersRepository usersRepository)
 	{
-		Units unit = new Units(null, usersRepository.findOne(1l), "Default", Auth.getCurrentDate());
+		Units unit = new Units(null, usersRepository.findOne(1l), "DEFAULT", Auth.getCurrentDate());
 		unit.setName("Default");
 		unit.setUnits(null);
 		unit.setVolumeof(null);

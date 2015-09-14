@@ -7,7 +7,10 @@ import java.util.Date;
 
 public class InitUserCreateService {
     public InitUserCreateService(UsersRepository usersRepository) {
-        createAdmin(usersRepository);
+    	if (0 == usersRepository.findByLogin("admin").size())
+    	{
+    		createAdmin(usersRepository);    		
+    	}
     }
 
     private void createAdmin(UsersRepository usersRepository) {

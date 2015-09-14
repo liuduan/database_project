@@ -48,12 +48,4 @@
 			<one-to-many class="edu.tamu.ctv.entity.Components" />
 		</set>
 	</class>
-	
-	<query name="findColumnHeadersByCodeAndProject">
-		select res
-		from Columnheaders as res
-		inner join res.columntypes ct
-		inner join ct.projects p
-		where res.code = :code and p.code = :pcode
-	</query>
 </hibernate-mapping>

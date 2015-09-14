@@ -10,7 +10,10 @@ public class InitProjectCreateService
 {
 	public InitProjectCreateService(ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
 	{
-		createDefault(projectsRepository, usersRepository, projectTypesRepository);
+		if (0 == projectsRepository.findByCode("ProjectCode").size())
+		{
+			createDefault(projectsRepository, usersRepository, projectTypesRepository);			
+		}
 	}
 
 	private void createDefault(ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)

@@ -35,5 +35,4 @@
             <one-to-many class="edu.tamu.ctv.entity.Resultshistory" />
         </set>
     </class>
-    
 </hibernate-mapping>

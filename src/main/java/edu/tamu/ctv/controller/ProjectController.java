@@ -1,12 +1,9 @@
 package edu.tamu.ctv.controller;
 
 import java.beans.PropertyEditorSupport;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,7 +34,6 @@ import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.utils.Auth;
-import scala.collection.immutable.HashMap;
 
 @Controller
 public class ProjectController

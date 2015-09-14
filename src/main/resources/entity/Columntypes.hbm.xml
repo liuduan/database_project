@@ -44,11 +44,4 @@
             <one-to-many class="edu.tamu.ctv.entity.Columntypes" />
         </set>
     </class>
-    
-    <query name="selectColumnTypesByProject">
-		select res
-		from Columntypes as res
-		inner join res.projects p
-		where p.code = :pcode
-	</query>
 </hibernate-mapping>

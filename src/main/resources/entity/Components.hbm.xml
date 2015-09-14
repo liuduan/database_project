@@ -44,11 +44,4 @@
             <one-to-many class="edu.tamu.ctv.entity.Results" />
         </set>
     </class>
-    
-    <query name="findComponentsByCodeAndProject">
-		select res
-		from Components as res
-		inner join res.projects p
-		where res.code = :code and p.code = :pcode
-	</query>	
 </hibernate-mapping>
