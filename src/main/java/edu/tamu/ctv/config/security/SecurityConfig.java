@@ -1,11 +1,16 @@
 package edu.tamu.ctv.config.security;
 
+import edu.tamu.ctv.repository.ColumnTypesTemplRepository;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
+import edu.tamu.ctv.repository.RowTypesTemplRepository;
 import edu.tamu.ctv.repository.UnitsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.service.ProjectService;
+import edu.tamu.ctv.service.defaultdata.InitColumnTypeTemplCreateService;
 import edu.tamu.ctv.service.defaultdata.InitProjectCreateService;
 import edu.tamu.ctv.service.defaultdata.InitProjectTypeCreateService;
+import edu.tamu.ctv.service.defaultdata.InitRowTypeTemplCreateService;
 import edu.tamu.ctv.service.defaultdata.InitUnitCreateService;
 import edu.tamu.ctv.service.defaultdata.InitUserCreateService;
 
@@ -62,13 +67,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     @Bean
-    public InitProjectCreateService initProjectsCreateService(ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository) {
-        return new InitProjectCreateService(projectsRepository, usersRepository, projectTypesRepository);
+    public InitUnitCreateService initUnitsCreateService(UnitsRepository unitRepository, UsersRepository usersRepository) {
+        return new InitUnitCreateService(unitRepository, usersRepository);
     }
     
     @Autowired
     @Bean
-    public InitUnitCreateService initUnitsCreateService(UnitsRepository unitRepository, UsersRepository usersRepository) {
-        return new InitUnitCreateService(unitRepository, usersRepository);
+    public InitRowTypeTemplCreateService initRowTypeTemplCreateService(RowTypesTemplRepository rowTypesTemplRepository, ProjectTypesRepository projectTypesRepository) {
+        return new InitRowTypeTemplCreateService(rowTypesTemplRepository, projectTypesRepository);
+    }
+    
+    @Autowired
+    @Bean
+    public InitColumnTypeTemplCreateService initColumnTypeTemplCreateService(ColumnTypesTemplRepository columnTypesTemplRepository, ProjectTypesRepository projectTypesRepository) {
+        return new InitColumnTypeTemplCreateService(columnTypesTemplRepository, projectTypesRepository);
+    }
+    
+    @Autowired
+    @Bean
+    public InitProjectCreateService initProjectsCreateService(ProjectService projectService, ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository) {
+        return new InitProjectCreateService(projectService, projectsRepository, usersRepository, projectTypesRepository);
     }
 }

@@ -4,30 +4,34 @@ import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.service.ProjectService;
 import edu.tamu.ctv.utils.Auth;
 
 public class InitProjectCreateService
 {
-	public InitProjectCreateService(ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
+	public InitProjectCreateService(ProjectService projectService, ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
 	{
 		if (0 == projectsRepository.findByCode("ProjectCode").size())
 		{
-			createDefault(projectsRepository, usersRepository, projectTypesRepository);			
+			createDefault(projectService, projectsRepository, usersRepository, projectTypesRepository);			
 		}
 	}
 
-	private void createDefault(ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
+	private void createDefault(ProjectService projectService, ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
 	{
-		Projects projectTypes = new Projects();
-		projectTypes.setCode("ProjectCode");
-		projectTypes.setName("ProjectName");
-		projectTypes.setAccess(2);
-		projectTypes.setProjecttypes(projectTypesRepository.findOne(1l));
-		projectTypes.setUsers(usersRepository.findOne(1l));
-		projectTypes.setRegistereddt(Auth.getCurrentDate());
-		projectTypes.setLastvisitdt(Auth.getCurrentDate());
-		projectTypes.setStatus(0l);
-		projectsRepository.save(projectTypes);
+		Projects project = new Projects();
+		project.setCode("ProjectCode");
+		project.setName("ProjectName");
+		project.setAccess(2);
+		project.setProjecttypes(projectTypesRepository.findOne(1l));
+		project.setUsers(usersRepository.findOne(1l));
+		project.setRegistereddt(Auth.getCurrentDate());
+		project.setLastupdatedt(Auth.getCurrentDate());
+		project.setStatus(0l);
+		
+		projectService.createDefaultColumnsAndTypes(project);
+		
+		projectsRepository.save(project);
 
 	}
 }

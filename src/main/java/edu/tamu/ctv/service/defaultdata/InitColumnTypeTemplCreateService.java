@@ -19,15 +19,26 @@ public class InitColumnTypeTemplCreateService
 	{
 		List<Columntypestempl> list = new ArrayList<Columntypestempl>();
 		
-		Projecttypes projectType = projectTypesRepository.findOne(1l);
+		Projecttypes projectType = projectTypesRepository.findByCode("INVIVO").get(0);
 		if (0 == columnTypesTemplRepository.findByProjecttypeId(projectType.getId()).size())
 		{
-/*			int counter = 0;
-			list.add(new Columntypestempl(null, projectType, "TYPE", "Type"));
-			Columntypestempl element1 = new Columntypestempl(null, projectType, "TYPE", "Type");
-			Columntypestempl element2 = new Columntypestempl(null, projectType, "TYPE", "Type");
-			Columntypestempl element3 = new Columntypestempl(null, projectType, "TYPE", "Type");
-			columnTypesTemplRepository.save();*/
+			int counter = 0;
+			list.add(new Columntypestempl(null, projectType, null, "WEIGHT", "Weight"));
+			list.add(new Columntypestempl(null, projectType, list.get(counter++), "GROUP", "Group"));
+			list.add(new Columntypestempl(null, projectType, list.get(counter++), "TYPE", "Type"));
+			list.add(new Columntypestempl(null, projectType, list.get(counter++), "SOURCE", "Source"));
 		}
+		
+		projectType = projectTypesRepository.findByCode("INVITRO").get(0);
+		if (0 == columnTypesTemplRepository.findByProjecttypeId(projectType.getId()).size())
+		{
+			int counter = 0;
+			list.add(new Columntypestempl(null, projectType, null, "WEIGHT", "Weight"));
+			list.add(new Columntypestempl(null, projectType, list.get(counter++), "GROUP", "Group"));
+			list.add(new Columntypestempl(null, projectType, list.get(counter++), "TYPE", "Type"));
+			list.add(new Columntypestempl(null, projectType, list.get(counter++), "SOURCE", "Source"));
+		}
+		
+		columnTypesTemplRepository.save(list);
 	}
 }

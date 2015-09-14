@@ -17,9 +17,10 @@ public class Columntypestempl implements java.io.Serializable
 	{
 	}
 
-	public Columntypestempl(Long id, Projecttypes projecttype, String code, String name)
+	public Columntypestempl(Long id, Projecttypes projecttype, Columntypestempl columntypes, String code, String name)
 	{
 		this.id = id;
+		this.columntypes = columntypes;
 		this.code = code;
 		this.name = name;
 		this.projecttype = projecttype;

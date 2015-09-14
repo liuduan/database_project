@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import edu.tamu.ctv.entity.*;
 import edu.tamu.ctv.repository.*;
-import edu.tamu.ctv.utils.Auth;
 import edu.tamu.ctv.utils.DateUtil;
 import edu.tamu.ctv.utils.importdata.toxpi.DataTransformation;
 
@@ -25,10 +24,6 @@ public class ImportManager implements Runnable
     private ComponentsRepository componentsRepository;
 	@Autowired
 	private ProjectsRepository projectRepository;
-	@Autowired
-	private RowTypesRepository rowTypesRepository;
-	@Autowired
-	private ColumnTypesRepository columnTypesRepository;
 	@Autowired
 	private OrdersRepository ordersRepository;
 	@Autowired
@@ -82,34 +77,10 @@ public class ImportManager implements Runnable
 				Map<String, Long> orderMap = new LinkedHashMap<String, Long>();
 				
 				Projects currentProject = projectRepository.findOne(projectId);
-				List<Rowtypes> rowTypes = rowTypesRepository.findByProjectsCode(currentProject.getCode());
-				if (rowTypes.size() == 0)
-				{
-					Rowtypes rt = new Rowtypes(null, currentProject, "Source", "Source", 1, Auth.getCurrentDate());
-					rowTypes.add(rt);
-					rt = new Rowtypes(null, currentProject, "CASRN", "CASRN", 2, Auth.getCurrentDate());
-					rowTypes.add(rt);
-					rt = new Rowtypes(null, currentProject, "Chemical", "Chemical", 3, Auth.getCurrentDate());
-					rowTypes.add(rt);
-					rowTypesRepository.save(rowTypes);
-				}
-				List<Columntypes> columnTypes = columnTypesRepository.findByProjectsCode(currentProject.getCode());
-				if (columnTypes.size() == 0)
-				{
-					Columntypes ct1 = new Columntypes(null, currentProject, "Weight", "Weight", Auth.getCurrentDate());
-					Columntypes ct2 = new Columntypes(null, currentProject, "Group", "Group", Auth.getCurrentDate());
-					ct2.setColumntypes(ct1);
-					Columntypes ct3 = new Columntypes(null, currentProject, "Type", "Type", Auth.getCurrentDate());
-					ct2.setColumntypes(ct2);
-					Columntypes ct4 = new Columntypes(null, currentProject, "Source", "Source", Auth.getCurrentDate());
-					ct2.setColumntypes(ct3);
-					columnTypes.add(ct1);
-					columnTypes.add(ct2);
-					columnTypes.add(ct3);
-					columnTypes.add(ct4);
-					columnTypesRepository.save(columnTypes);
-				}
 				
+				List<Rowtypes> rowTypes = new ArrayList<Rowtypes>(currentProject.getRowtypeses());
+				List<Columntypes> columnTypes = new ArrayList<Columntypes>(currentProject.getColumntypeses());
+
 				List<Rowheaders> rowHeaderList = new ArrayList<Rowheaders>();
 				List<Columnheaders> columnHeaderList = new ArrayList<Columnheaders>();
 				List<Components> componentList = new ArrayList<Components>();

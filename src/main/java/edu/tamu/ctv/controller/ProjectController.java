@@ -33,13 +33,17 @@ import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.service.ProjectService;
 import edu.tamu.ctv.utils.Auth;
 
 @Controller
 public class ProjectController
 {
 	private final Logger logger = LoggerFactory.getLogger(ProjectController.class);
-
+	
+	@Autowired
+	private ProjectService projectService;
+	
 	@Autowired
 	private ProjectsRepository projectRepository;
 
@@ -79,11 +83,7 @@ public class ProjectController
 				redirectAttributes.addFlashAttribute("msg", "Project updated successfully!");
 			}
 		
-			project.setUsers(userRepository.findOne(1l));
-			project.setRegistereddt(Auth.getCurrentDate());
-			project.setLastvisitdt(Auth.getCurrentDate());
-
-			projectRepository.save(project);
+			projectService.save(project);
 
 			return "redirect:/projects/" + project.getId();
 		}
@@ -194,7 +194,6 @@ public class ProjectController
 	public List<Users> getUsers()
 	{
 		List<Users> users = (List<Users>) userRepository.findAll();
-	    //Hibernate.initialize(users);
 		return users;
 	}
 
@@ -202,52 +201,12 @@ public class ProjectController
 	public List<Projecttypes> getProjectTypes()
 	{
 		List<Projecttypes> projecttypes = (List<Projecttypes>) projectTypesRepository.findAll();
-		//Hibernate.initialize(projecttypes);
 		return projecttypes;
 	}
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception
 	{
-/*		binder.registerCustomEditor(Set.class, "projectmanagerses", new CustomCollectionEditor(Set.class)
-		{
-			protected Object convertElement(Object element)
-			{
-				if (element instanceof String)
-				{
-					Users user = userRepository.findOne(Long.parseLong(element.toString()));
-					return user;
-				}
-				return null;
-			}
-		});
-
-		binder.registerCustomEditor(Set.class, "projectreviewerses", new CustomCollectionEditor(Set.class)
-		{
-			protected Object convertElement(Object element)
-			{
-				if (element instanceof String)
-				{
-					Users user = userRepository.findOne(Long.parseLong(element.toString()));
-					return user;
-				}
-				return null;
-			}
-		});
-
-		binder.registerCustomEditor(Set.class, "projectmemberses", new CustomCollectionEditor(Set.class)
-		{
-			protected Object convertElement(Object element)
-			{
-				if (element instanceof String)
-				{
-					Users user = userRepository.findOne(Long.parseLong(element.toString()));
-					return user;
-				}
-				return null;
-			}
-		});*/
-
 		binder.registerCustomEditor(Projecttypes.class, "projecttypes", new PropertyEditorSupport()
 		{
 			@Override

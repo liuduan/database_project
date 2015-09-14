@@ -17,7 +17,7 @@ public class Projects implements java.io.Serializable
 	private Date ends;
 	private Long status;
 	private Date registereddt;
-	private Date lastvisitdt;
+	private Date lastupdatedt;
 	
 	private Set<Users> projectmanagerses = new HashSet<Users>(0);
 	private Set<Users> projectreviewerses = new HashSet<Users>(0);
@@ -32,7 +32,7 @@ public class Projects implements java.io.Serializable
 	{
 	}
 
-	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, Date registereddt, Date lastvisitdt)
+	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, Date registereddt, Date lastupdatedt)
 	{
 		this.id = id;
 		this.projecttypes = projecttypes;
@@ -41,10 +41,10 @@ public class Projects implements java.io.Serializable
 		this.name = name;
 		this.access = access;
 		this.registereddt = registereddt;
-		this.lastvisitdt = lastvisitdt;
+		this.lastupdatedt = lastupdatedt;
 	}
 
-	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, String notes, Date registereddt, Date lastvisitdt, Set<Rowtypes> rowtypeses,
+	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, String notes, Date registereddt, Date lastupdatedt, Set<Rowtypes> rowtypeses,
 			Set<Components> componentses, Set<Columntypes> columntypeses, Set<Results> resultses)
 	{
 		this.id = id;
@@ -55,7 +55,7 @@ public class Projects implements java.io.Serializable
 		this.access = access;
 		this.notes = notes;
 		this.registereddt = registereddt;
-		this.lastvisitdt = lastvisitdt;
+		this.lastupdatedt = lastupdatedt;
 		this.rowtypeses = rowtypeses;
 		this.componentses = componentses;
 		this.columntypeses = columntypeses;
@@ -148,14 +148,14 @@ public class Projects implements java.io.Serializable
 		this.registereddt = registereddt;
 	}
 
-	public Date getLastvisitdt()
+	public Date getLastupdatedt()
 	{
-		return this.lastvisitdt;
+		return this.lastupdatedt;
 	}
 
-	public void setLastvisitdt(Date lastvisitdt)
+	public void setLastupdatedt(Date lastvisitdt)
 	{
-		this.lastvisitdt = lastvisitdt;
+		this.lastupdatedt = lastvisitdt;
 	}
 
 	public Set<Users> getProjectmanagerses()

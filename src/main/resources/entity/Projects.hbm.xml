@@ -40,8 +40,8 @@
         <property name="registereddt" type="timestamp">
             <column name="registereddt" length="29" not-null="true" default="current_date"/>
         </property>
-        <property name="lastvisitdt" type="timestamp">
-            <column name="lastvisitdt" length="29" not-null="true" default="current_date"/>
+        <property name="lastupdatedt" type="timestamp">
+            <column name="lastupdatedt" length="29" not-null="true" default="current_date"/>
         </property>
         
         <set name="projectmanagerses" table="projectmanagers" inverse="false" lazy="true" fetch="select" cascade="none">

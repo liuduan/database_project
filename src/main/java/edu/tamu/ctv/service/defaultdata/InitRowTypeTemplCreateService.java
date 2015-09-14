@@ -19,15 +19,24 @@ public class InitRowTypeTemplCreateService
 	{
 		List<Rowtypestempl> list = new ArrayList<Rowtypestempl>();
 		
-		Projecttypes projectType = projectTypesRepository.findOne(1l);
+		Projecttypes projectType = projectTypesRepository.findByCode("INVIVO").get(0);
 		if (0 == rowTypesTemplRepository.findByProjecttypeId(projectType.getId()).size())
 		{
 			int counter = 1;
 			list.add(new Rowtypestempl(null, projectType, "SOURCE", "Source", counter++));
 			list.add(new Rowtypestempl(null, projectType, "CASRN", "CASR Number", counter++));
 			list.add(new Rowtypestempl(null, projectType, "CHEMICAL", "Chemical", counter++));
-			
-			rowTypesTemplRepository.save(list);
 		}
+		
+		projectType = projectTypesRepository.findByCode("INVITRO").get(0);
+		if (0 == rowTypesTemplRepository.findByProjecttypeId(projectType.getId()).size())
+		{
+			int counter = 1;
+			list.add(new Rowtypestempl(null, projectType, "SOURCE", "Source", counter++));
+			list.add(new Rowtypestempl(null, projectType, "CASRN", "CASR Number", counter++));
+			list.add(new Rowtypestempl(null, projectType, "CHEMICAL", "Chemical", counter++));
+		}
+		
+		rowTypesTemplRepository.save(list);
 	}
 }
