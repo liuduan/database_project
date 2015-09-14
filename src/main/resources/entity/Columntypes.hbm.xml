@@ -28,9 +28,6 @@
         <property name="registereddt" type="timestamp">
             <column name="registereddt" length="29" not-null="true" />
         </property>
-        <property name="lastvisitdt" type="timestamp">
-            <column name="lastvisitdt" length="29" not-null="true" />
-        </property>
         <set name="columnheaderses" table="columnheaders" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="columntype_id" not-null="true" />

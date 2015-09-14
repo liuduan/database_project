@@ -19,7 +19,6 @@ public class Columnheaders implements java.io.Serializable
 	private String notes;
 	private Integer color;
 	private Date registereddt;
-	private Date lastvisitdt;
 	private Set columnheaderses = new HashSet(0);
 	private Set componentses = new HashSet(0);
 
@@ -27,7 +26,7 @@ public class Columnheaders implements java.io.Serializable
 	{
 	}
 
-	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, Date registereddt, Date lastvisitdt)
+	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, Date registereddt)
 	{
 		this.id = id;
 		this.columnheaders = columnheaders;
@@ -35,10 +34,9 @@ public class Columnheaders implements java.io.Serializable
 		this.code = code;
 		this.name = name;
 		this.registereddt = registereddt;
-		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, String notes, Integer color, Date registereddt, Date lastvisitdt, Set columnheaderses,
+	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, String notes, Integer color, Date registereddt, Set columnheaderses,
 			Set componentses)
 	{
 		this.id = id;
@@ -49,7 +47,6 @@ public class Columnheaders implements java.io.Serializable
 		this.notes = notes;
 		this.color = color;
 		this.registereddt = registereddt;
-		this.lastvisitdt = lastvisitdt;
 		this.columnheaderses = columnheaderses;
 		this.componentses = componentses;
 	}
@@ -132,16 +129,6 @@ public class Columnheaders implements java.io.Serializable
 	public void setRegistereddt(Date registereddt)
 	{
 		this.registereddt = registereddt;
-	}
-
-	public Date getLastvisitdt()
-	{
-		return this.lastvisitdt;
-	}
-
-	public void setLastvisitdt(Date lastvisitdt)
-	{
-		this.lastvisitdt = lastvisitdt;
 	}
 
 	public Set getColumnheaderses()

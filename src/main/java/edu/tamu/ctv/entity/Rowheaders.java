@@ -18,24 +18,22 @@ public class Rowheaders implements java.io.Serializable
 	private String notes;
 	private Integer color;
 	private Date registereddt;
-	private Date lastvisitdt;
 	private Set orderses = new HashSet(0);
 
 	public Rowheaders()
 	{
 	}
 
-	public Rowheaders(Long id, Rowtypes rowtypes, String code, String name, Date registereddt, Date lastvisitdt)
+	public Rowheaders(Long id, Rowtypes rowtypes, String code, String name, Date registereddt)
 	{
 		this.id = id;
 		this.rowtypes = rowtypes;
 		this.code = code;
 		this.name = name;
 		this.registereddt = registereddt;
-		this.lastvisitdt = lastvisitdt;
 	}
 
-	public Rowheaders(Long id, Rowtypes rowtypes, String code, String name, String notes, Integer color, Date registereddt, Date lastvisitdt, Set orderses)
+	public Rowheaders(Long id, Rowtypes rowtypes, String code, String name, String notes, Integer color, Date registereddt, Set orderses)
 	{
 		this.id = id;
 		this.rowtypes = rowtypes;
@@ -44,7 +42,6 @@ public class Rowheaders implements java.io.Serializable
 		this.notes = notes;
 		this.color = color;
 		this.registereddt = registereddt;
-		this.lastvisitdt = lastvisitdt;
 		this.orderses = orderses;
 	}
 
@@ -116,16 +113,6 @@ public class Rowheaders implements java.io.Serializable
 	public void setRegistereddt(Date registereddt)
 	{
 		this.registereddt = registereddt;
-	}
-
-	public Date getLastvisitdt()
-	{
-		return this.lastvisitdt;
-	}
-
-	public void setLastvisitdt(Date lastvisitdt)
-	{
-		this.lastvisitdt = lastvisitdt;
 	}
 
 	public Set getOrderses()

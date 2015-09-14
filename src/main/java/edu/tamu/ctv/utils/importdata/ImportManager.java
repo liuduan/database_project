@@ -85,23 +85,23 @@ public class ImportManager implements Runnable
 				List<Rowtypes> rowTypes = rowTypesRepository.findByProjectsCode(currentProject.getCode());
 				if (rowTypes.size() == 0)
 				{
-					Rowtypes rt = new Rowtypes(null, currentProject, "Source", "Source", 1, Auth.getCurrentDate(), Auth.getCurrentDate());
+					Rowtypes rt = new Rowtypes(null, currentProject, "Source", "Source", 1, Auth.getCurrentDate());
 					rowTypes.add(rt);
-					rt = new Rowtypes(null, currentProject, "CASRN", "CASRN", 2, Auth.getCurrentDate(), Auth.getCurrentDate());
+					rt = new Rowtypes(null, currentProject, "CASRN", "CASRN", 2, Auth.getCurrentDate());
 					rowTypes.add(rt);
-					rt = new Rowtypes(null, currentProject, "Chemical", "Chemical", 3, Auth.getCurrentDate(), Auth.getCurrentDate());
+					rt = new Rowtypes(null, currentProject, "Chemical", "Chemical", 3, Auth.getCurrentDate());
 					rowTypes.add(rt);
 					rowTypesRepository.save(rowTypes);
 				}
 				List<Columntypes> columnTypes = columnTypesRepository.findByProjectsCode(currentProject.getCode());
 				if (columnTypes.size() == 0)
 				{
-					Columntypes ct1 = new Columntypes(null, currentProject, "Weight", "Weight", Auth.getCurrentDate(), Auth.getCurrentDate());
-					Columntypes ct2 = new Columntypes(null, currentProject, "Group", "Group", Auth.getCurrentDate(), Auth.getCurrentDate());
+					Columntypes ct1 = new Columntypes(null, currentProject, "Weight", "Weight", Auth.getCurrentDate());
+					Columntypes ct2 = new Columntypes(null, currentProject, "Group", "Group", Auth.getCurrentDate());
 					ct2.setColumntypes(ct1);
-					Columntypes ct3 = new Columntypes(null, currentProject, "Type", "Type", Auth.getCurrentDate(), Auth.getCurrentDate());
+					Columntypes ct3 = new Columntypes(null, currentProject, "Type", "Type", Auth.getCurrentDate());
 					ct2.setColumntypes(ct2);
-					Columntypes ct4 = new Columntypes(null, currentProject, "Source", "Source", Auth.getCurrentDate(), Auth.getCurrentDate());
+					Columntypes ct4 = new Columntypes(null, currentProject, "Source", "Source", Auth.getCurrentDate());
 					ct2.setColumntypes(ct3);
 					columnTypes.add(ct1);
 					columnTypes.add(ct2);
@@ -153,7 +153,7 @@ public class ImportManager implements Runnable
 							}
 							if (null == currentRowHeader)
 							{
-								currentRowHeader = new Rowheaders(null, rowTypes.get(rowCounter), rowCode, rowCode, DateUtil.GetCurrentDate(), DateUtil.GetCurrentDate());
+								currentRowHeader = new Rowheaders(null, rowTypes.get(rowCounter), rowCode, rowCode, DateUtil.GetCurrentDate());
 								rowHeaderList.add(currentRowHeader);
 							}
 							rowHeaders.add(currentRowHeader);
@@ -195,7 +195,7 @@ public class ImportManager implements Runnable
 						}
 						if (null == currentColumnHeader)
 						{
-							currentColumnHeader = new Columnheaders(null, parentColumnHeader, columnTypes.get(columnLevel), level.getCode(), level.getCode(), DateUtil.GetCurrentDate(), DateUtil.GetCurrentDate());
+							currentColumnHeader = new Columnheaders(null, parentColumnHeader, columnTypes.get(columnLevel), level.getCode(), level.getCode(), DateUtil.GetCurrentDate());
 							columnHeaderList.add(currentColumnHeader);
 						}
 						parentColumnHeader = currentColumnHeader;
