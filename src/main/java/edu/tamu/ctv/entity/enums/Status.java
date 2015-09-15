@@ -4,7 +4,7 @@ public enum Status
 {
 	NEW(0, "New"),
 	INPROCESS(1, "In process"),
-	FINESHED(2, "Fineshed");
+	FINISHED(2, "Finished");
 
 	private int id;
 	private String value;
