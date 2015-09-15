@@ -66,7 +66,10 @@
 				<div class="tabs widget">
 					<ul class="nav nav-tabs widget">
 						<li class="active"><a data-toggle="tab" href="#profile-tab"> Profile <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
-						<li class=""><a data-toggle="tab" href="#projects-tab">	Projects <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
+						<li class=""><a data-toggle="tab" href="#projects-tab">	Own Projects <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
+						<li class=""><a data-toggle="tab" href="#manager-tab">	Project Manager <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
+						<li class=""><a data-toggle="tab" href="#reviewer-tab">	Project Review <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
+						<li class=""><a data-toggle="tab" href="#member-tab">	Project Member <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
 					</ul>
 					
 					<div class="tab-content">
@@ -181,7 +184,7 @@
 
 						</div>
 
-
+						<c:set var="projectListFragment" scope="request" value="${projectOwnCache}"/>
 						<div id="projects-tab" class="tab-pane">
 							<div class="pd-20">
 								<div class="vd_info tr" style="float: right;">
@@ -190,48 +193,44 @@
 								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
 									<i class="glyphicon glyphicon-flash"></i> Projects
 								</h3>
-								<table class="table table-striped table-hover">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th></th>
-											<th>Code</th>
-											<th>Name</th>
-											<th>Start</th>
-											<th>End</th>
-											<th>Access</th>
-											<th>Status</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-									<c:forEach var="project" items="${projectsList}" varStatus="loop">
-										<tr>
-											<td>${loop.index + 1}</td>
-											<td><img height="80" src="/ctvproject/img/in_vivo.png" alt="example image"></td>
-											<td>${project.code}</td>
-											<td>${project.name}</td>
-											<td class="center">${project.starts}</td>
-											<td class="center">${project.ends}</td>
-											<td class="center">${project.access}</td>
-											<td class="center">${project.status}</td>
-											<td>
-												<spring:url value="/projects/${project.id}" var="projectUrl" />
-												<spring:url value="/projects/update/${project.id}" var="updateUrl" />
-												<spring:url value="/projects/delete/${project.id}" var="deleteUrl" /> 
-												
-												<button class="btn btn-info" onclick="location.href='${projectUrl}'"><span class="glyphicon glyphicon-eye-open"></span></button>
-												<button class="btn btn-primary" onclick="location.href='${updateUrl}'"><span class="glyphicon glyphicon-edit"></span></button>
-												<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}')"><span class="glyphicon glyphicon-trash"></span></button>
-											</td>
-										</tr>
-									</c:forEach>
-									</tbody>
-								</table>
+								<jsp:include page="fragments/projectlist.jsp" />
+								<div class=""></div>
+							</div>
+						</div>
+						
+						<c:set var="projectListFragment" scope="request" value="${projectManagerCache}"/>
+						<div id="manager-tab" class="tab-pane">
+							<div class="pd-20">
+								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
+									<i class="glyphicon glyphicon-flash"></i> Project Manager
+								</h3>
+								<jsp:include page="fragments/projectlist.jsp" />
 								<div class=""></div>
 							</div>
 						</div>
 
+						<c:set var="projectListFragment" scope="request" value="${projectReviewerCache}"/>
+						<div id="reviewer-tab" class="tab-pane">
+							<div class="pd-20">
+								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
+									<i class="glyphicon glyphicon-flash"></i> Project Reviewer
+								</h3>
+								<jsp:include page="fragments/projectlist.jsp" />
+								<div class=""></div>
+							</div>
+						</div>
+
+						<c:set var="projectListFragment" scope="request" value="${projectMemberCache}"/>
+						<div id="member-tab" class="tab-pane">
+							<div class="pd-20">
+								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
+									<i class="glyphicon glyphicon-flash"></i> Project Member
+								</h3>
+								<jsp:include page="fragments/projectlist.jsp" />
+								<div class=""></div>
+							</div>
+						</div>
+					
 					</div>
 				</div>
 			</div>
