@@ -48,10 +48,13 @@ public class ProfileController
 	
 	private void populateDefaultModel(Model model, Users user)
 	{
-
+		model.addAttribute("projectOwnCache", user.getProjectses());
+		model.addAttribute("projectManagerCache", user.getProjectmanagerses());
+		model.addAttribute("projectReviewerCache", user.getProjectreviewerses());
+		model.addAttribute("projectMemberCache", user.getProjectmemberses());
 	}
 	
-	@ModelAttribute("projectOwnCache")
+/*	@ModelAttribute("projectOwnCache")
 	public Set<Projects> getProjects()
 	{
 		Users user = projectAuthentication.getCurrentUser();
@@ -77,5 +80,5 @@ public class ProfileController
 	{
 		Users user = projectAuthentication.getCurrentUser();
 		return userRepository.findOne(user.getId()).getProjectmemberses();
-	}
+	}*/
 }

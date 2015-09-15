@@ -221,7 +221,18 @@ public class ProjectController
 	        public void setAsText(String value) throws IllegalArgumentException
 	        {
 	            if (StringUtils.isBlank(value)) return;
-	            setValue(Access.valueOf(value));
+	            setValue(Access.parse(Integer.valueOf(value)));
+	        }
+
+	    });
+		
+		binder.registerCustomEditor(Status.class, new PropertyEditorSupport()
+		{
+	        @Override
+	        public void setAsText(String value) throws IllegalArgumentException
+	        {
+	            if (StringUtils.isBlank(value)) return;
+	            setValue(Status.parse(Integer.valueOf(value)));
 	        }
 
 	    });

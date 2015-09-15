@@ -60,8 +60,8 @@
         <property name="interests" type="string">
             <column name="interests" />
         </property>
-        <property name="birthday" type="timestamp">
-            <column name="birthday" length="29" not-null="true" />
+        <property name="birthday" length="4" type="java.util.Date">
+            <column name="birthday" not-null="true"/>
         </property>
         <property name="organization" type="string">
             <column name="organization" />

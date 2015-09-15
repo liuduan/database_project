@@ -37,6 +37,7 @@ public class UserFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "state", "NotEmpty.userForm.state");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zip", "NotEmpty.userForm.zip");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sex", "NotEmpty.userForm.sex");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthday", "NotEmpty.userForm.birthday");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "organization", "NotEmpty.userForm.organization");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "organaddress", "NotEmpty.userForm.organaddress");
 
@@ -46,9 +47,9 @@ public class UserFormValidator implements Validator {
 		if(user.getCountry().equalsIgnoreCase("none")){
 			errors.rejectValue("country", "NotEmpty.userForm.country");
 		}
-/*		if (!user.getPassword().equals(user.getConfirmPassword())) {
+		if (!user.getPassword().equals(user.getConfirmPassword())) {
 			errors.rejectValue("confirmPassword", "Diff.userform.confirmPassword");
-		}*/
+		}
 	}
 
 }

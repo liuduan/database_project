@@ -89,6 +89,16 @@
 				</div>
 			</div>
 		</spring:bind>
+		
+		<spring:bind path="birthday">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Birthday</label>
+				<div class="col-sm-5">
+					<form:input path="birthday" type="date" placeholder="MM/DD/YYYY"/> <!--  pattern="mm/dd/yyyy" cssClass="date-picker" -->
+					<form:errors path="birthday" class="control-label" />
+				</div>
+			</div>
+		</spring:bind>
 
 		<spring:bind path="email">
 			<div class="form-group ${status.error ? 'has-error' : ''}">

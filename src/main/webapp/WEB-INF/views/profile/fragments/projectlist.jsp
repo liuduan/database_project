@@ -20,8 +20,19 @@
 	<tbody>
 	<c:forEach var="project" items="${projectListFragment}" varStatus="loop">
 		<tr>
+			<spring:url value="/ctvproject/img/in_vitro.png" var="projectTypeImg" />
+			<c:choose>
+				<c:when test="${project.projecttypes.code=='INVITRO'}">
+					<c:set var="projectTypeImg" value="in_vitro.png" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="projectTypeImg" value="in_vivo.png" />
+				</c:otherwise>
+			</c:choose>
+			
+			
 			<td>${loop.index + 1}</td>
-			<td><img height="80" src="/ctvproject/img/in_vivo.png" alt="example image"></td>
+			<td><img height="80" src="/ctvproject/img/${projectTypeImg}" alt="Project Type Image"></td>
 			<td>${project.code}</td>
 			<td>${project.name}</td>
 			<td class="center">${project.starts}</td>

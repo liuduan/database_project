@@ -6,6 +6,8 @@
 <link href="/ctvproject/scripts/external/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <link href="/ctvproject/scripts/css/hello.css" rel="stylesheet" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
+
         
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
 <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/15.1.6/js/dx.webappjs.js"></script>
@@ -17,7 +19,10 @@
 
 <spring:url value="/" var="urlHome" />
 
+<spring:url value="/users" var="urlListUser" />
 <spring:url value="/users/add" var="urlAddUser" />
+
+<spring:url value="/projects" var="urlListProject" />
 <spring:url value="/projects/add" var="urlAddProject" />
 
 <spring:url value="/upload" var="urlImport" />
@@ -27,15 +32,34 @@
 <spring:url value="/profile" var="urlProfile" />
 <spring:url value="/contact" var="urlContact" />
 
-<nav class="navbar navbar-inverse ">
-	<div class="container">
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
 		<div class="navbar-header">
+		   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
 			<a class="navbar-brand" href="${urlHome}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
 		</div>
-		<div id="navbar">
+		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="${urlAddUser}">Add User</a></li>
-				<li class="active"><a href="${urlAddProject}">Add Project</a></li>
+				
+			<li class="dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="${urlListUser}">List</a></li>
+                <li><a href="${urlAddUser}">Add User</a></li>
+              </ul>
+            </li>
+			<li class="dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Project <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="${urlListProject}">List</a></li>
+                <li><a href="${urlAddProject}">Add User</a></li>
+              </ul>
+            </li>	
 				
 				<li class="active"><a href="${urlImport}">Import</a></li>
 				<li class="active"><a href="${urlExport}">Export</a></li>

@@ -6,5 +6,4 @@
 	</footer>
 </div>
 
-<script src="/ctvproject/scripts/js/hello.js"></script>
 <script src="/ctvproject/scripts/external/bootstrap/js/bootstrap.min.js"></script>

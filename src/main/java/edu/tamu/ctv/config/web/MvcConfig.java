@@ -11,11 +11,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
@@ -70,7 +73,25 @@ public class MvcConfig extends WebMvcConfigurerAdapter
 		ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
 		resource.setBasename("classpath:messages");
 		resource.setDefaultEncoding("UTF-8");
+		//TODO: Change
+		resource.setUseCodeAsDefaultMessage(true);
 		return resource;
 	}
+	
+/*	@Bean(name = "localeResolver")
+	public SessionLocaleResolver getSessionLocaleResolver()
+	{
+		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+		localeResolver.setDefaultLocale(StringUtils.parseLocaleString(""));
+		return localeResolver;
+	}
+	
+	@Bean(name = "localeChangeInterceptor")
+	public LocaleChangeInterceptor getLocaleChangeInterceptor()
+	{
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("lang");
+		return localeChangeInterceptor;
+	}*/
 
 }

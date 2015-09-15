@@ -21,6 +21,8 @@ public class ProjectFormValidator implements Validator
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.projectForm.name");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "access", "NotEmpty.projectForm.access");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "projecttype", "NotEmpty.projectForm.projecttype");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "status", "NotEmpty.projectForm.status");
+		
 	}
 
 }

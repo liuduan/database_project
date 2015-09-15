@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.UsersRepository;
+import edu.tamu.ctv.service.UsersService;
 import edu.tamu.ctv.service.validator.UserFormValidator;
 import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
@@ -37,6 +38,8 @@ public class UserController
 
 	@Autowired
 	private UsersRepository userRepository;
+	@Autowired
+	private UsersService usersService;
 	
 	@Autowired
 	UserFormValidator userFormValidator;
@@ -45,6 +48,10 @@ public class UserController
 	protected void initBinder(WebDataBinder binder)
 	{
 		binder.setValidator(userFormValidator);
+	    
+/*		SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+	    dateFormat.setLenient(false);
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));*/
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -82,11 +89,7 @@ public class UserController
 				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
 			}
 
-			user.setRegistereddt(ProjectAuthentication.getCurrentDate());
-			user.setLastvisitdt(ProjectAuthentication.getCurrentDate());
-			//TODO: implement in GUI
-			user.setBirthday(ProjectAuthentication.getCurrentDate());
-			userRepository.save(user);
+			usersService.save(user);
 
 			return "redirect:/users/" + user.getId();
 		}
