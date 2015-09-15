@@ -66,7 +66,7 @@ var columnheaders = [
 	
 	<br />
  <script>
-
+ 
  $(function () {
 	 
 		$("#gridContainer").dxDataGrid({
@@ -76,9 +76,9 @@ var columnheaders = [
 // 		    columnChooser: {
 // 		        enabled: true
 // 		    },
-		    columnFixing: { 
-		        enabled: true
-		    }, 
+// 		    columnFixing: { 
+// 		        enabled: true
+// 		    }, 
 		    dataSource: ${results},
 //		    showRowLines: true,
 		    paging: {
@@ -88,7 +88,29 @@ var columnheaders = [
 		        showPageSizeSelector: true,
 		        allowedPageSizes: [5, 10, 20]
 		    },
-		    columns: 	${columns},
+		    columns: 	
+		    [
+
+// <c:forEach items="${rowTypes}" var="component">  
+// {dataField: "${component.code}",
+// 	caption: '${component.code}',
+// 	width: 150,
+//     fixed: true}
+//  ,
+// </c:forEach> 
+<c:forEach items="${rowTypes}" var="component">  
+ {dataField:"${component.code}",fixed: true}
+,
+</c:forEach> 
+
+<c:forEach items="${components}" var="component" varStatus="status">  
+ "${component.code}"
+
+<c:if test="${!status.last}">    
+  ,    
+</c:if>  
+</c:forEach> 
+		    ],
 		    rowAlternationEnabled: true,
 		    onContentReady : 	ddd
 		});
@@ -127,9 +149,17 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
  	for(i = 0; i < columnCount; i++) 
 	{
  		var result  = $.grep(columns, function(e){ return e.component == currentColumns[i].dataField; })
- 		tr1 += '       <td class="dx-datagrid-action" colspan="1">' + result[0].columnheaderCode + '</td>' ;
- 		var level1  = $.grep(columnheaders[0].columnheaders, function(e){ return e.id == result[0].parentId; })
- 		columnNewOrder.push(level1[0]);
+ 		if (result.length==0)
+ 		{
+ 			tr1 += '       <td class="dx-datagrid-action" colspan="1"></td>' ;
+ 			columnNewOrder.push(null);
+ 		}
+ 		else
+ 		{
+	 		tr1 += '       <td class="dx-datagrid-action" colspan="1">' + result[0].columnheaderCode + '</td>' ;
+	 		var level1  = $.grep(columnheaders[0].columnheaders, function(e){ return e.id == result[0].parentId; })
+	 		columnNewOrder.push(level1[0]);
+ 		}
  		
 	}
 
@@ -147,9 +177,17 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
     	 
     	 for(j = 0; j < columnCount; j++) 
     		{ 
+    		 if ( columnNewOrder[j] == null )
+    		 {
+    			 tr1 += '       <td class="dx-datagrid-action" colspan="1"></td>' ;
+     		    levels.push(null);
+    		 }
+    		 else
+    		 {
     		    var foundel = $.grep(columnheaders[i].columnheaders, function(e){ return e.id == columnNewOrder[j].parentId; });
     		    tr1 += '       <td class="dx-datagrid-action" colspan="1">' + foundel[0].code + '</td>' ;
     		    levels.push(foundel[0]);
+    		 }
     		};
     		columnNewOrder = levels;
     	 tr1 += '</tr>';

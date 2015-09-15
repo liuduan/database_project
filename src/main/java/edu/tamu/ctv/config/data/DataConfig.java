@@ -59,6 +59,10 @@ public class DataConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         //TODO: Check enable_lazy_load_no_trans option
         properties.put("hibernate.enable_lazy_load_no_trans", env.getProperty("hibernate.enable_lazy_load_no_trans"));
+        properties.put("hibernate.cache.provider_class", env.getProperty("hibernate.cache.provider_class"));
+        properties.put("hibernate.cache.region.factory_class", env.getProperty("hibernate.cache.region.factory_class"));
+        properties.put("hibernate.cache.use_second_level_cache", env.getProperty("hibernate.cache.use_second_level_cache"));
+        properties.put("net.sf.ehcache.configurationResource", "ehcache.xml");
         
         entityManagerFactoryBean.setJpaProperties(properties);
 

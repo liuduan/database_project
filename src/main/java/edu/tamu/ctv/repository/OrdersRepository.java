@@ -15,4 +15,8 @@ public interface OrdersRepository extends CrudRepository<Orders, Long>
 {
 	@Query("SELECT r FROM Results r WHERE r.orderId = :id")
 	List<Results> getResultsByOrderId(@Param("id")Long id);
+	
+	@Query("select res from Orders as res inner join res.rowheaders rh inner join rh.rowtypes rt inner join rt.projects p where p.id = :id")
+	List<Orders> findByRowHeadersRowTypesProjectsId(@Param("id")Long id);
+	
 }

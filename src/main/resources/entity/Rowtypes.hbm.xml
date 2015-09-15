@@ -4,6 +4,7 @@
 <!-- Generated Sep 5, 2015 1:43:34 PM by Hibernate Tools 4.3.1.Final -->
 <hibernate-mapping>
     <class name="edu.tamu.ctv.entity.Rowtypes" table="rowtypes" schema="public" optimistic-lock="version">
+		<cache usage="read-write"/>
 		<id name="id" type="long">
 			<column name="id" />
 			<generator class="sequence">
@@ -29,6 +30,7 @@
             <column name="registereddt" length="29" not-null="true" />
         </property>
         <set name="rowheaderses" table="rowheaders" inverse="true" lazy="true" fetch="select">
+            <cache usage="read-write"/>
             <key>
                 <column name="rowtype_id" not-null="true" />
             </key>

@@ -61,10 +61,12 @@ public class AnalysisController
 //		Object jsono = mapper.readValue(json, Object.class);
 		model.addAttribute("results",  json);
 		
-		json = ow.writeValueAsString(analysis.columns); 
-		model.addAttribute("columns",  json);
+//		json = ow.writeValueAsString(analysis.columns); 
+//		model.addAttribute("columns",  analysis.columns);
 		model.addAttribute("columnheaders",  analysis.columnheaders);
 		model.addAttribute("components",  analysis.components);
+		model.addAttribute("rowTypes",  analysis.rowTypes);
+		
 		return "analysis/show";
 
 	}

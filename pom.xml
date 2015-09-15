@@ -70,8 +70,16 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-
-
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-ehcache</artifactId>
+<version>${hibernate.version}</version>
+</dependency>
+<dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.6.9</version>
+        </dependency>
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
@@ -101,7 +109,11 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.0.2.RELEASE</version>
 		</dependency>
-        
+        <dependency>
+	<groupId>com.googlecode.lambdaj</groupId>
+	<artifactId>lambdaj</artifactId>
+	<version>2.3.3</version>
+</dependency>
         <dependency>
 	        <groupId>commons-collections</groupId>
 	        <artifactId>commons-collections</artifactId>
