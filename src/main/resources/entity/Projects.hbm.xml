@@ -22,9 +22,16 @@
         <property name="name" type="string">
             <column name="name" not-null="true" />
         </property>
-        <property name="access" type="int">
-            <column name="access" not-null="true" />
-        </property>
+		<property name="access" column="access" not-null="true">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">edu.tamu.ctv.entity.enums.Access</param>
+			</type>
+		</property>
+		<property name="status" column="status" not-null="true">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">edu.tamu.ctv.entity.enums.Status</param>
+			</type>
+		</property>
         <property name="notes" type="string">
             <column name="notes" />
         </property>
@@ -33,9 +40,6 @@
         </property>
         <property name="ends" type="timestamp">
             <column name="ends" length="29" />
-        </property>
-        <property name="status" type="long">
-            <column name="status" not-null="true"/>
         </property>
         <property name="registereddt" type="timestamp">
             <column name="registereddt" length="29" not-null="true" default="current_date"/>

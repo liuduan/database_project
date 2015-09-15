@@ -1,5 +1,6 @@
 package edu.tamu.ctv.config.security;
 
+import edu.tamu.ctv.entity.enums.Roles;
 import edu.tamu.ctv.repository.ColumnTypesTemplRepository;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
@@ -40,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	{
         http.authorizeRequests()
         .antMatchers("/").permitAll()
-        //.antMatchers("/users/**").hasRole("ADMIN")
+        //.antMatchers("/users/**").hasRole(Roles.ADMIN.getCode())
         .and()
             .formLogin().loginPage("/login")
             .failureUrl("/login?error")

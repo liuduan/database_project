@@ -1,6 +1,7 @@
 package edu.tamu.ctv.service.defaultdata;
 
 import edu.tamu.ctv.entity.Users;
+import edu.tamu.ctv.entity.enums.Roles;
 import edu.tamu.ctv.repository.UsersRepository;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ public class InitUserCreateService {
     private void createAdmin(UsersRepository usersRepository) {
         Users admin = new Users();
         admin.setLogin("admin");
+        admin.setRole(Roles.ADMIN);
         admin.setFirstname("admin");
         admin.setLastname("admin");
         admin.setCountry("Ukraine");

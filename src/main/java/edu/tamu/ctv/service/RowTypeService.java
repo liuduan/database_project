@@ -10,7 +10,7 @@ import edu.tamu.ctv.entity.Rowtypes;
 import edu.tamu.ctv.entity.Rowtypestempl;
 import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.repository.RowTypesTemplRepository;
-import edu.tamu.ctv.utils.Auth;
+import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 @Service("rowTypeService")
 public class RowTypeService
@@ -20,7 +20,7 @@ public class RowTypeService
 	
 	private Rowtypes convert(Rowtypestempl rowTypesTempl, Projects project)
 	{
-		Rowtypes rowType = new Rowtypes(null, project, rowTypesTempl.getCode(), rowTypesTempl.getName(), rowTypesTempl.getShoworder(), Auth.getCurrentDate());
+		Rowtypes rowType = new Rowtypes(null, project, rowTypesTempl.getCode(), rowTypesTempl.getName(), rowTypesTempl.getShoworder(), ProjectAuthentication.getCurrentDate());
 		return rowType;
 	}
 	

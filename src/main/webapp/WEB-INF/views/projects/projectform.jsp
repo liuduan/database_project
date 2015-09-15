@@ -31,8 +31,7 @@
 
 	<spring:url value="/projects" var="projectActionUrl" />
 
-	<form:form class="form-horizontal" method="post"
-		modelAttribute="projectForm" action="${projectActionUrl}">
+	<form:form class="form-horizontal" method="post" modelAttribute="projectForm" action="${projectActionUrl}">
 
 		<form:hidden path="id" />
 
@@ -63,7 +62,7 @@
 				<label class="col-sm-2 control-label">Access Level</label>
 				<div class="col-sm-5">
 					<form:select path="access" class="form-control">
-						<form:options items="${accessList}" />
+						<form:options items="${accessList}" itemLabel="value" itemValue="id"/>
 					</form:select>
 					<form:errors path="access" class="control-label" />
 				</div>
@@ -76,7 +75,7 @@
 				<label class="col-sm-2 control-label">Status</label>
 				<div class="col-sm-5">
 					<form:select path="status" class="form-control">
-						<form:options items="${accessList}" />
+						<form:options items="${statusList}" itemLabel="value" itemValue="id" />
 					</form:select>
 					<form:errors path="status" class="control-label" />
 				</div>

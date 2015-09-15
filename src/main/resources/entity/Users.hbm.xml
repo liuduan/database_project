@@ -16,6 +16,11 @@
         <property name="password" type="string">
             <column name="password" not-null="true" />
         </property>
+        <property name="role" column="role" not-null="true">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">edu.tamu.ctv.entity.enums.Roles</param>
+			</type>
+		</property>
         <property name="firstname" type="string">
             <column name="firstname" not-null="true" />
         </property>

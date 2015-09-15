@@ -10,7 +10,7 @@ import edu.tamu.ctv.entity.Columntypes;
 import edu.tamu.ctv.entity.Columntypestempl;
 import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.repository.ColumnTypesTemplRepository;
-import edu.tamu.ctv.utils.Auth;
+import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 @Service("columnTypesService")
 public class ColumnTypesService
@@ -20,7 +20,7 @@ public class ColumnTypesService
 	
 	private Columntypes convert(Columntypestempl columnTypesTempl, Projects project, Columntypes parent)
 	{
-		Columntypes columnType = new Columntypes(null, parent, project, columnTypesTempl.getCode(), columnTypesTempl.getName(), Auth.getCurrentDate());
+		Columntypes columnType = new Columntypes(null, parent, project, columnTypesTempl.getCode(), columnTypesTempl.getName(), ProjectAuthentication.getCurrentDate());
 		return columnType;
 	}
 	

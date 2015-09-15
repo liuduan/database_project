@@ -1,14 +1,19 @@
 package edu.tamu.ctv.service;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.tamu.ctv.entity.Projects;
+import edu.tamu.ctv.entity.Users;
+import edu.tamu.ctv.entity.enums.Status;
 import edu.tamu.ctv.repository.ProjectsRepository;
-import edu.tamu.ctv.repository.UsersRepository;
-import edu.tamu.ctv.utils.Auth;
+import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 @Service("projectService")
 public class ProjectService
@@ -18,26 +23,25 @@ public class ProjectService
 	@Autowired
 	private ProjectsRepository projectRepository;
 	@Autowired
-	private UsersRepository userRepository;
-	@Autowired
 	private ColumnTypesService columnTypesService;
 	@Autowired
 	private RowTypeService rowTypeService;
+	@Autowired
+	private ProjectAuthentication projectAuthentication;
 	
-	public void save(Projects project)
+	public void save(Projects entity)
 	{
-		if (project.isNew())
+		if (entity.isNew())
 		{
-			InitDefaultValues(project);
+			InitDefaultValues(entity);
 		}
 		else
 		{
-			updateProject(project);
+			entity = updateEntry(entity);
 		}
-		
 		try
 		{
-			projectRepository.save(project);
+			projectRepository.save(entity);
 		}
 		catch (Exception e)
 		{
@@ -45,23 +49,37 @@ public class ProjectService
 		}
 	}
 	
-	private void updateProject(Projects project)
+	private void InitDefaultValues(Projects entity)
 	{
-		project.setLastupdatedt(Auth.getCurrentDate());
-	}
-	
-	private void InitDefaultValues(Projects project)
-	{
-		project.setUsers(userRepository.findOne(1l));
-		project.setRegistereddt(Auth.getCurrentDate());
-		project.setLastupdatedt(Auth.getCurrentDate());
+		entity.setUsers(projectAuthentication.getCurrentUser());
+		entity.setRegistereddt(ProjectAuthentication.getCurrentDate());
+		entity.setLastupdatedt(ProjectAuthentication.getCurrentDate());
 		
-		createDefaultColumnsAndTypes(project);
+		createDefaultColumnsAndTypes(entity);
 	}
 	
-	public void createDefaultColumnsAndTypes(Projects project)
+	private Projects updateEntry(Projects entity)
 	{
-		columnTypesService.createDefaultColumns(project);
-		rowTypeService.createDefaultTypes(project);
+		Projects oldEntity = projectRepository.findOne(entity.getId());
+		
+		oldEntity.setName(entity.getName());
+		oldEntity.setAccess(entity.getAccess());
+		oldEntity.setStatus(entity.getStatus());
+		oldEntity.setNotes(entity.getNotes());
+		oldEntity.setStarts(entity.getStarts());
+		oldEntity.setEnds(entity.getEnds());
+		oldEntity.setProjectmanagerses(entity.getProjectmanagerses());
+		oldEntity.setProjectreviewerses(entity.getProjectreviewerses());
+		oldEntity.setProjectmemberses(entity.getProjectmemberses());
+		
+		oldEntity.setLastupdatedt(ProjectAuthentication.getCurrentDate());
+
+		return oldEntity;
+	}
+	
+	public void createDefaultColumnsAndTypes(Projects entity)
+	{
+		columnTypesService.createDefaultColumns(entity);
+		rowTypeService.createDefaultTypes(entity);
 	}
 }

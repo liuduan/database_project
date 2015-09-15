@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,19 @@ public class FileUploadController
 	private ImportManager importManager;
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public String upload(Model model)
+	public String upload(@RequestParam("projectId") String projectId, Model model)
 	{
 		logger.debug("upload()");
+		model.addAttribute("importProjectId", projectId);
 		return "fileupload/upload";
 	}
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file)
+	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("projectId") String projectId)
 	{
-		if (!file.isEmpty())
+		if (!file.isEmpty() && StringUtils.isNotBlank(projectId))
 		{
+			Long prjId = Long.valueOf(projectId);
 			try
 			{
 				byte[] bytes = file.getBytes();
@@ -52,7 +55,7 @@ public class FileUploadController
 				stream.write(bytes);
 				stream.close();
 
-				parseFile(serverFile);
+				parseFile(serverFile, prjId);
 				
 				logger.info("Server File Location=" + serverFile.getAbsolutePath());
 
@@ -107,12 +110,12 @@ public class FileUploadController
 		return message;
 	}
 	
-	private void parseFile(File serverFile)
+	private void parseFile(File serverFile, Long projectId)
 	{
 		try
 		{
 			importManager.setFile(serverFile.getPath());
-			//Runnable func = new ImportManager();
+			importManager.setProject(projectId);
 			Thread thread = new Thread(importManager);
 			thread.start();
 		}

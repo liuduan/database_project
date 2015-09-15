@@ -1,17 +1,15 @@
 package edu.tamu.ctv.controller;
 
 import java.beans.PropertyEditorSupport;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +28,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.entity.Projecttypes;
 import edu.tamu.ctv.entity.Users;
+import edu.tamu.ctv.entity.enums.Access;
+import edu.tamu.ctv.entity.enums.Status;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.service.ProjectService;
-import edu.tamu.ctv.utils.Auth;
 
 @Controller
 public class ProjectController
@@ -89,7 +88,6 @@ public class ProjectController
 		}
 	}
 
-	// delete project
 	@RequestMapping(value = "/projects/delete/{id}", method = RequestMethod.POST)
 	public String deleteProject(@PathVariable("id") Long id, final RedirectAttributes redirectAttributes)
 	{
@@ -176,18 +174,6 @@ public class ProjectController
 
 	private void populateDefaultModel(Model model, Projects project)
 	{
-		Map<Integer, String> access = new LinkedHashMap<Integer, String>();
-		access.put(0, "Private");
-		access.put(1, "Protected");
-		access.put(2, "For registered users (readonly)");
-		access.put(3, "For registered users (allow edit)");
-		access.put(4, "Public (readonly)");
-		access.put(5, "Public (allow edit)");
-		model.addAttribute("accessList", access);
-
-		model.addAttribute("projTypes", getProjectTypes());
-		model.addAttribute("userList", getUsers());
-
 	}
 
 	@ModelAttribute("usersCache")
@@ -203,6 +189,18 @@ public class ProjectController
 		List<Projecttypes> projecttypes = (List<Projecttypes>) projectTypesRepository.findAll();
 		return projecttypes;
 	}
+	
+	@ModelAttribute("accessList")
+	public Access[] getAccessList()
+	{
+		return Access.values();
+	}
+	
+	@ModelAttribute("statusList")
+	public Status[] getStatusList()
+	{
+		return Status.values();
+	}
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception
@@ -216,5 +214,16 @@ public class ProjectController
 				setValue(ch);
 			}
 		});
+		
+		binder.registerCustomEditor(Access.class, new PropertyEditorSupport()
+		{
+	        @Override
+	        public void setAsText(String value) throws IllegalArgumentException
+	        {
+	            if (StringUtils.isBlank(value)) return;
+	            setValue(Access.valueOf(value));
+	        }
+
+	    });
 	}
 }

@@ -14,6 +14,7 @@ import edu.tamu.ctv.entity.*;
 import edu.tamu.ctv.repository.*;
 import edu.tamu.ctv.utils.DateUtil;
 import edu.tamu.ctv.utils.importdata.toxpi.DataTransformation;
+import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 @Service("importManager")
 public class ImportManager implements Runnable
@@ -35,14 +36,13 @@ public class ImportManager implements Runnable
 	@Autowired
 	private UnitsRepository unitsRepository;
 	@Autowired
-	private UsersRepository usersRepository;
-	@Autowired
 	private SequencesRepository sequencesRepository;
-	
+	@Autowired
+	private ProjectAuthentication projectAuthentication;
 	
 	private String fileLocation = "";
 	//TODO: Change
-	private Long projectId = 1l;
+	private Long projectId = 0l;
 	
 	public ImportManager()
 	{}
@@ -50,6 +50,11 @@ public class ImportManager implements Runnable
 	public void setFile(String fileLocation)
 	{
 		this.fileLocation = fileLocation;
+	}
+	
+	public void setProject(Long projectId)
+	{
+		this.projectId = projectId;
 	}
 	
 	public UniversalDataImport parseToxPiFormat()
@@ -74,9 +79,14 @@ public class ImportManager implements Runnable
 		{
 			if (data != null)
 			{
+				Users currentUser = projectAuthentication.getCurrentUser();
+				Units currentUnit = projectAuthentication.getDefaultUnit();
 				Map<String, Long> orderMap = new LinkedHashMap<String, Long>();
 				
 				Projects currentProject = projectRepository.findOne(projectId);
+				
+				//TODO: throw Exception
+				if (currentProject == null) return;
 				
 				List<Rowtypes> rowTypes = new ArrayList<Rowtypes>(currentProject.getRowtypeses());
 				List<Columntypes> columnTypes = new ArrayList<Columntypes>(currentProject.getColumntypeses());
@@ -151,7 +161,7 @@ public class ImportManager implements Runnable
 							if (columnCode.equals(ch.getCode()))
 							{
 								currentColumnHeader = ch;
-								continue;
+								break;
 							}
 						}
 						if (null == currentColumnHeader)
@@ -179,7 +189,7 @@ public class ImportManager implements Runnable
 						if (component.getCode().equals(c.getCode()))
 						{
 							currentComponent = c;
-							continue;
+							break;
 						}
 					}
 					if (null == currentComponent)
@@ -188,19 +198,16 @@ public class ImportManager implements Runnable
 					}
 					if (null == currentComponent)
 					{
-						currentComponent = new Components(null, currentProject, unitsRepository.findOne(1l), usersRepository.findOne(1l), component.getCode(), component.getCode(), DateUtil.GetCurrentDate());
+						currentComponent = new Components(null, currentProject, currentUnit, currentUser, component.getCode(), component.getCode(), DateUtil.GetCurrentDate());
 						currentComponent.setColumnheaders(parentColumnHeader);
 						componentList.add(currentComponent);
 					}
 					
-					Results currentResult = new Results(null, currentComponent, currentProject, usersRepository.findOne(1l), orderId, DateUtil.GetCurrentDate());
+					Results currentResult = new Results(null, currentComponent, currentProject, currentUser, orderId, DateUtil.GetCurrentDate());
 					currentResult.setStrresult(result.getValue());
 					resultList.add(currentResult);
-					
-
 				}
-				
-				
+
 				//Save to DB
 				rowHeaderRepository.save(rowHeaderList);
 				columnHeaderRepository.save(columnHeaderList);

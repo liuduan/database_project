@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.entity.customdefined.ContactForm;
-import edu.tamu.ctv.utils.Auth;
+import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 @Controller
 public class HomeController

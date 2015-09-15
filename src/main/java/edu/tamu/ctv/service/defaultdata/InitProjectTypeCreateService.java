@@ -2,7 +2,7 @@ package edu.tamu.ctv.service.defaultdata;
 
 import edu.tamu.ctv.entity.Projecttypes;
 import edu.tamu.ctv.repository.ProjectTypesRepository;
-import edu.tamu.ctv.utils.Auth;
+import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 
 public class InitProjectTypeCreateService
@@ -21,8 +21,8 @@ public class InitProjectTypeCreateService
 			projectTypes = new Projecttypes();
 			projectTypes.setCode("INVIVO");
 			projectTypes.setName("In Vivo");
-			projectTypes.setRegistereddt(Auth.getCurrentDate());
-			projectTypes.setLastvisitdt(Auth.getCurrentDate());
+			projectTypes.setRegistereddt(ProjectAuthentication.getCurrentDate());
+			projectTypes.setLastvisitdt(ProjectAuthentication.getCurrentDate());
 			projectTypesRepository.save(projectTypes);
 		}
 
@@ -31,8 +31,8 @@ public class InitProjectTypeCreateService
 			projectTypes = new Projecttypes();
 			projectTypes.setCode("INVITRO");
 			projectTypes.setName("In Vitro");
-			projectTypes.setRegistereddt(Auth.getCurrentDate());
-			projectTypes.setLastvisitdt(Auth.getCurrentDate());
+			projectTypes.setRegistereddt(ProjectAuthentication.getCurrentDate());
+			projectTypes.setLastvisitdt(ProjectAuthentication.getCurrentDate());
 			projectTypesRepository.save(projectTypes);
 		}
 

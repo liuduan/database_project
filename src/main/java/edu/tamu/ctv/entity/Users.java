@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.tamu.ctv.entity.enums.Roles;
+
 public class Users implements Serializable
 {
 	private static final long serialVersionUID = 8955989208010581715L;
@@ -12,6 +14,7 @@ public class Users implements Serializable
 	private Long id;
 	private String login;
 	private String password;
+	private Roles  role = Roles.USER;
 	private String confirmPassword;
 	private String firstname;
 	private String lastname;
@@ -151,6 +154,16 @@ public class Users implements Serializable
 	public void setConfirmPassword(String confirmPassword)
 	{
 		this.confirmPassword = confirmPassword;
+	}
+
+	public Roles getRole()
+	{
+		return role;
+	}
+
+	public void setRole(Roles role)
+	{
+		this.role = role;
 	}
 
 	public String getFirstname()

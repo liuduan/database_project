@@ -20,7 +20,7 @@
 					<form method="POST" action="uploadFile"	enctype="multipart/form-data">
 						<fieldset>
 							<input	type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							
+							<input	type="hidden" name="projectId" value="${importProjectId}" />
 							
 							<div class="form-group">
 								<label class="col-sm-2 control-label">File to upload:</label>

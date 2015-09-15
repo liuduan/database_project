@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.tamu.ctv.entity.enums.Access;
+import edu.tamu.ctv.entity.enums.Status;
+
 public class Projects implements java.io.Serializable
 {
 	private Long id;
@@ -11,11 +14,11 @@ public class Projects implements java.io.Serializable
 	private Users users;
 	private String code;
 	private String name;
-	private int access;
+	private Access access;
 	private String notes;
 	private Date starts;
 	private Date ends;
-	private Long status;
+	private Status status;
 	private Date registereddt;
 	private Date lastupdatedt;
 	
@@ -32,7 +35,7 @@ public class Projects implements java.io.Serializable
 	{
 	}
 
-	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, Date registereddt, Date lastupdatedt)
+	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, Access access, Status status, Date registereddt, Date lastupdatedt)
 	{
 		this.id = id;
 		this.projecttypes = projecttypes;
@@ -40,11 +43,12 @@ public class Projects implements java.io.Serializable
 		this.code = code;
 		this.name = name;
 		this.access = access;
+		this.status = status;
 		this.registereddt = registereddt;
 		this.lastupdatedt = lastupdatedt;
 	}
 
-	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, int access, String notes, Date registereddt, Date lastupdatedt, Set<Rowtypes> rowtypeses,
+	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, Access access, Status status, String notes, Date registereddt, Date lastupdatedt, Set<Rowtypes> rowtypeses,
 			Set<Components> componentses, Set<Columntypes> columntypeses, Set<Results> resultses)
 	{
 		this.id = id;
@@ -53,6 +57,7 @@ public class Projects implements java.io.Serializable
 		this.code = code;
 		this.name = name;
 		this.access = access;
+		this.status = status;
 		this.notes = notes;
 		this.registereddt = registereddt;
 		this.lastupdatedt = lastupdatedt;
@@ -118,12 +123,12 @@ public class Projects implements java.io.Serializable
 		this.name = name;
 	}
 
-	public int getAccess()
+	public Access getAccess()
 	{
 		return this.access;
 	}
 
-	public void setAccess(int access)
+	public void setAccess(Access access)
 	{
 		this.access = access;
 	}
@@ -208,12 +213,12 @@ public class Projects implements java.io.Serializable
 		this.ends = ends;
 	}
 
-	public Long getStatus()
+	public Status getStatus()
 	{
 		return status;
 	}
 
-	public void setStatus(Long status)
+	public void setStatus(Status status)
 	{
 		this.status = status;
 	}

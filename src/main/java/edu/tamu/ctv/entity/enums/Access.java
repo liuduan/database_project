@@ -27,7 +27,7 @@ public enum Access
 	{
 		return value;
 	}
-
+	
 	public static Access parse(String val)
 	{
 		Access access = null;
