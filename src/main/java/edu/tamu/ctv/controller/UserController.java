@@ -29,7 +29,6 @@ import edu.tamu.ctv.entity.Users;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.service.UsersService;
 import edu.tamu.ctv.service.validator.UserFormValidator;
-import edu.tamu.ctv.utils.session.ProjectAuthentication;
 
 @Controller
 public class UserController

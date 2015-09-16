@@ -17,4 +17,6 @@ public interface ColumnHeadersRepository extends CrudRepository<Columnheaders, L
 	
 	@Query("select res from Columnheaders as res inner join res.columntypes ct inner join ct.projects p where p.id = :id")
 	List<Columnheaders> findByHeaderTypesProjectsId(@Param("id")Long id);
+	
+	List<Columnheaders> findByColumntypesProjectsId(Long id);
 }

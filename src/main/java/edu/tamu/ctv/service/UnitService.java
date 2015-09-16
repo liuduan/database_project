@@ -14,6 +14,6 @@ public class UnitService
 	
 	public Units getDefaultUnit()
 	{
-		return unitsRepository.findOne(0l);
+		return unitsRepository.findOne(1l);
 	}
 }

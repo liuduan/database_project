@@ -26,7 +26,7 @@
 <spring:url value="/projects/add" var="urlAddProject" />
 
 <spring:url value="/upload" var="urlImport" />
-<spring:url value="/export" var="urlExport" />
+<spring:url value="/downloadcsv?projectId=1" var="urlExport" />
 
 <spring:url value="/analysis/${projectId}" var="urlDisplayAnalysis" />
 <spring:url value="/profile" var="urlProfile" />
@@ -57,7 +57,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Project <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="${urlListProject}">List</a></li>
-                <li><a href="${urlAddProject}">Add User</a></li>
+                <li><a href="${urlAddProject}">Add Project</a></li>
               </ul>
             </li>	
 				

@@ -6,6 +6,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import edu.tamu.ctv.entity.Projects;
+import edu.tamu.ctv.entity.Users;
 
 @Component
 public class ProjectFormValidator implements Validator
@@ -17,12 +18,17 @@ public class ProjectFormValidator implements Validator
 
 	public void validate(Object target, Errors errors)
 	{
+		Projects project = (Projects) target;
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "NotEmpty.projectForm.code");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.projectForm.name");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "access", "NotEmpty.projectForm.access");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "projecttype", "NotEmpty.projectForm.projecttype");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "status", "NotEmpty.projectForm.status");
 		
+		if(null == project.getProjecttypes())
+		{
+			errors.rejectValue("projecttype", "NotEmpty.projectForm.projecttype");
+		}
 	}
 
 }

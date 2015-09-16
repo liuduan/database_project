@@ -34,11 +34,16 @@ import edu.tamu.ctv.repository.ProjectTypesRepository;
 import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.service.ProjectService;
+import edu.tamu.ctv.service.validator.ProjectFormValidator;
+import edu.tamu.ctv.service.validator.UserFormValidator;
 
 @Controller
 public class ProjectController
 {
 	private final Logger logger = LoggerFactory.getLogger(ProjectController.class);
+	
+	@Autowired
+	ProjectFormValidator projectFormValidator;
 	
 	@Autowired
 	private ProjectService projectService;
@@ -205,6 +210,8 @@ public class ProjectController
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception
 	{
+		binder.setValidator(projectFormValidator);
+		
 		binder.registerCustomEditor(Projecttypes.class, "projecttypes", new PropertyEditorSupport()
 		{
 			@Override
