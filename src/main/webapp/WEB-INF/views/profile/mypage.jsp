@@ -9,6 +9,12 @@
 <html lang="en">
 <jsp:include page="../fragments/header.jsp" />
 
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
 <body>
 
 	<div class="container">

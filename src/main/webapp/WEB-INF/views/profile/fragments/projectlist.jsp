@@ -50,17 +50,17 @@
 					params.set('${_csrf.parameterName}', '${_csrf.token}');
 				</script>
 				
-				<button class="btn btn-info" onclick="location.href='${projectUrl}'"><span class="glyphicon glyphicon-eye-open"></span></button>
+				<button data-toggle="tooltip" class="btn btn-info" onclick="location.href='${projectUrl}'" title="View the Project"><span class="glyphicon glyphicon-eye-open"></span></button>
 				<c:if test="${allowEditFragment eq true}">
-					<button class="btn btn-warning" onclick="location.href='${updateUrl}'"><span class="glyphicon glyphicon-edit"></span></button>
+					<button data-toggle="tooltip" class="btn btn-warning" onclick="location.href='${updateUrl}'" title="Update the Project"><span class="glyphicon glyphicon-edit"></span></button>
 				</c:if>
 				<c:if test="${allowDeleteFragment eq true}">
-					<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}', params)"><span class="glyphicon glyphicon-trash"></span></button>
+					<button data-toggle="tooltip" class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}', params)" title="Delete the Project"><span class="glyphicon glyphicon-trash"></span></button>
 				</c:if>
 				<c:if test="${allowEditFragment eq true}">
-					<button class="btn btn-primary" onclick="location.href='${importActionUrl}'"><span class="glyphicon glyphicon-import"></span> Import </button>
+					<button data-toggle="tooltip" class="btn btn-primary" onclick="location.href='${importActionUrl}'" title="Import"><span class="glyphicon glyphicon-import"></span></button>
 				</c:if>
-				<button class="btn btn-primary" onclick="location.href='${exportActionUrl}'"><span class="glyphicon glyphicon-export"></span> Export </button>
+				<button data-toggle="tooltip" class="btn btn-primary" onclick="location.href='${exportActionUrl}'" title="Export"><span class="glyphicon glyphicon-export"></span></button>
 
 			</td>
 		</tr>
