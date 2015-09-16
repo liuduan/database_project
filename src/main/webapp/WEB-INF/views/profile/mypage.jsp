@@ -185,6 +185,8 @@
 						</div>
 
 						<c:set var="projectListFragment" scope="request" value="${projectOwnCache}"/>
+						<c:set var="allowDeleteFragment" scope="request" value="true"/>
+						<c:set var="allowEditFragment" scope="request" value="true"/>
 						<div id="projects-tab" class="tab-pane">
 							<div class="pd-20">
 								<div class="vd_info tr" style="float: right;">
@@ -199,6 +201,8 @@
 						</div>
 						
 						<c:set var="projectListFragment" scope="request" value="${projectManagerCache}"/>
+						<c:set var="allowDeleteFragment" scope="request" value="false"/>
+						<c:set var="allowEditFragment" scope="request" value="true"/>
 						<div id="manager-tab" class="tab-pane">
 							<div class="pd-20">
 								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
@@ -210,6 +214,8 @@
 						</div>
 
 						<c:set var="projectListFragment" scope="request" value="${projectReviewerCache}"/>
+						<c:set var="allowDeleteFragment" scope="request" value="false"/>
+						<c:set var="allowEditFragment" scope="request" value="false"/>
 						<div id="reviewer-tab" class="tab-pane">
 							<div class="pd-20">
 								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">
@@ -221,6 +227,8 @@
 						</div>
 
 						<c:set var="projectListFragment" scope="request" value="${projectMemberCache}"/>
+						<c:set var="allowDeleteFragment" scope="request" value="false"/>
+						<c:set var="allowEditFragment" scope="request" value="true"/>
 						<div id="member-tab" class="tab-pane">
 							<div class="pd-20">
 								<h3 class="mgbt-xs-15 mgtp-10 font-semibold">

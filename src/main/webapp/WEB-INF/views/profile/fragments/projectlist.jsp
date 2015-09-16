@@ -44,15 +44,23 @@
 				<spring:url value="/projects/update/${project.id}" var="updateUrl" />
 				<spring:url value="/ctvproject/projects/delete/${project.id}" var="deleteUrl" /> 
 				<spring:url value="/upload?projectId=${project.id}" var="importActionUrl" />
+				<spring:url value="/export/${project.id}" var="exportActionUrl" />
 				<script type="text/javascript">
 					var params = new Map();
 					params.set('${_csrf.parameterName}', '${_csrf.token}');
 				</script>
 				
 				<button class="btn btn-info" onclick="location.href='${projectUrl}'"><span class="glyphicon glyphicon-eye-open"></span></button>
-				<button class="btn btn-primary" onclick="location.href='${updateUrl}'"><span class="glyphicon glyphicon-edit"></span></button>
-				<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}', params)"><span class="glyphicon glyphicon-trash"></span></button>
-				<button class="btn btn-primary pull-right" onclick="location.href='${importActionUrl}'">Import</button>
+				<c:if test="${allowEditFragment eq true}">
+					<button class="btn btn-warning" onclick="location.href='${updateUrl}'"><span class="glyphicon glyphicon-edit"></span></button>
+				</c:if>
+				<c:if test="${allowDeleteFragment eq true}">
+					<button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}', params)"><span class="glyphicon glyphicon-trash"></span></button>
+				</c:if>
+				<c:if test="${allowEditFragment eq true}">
+					<button class="btn btn-primary" onclick="location.href='${importActionUrl}'"><span class="glyphicon glyphicon-import"></span> Import </button>
+				</c:if>
+				<button class="btn btn-primary" onclick="location.href='${exportActionUrl}'"><span class="glyphicon glyphicon-export"></span> Export </button>
 
 			</td>
 		</tr>

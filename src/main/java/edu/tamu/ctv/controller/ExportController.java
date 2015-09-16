@@ -4,13 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -35,14 +34,22 @@ public class ExportController
 		return "export/export";
 	}
 
-	@RequestMapping(value = "/downloadcsv", method = RequestMethod.GET)
-	public void downloadCSV(@ModelAttribute("projectId") String projectId, HttpServletResponse response) throws IOException
+	@RequestMapping(value = "/export/{id}", method = RequestMethod.GET)
+	public void export(@PathVariable("id") Long id, HttpServletResponse response) throws IOException
 	{
-		if (StringUtils.isNotBlank(projectId))
+		logger.debug("export() id: {}", id);
+		
+		Projects project = projectRepository.findOne(id);
+		if (project != null)
 		{
-			Projects project = projectRepository.findOne(Long.valueOf(projectId));
 			exportService.ExportByProject(project, response);
-			response.getOutputStream().flush();
 		}
+		else
+		{
+			String reportName = "error.csv";
+			response.setContentType("text/csv");
+			response.setHeader("Content-disposition", "attachment;filename=" + reportName);
+		}
+		response.getOutputStream().flush();
 	}
 }

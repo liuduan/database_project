@@ -14,7 +14,10 @@
 
 <link rel="stylesheet" type="text/css" href="http://cdn3.devexpress.com/jslib/15.1.6/css/dx.common.css" />
 <link rel="stylesheet" type="text/css" href="http://cdn3.devexpress.com/jslib/15.1.6/css/dx.dark.css" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/font-awesome/css/font-awesome.min.css" />   
+<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/font-awesome/css/font-awesome.min.css" />  
+
+<link rel="shortcut icon" href="/ctvproject/img/favicon.png" type="image/x-icon" sizes="64x64">
+
 </head>
 
 <spring:url value="/" var="urlHome" />
@@ -41,7 +44,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-			<a class="navbar-brand" href="${urlHome}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>
+			<a class="navbar-brand" href="${urlHome}" style="padding: 5px;">
+				<!--  <span class="glyphicon glyphicon-home" aria-hidden="true">-->
+					<img src="/ctvproject/img/ctv_logo.png" alt="logo" height="40" width="150" style="display: inline-block; ">
+				<!--</span>-->
+			</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
