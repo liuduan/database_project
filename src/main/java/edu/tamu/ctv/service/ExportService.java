@@ -30,7 +30,6 @@ import edu.tamu.ctv.repository.ColumnHeadersRepository;
 import edu.tamu.ctv.repository.ColumnTypesRepository;
 import edu.tamu.ctv.repository.ComponentsRepository;
 import edu.tamu.ctv.repository.OrdersRepository;
-import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.ResultsRepository;
 import edu.tamu.ctv.repository.RowHeadersRepository;
 import edu.tamu.ctv.repository.RowTypesRepository;
@@ -41,8 +40,6 @@ public class ExportService
 {
 	private final Logger logger = LoggerFactory.getLogger(ExportService.class);
 	
-	@Autowired
-	private ProjectsRepository projectRepository;
 	@Autowired
 	private RowTypesRepository rowTypesRepository;
 	@Autowired
@@ -73,9 +70,12 @@ public class ExportService
 	private Map<Long, List<Orders>> ordersMapper  = new HashMap<Long, List<Orders>>();
 	private Map<Long, Results> resultsMapper  = new HashMap<Long, Results>();
 	private Map<Long, Rowheaders> rowHeaderMapper = new HashMap<Long, Rowheaders>();
+	private Map<Long, Columnheaders> columnHeaderMapper = new HashMap<Long, Columnheaders>();
 	
 	//Index mapping
 	private Map<Long, Integer> orderIndexMap = new HashMap<Long, Integer>();
+	private List<Long> columnIndexMap = new ArrayList<Long>();
+	
 	private List<Long> componentPosition = new ArrayList<Long>();
 	private List<Long> rowTypePosition = new ArrayList<Long>();
 	private List<Long> columnTypePosition = new ArrayList<Long>();
@@ -105,10 +105,14 @@ public class ExportService
 		return sb;
 	}
 	
-	private void addElementToMap(Long key, String element, Integer position)
+	private void addElementToMap(Long key, String element, Long componentId)
 	{
+		Components component = null;
 		boolean addRowElements = false;
+		int position = componentPosition.indexOf(componentId);
+		int elemPos = position + _horizontalOffset;
 		Integer orderPos = orderIndexMap.get(key);
+		
 		if (null == orderPos)
 		{
 			orderPos = orderIndexMap.size() + _verticalOffset;
@@ -117,10 +121,10 @@ public class ExportService
 		}
 		List<String> value = _resultMap.get(orderPos);
 
+		//Rows
 		if (addRowElements)
 		{
 			List<Orders> order = ordersMapper.get(key);
-
 			Rowheaders rh = null;
 			value.set(0, String.valueOf(key));
 			for (Orders o : order)
@@ -131,7 +135,33 @@ public class ExportService
 			}
 		}
 		
-		int elemPos = position + _horizontalOffset;
+		//Columns
+		if (!columnIndexMap.contains(componentId))
+		{
+			int headerPos = _verticalOffset - 1;
+			columnIndexMap.add(componentId);
+			component = componentsMapper.get(componentId);
+			
+			List<String> componentValue = _resultMap.get(headerPos);
+			componentValue.set(elemPos, component.getCode());
+			Columnheaders ch = columnHeaderMapper.get(component.getColumnheaders().getId());
+			while (ch != null)
+			{
+				headerPos--;
+				componentValue = _resultMap.get(headerPos);
+				componentValue.set(elemPos, ch.getCode());
+				if (ch.getColumnheaders() != null)
+				{
+					ch = columnHeaderMapper.get(ch.getColumnheaders().getId());					
+				}
+				else
+				{
+					ch = null;
+				}
+			}
+		}
+		
+		
 		value.set(elemPos, element);
 	}
 	
@@ -150,11 +180,11 @@ public class ExportService
 		}
 	}
 	
-	private void fillResultMapper(List<Results> results)
+	private void fillColumnHeaderMapper(List<Columnheaders> columnHeaderList)
 	{
-		for (Results result : results)
+		for (Columnheaders columnHeader : columnHeaderList)
 		{
-			resultsMapper.put(result.getId(), result);
+			columnHeaderMapper.put(columnHeader.getId(), columnHeader);
 		}
 	}
 	
@@ -176,6 +206,9 @@ public class ExportService
 		if (componentPosition != null) componentPosition.clear();
 		if (rowTypePosition != null) rowTypePosition.clear();
 		if (rowHeaderMapper != null) rowHeaderMapper.clear();
+		if (columnHeaderMapper != null) columnHeaderMapper.clear();
+		if (columnIndexMap != null) columnIndexMap.clear();
+		
 		
 	
 		
@@ -195,8 +228,8 @@ public class ExportService
 		List<Orders> orderList = ordersRepository.findOrdersByRowheadersRowtypesProjectsId(projectId);
 		
 		fillOrderMapper(orderList);
-		//fillResultMapper(results);
 		fillRowHeaderMapper(rowHeaderList);
+		fillColumnHeaderMapper(columnHeaderList);
 		
 		Collections.sort(rowTypeList, new Comparator<Rowtypes>()
 		{
@@ -245,18 +278,24 @@ public class ExportService
 			row.addAll(Collections.nCopies(_columnSize,""));
 			_resultMap.add(row);
 		}
-
-		Long componentId = null;
-		for (Results result : results)
+		
+		try
 		{
-			componentId = result.getComponents().getId();
-			addElementToMap(result.getOrderId(), result.getStrresult(), componentPosition.indexOf(componentId));
+			for (Results result : results)
+			{
+				addElementToMap(result.getOrderId(), result.getStrresult(), result.getComponents().getId());
+			}
+
+			for (int count = 0; count < _resultMap.size(); count++)
+			{
+				response.getOutputStream().print(getStringByIndex(count).toString());
+			}
+		}
+		catch (Exception e)
+		{
+			logger.error(e.getMessage(), e);
 		}
 
-		for (int count = 0; count < _resultMap.size(); count++)
-		{
-			response.getOutputStream().print(getStringByIndex(count).toString());
-		}
 
 	}
 }

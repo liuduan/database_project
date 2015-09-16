@@ -1,7 +1,6 @@
 package edu.tamu.ctv.utils.importdata;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +34,6 @@ public class ImportManager implements Runnable
 	@Autowired
 	private ResultsRepository resultsRepository;
 	@Autowired
-	private UnitsRepository unitsRepository;
-	@Autowired
 	private SequencesRepository sequencesRepository;
 	@Autowired
 	private ProjectAuthentication projectAuthentication;
@@ -44,6 +41,10 @@ public class ImportManager implements Runnable
 	private String fileLocation = "";
 	//TODO: Change
 	private Long projectId = 0l;
+	
+	List<Rowheaders> rowHeaderList = null;
+	List<Columnheaders> columnHeaderList = null;
+	List<Components> componentList = null;
 	
 	public ImportManager()
 	{}
@@ -74,14 +75,59 @@ public class ImportManager implements Runnable
 		return result;
 	}
 	
+	private Rowheaders findRowheaders(String rowCode, Long rowTypeId)
+	{
+		for (Rowheaders rowHeader : rowHeaderList)
+		{
+			if (rowHeader.getCode().equals(rowCode) && rowHeader.getRowtypes().getId().equals(rowTypeId))
+			{
+				return rowHeader;
+			}
+		}
+		return null;
+	}
+	
+	private Columnheaders findColumnheaders(String columnCode)
+	{
+		for (Columnheaders columnHeader : columnHeaderList)
+		{
+			if (columnHeader.getCode().equals(columnCode))
+			{
+				return columnHeader;
+			}
+		}
+		return null;
+	}
+	
+	private Components findComponents(String componentCode)
+	{
+		for (Components component : componentList)
+		{
+			if (component.getCode().equals(componentCode))
+			{
+				return component;
+			}
+		}
+		return null;
+	}
+	
 	private void storeDataToDataBase(UniversalDataImport data)
 	{
 		try
 		{
+			if (columnHeaderList != null) columnHeaderList.clear();
+			if (rowHeaderList != null) rowHeaderList.clear();
+			if (componentList != null) componentList.clear();
+			
 			if (data != null)
 			{
 				Users currentUser = projectAuthentication.getCurrentUser();
 				Units currentUnit = projectAuthentication.getDefaultUnit();
+				
+				columnHeaderList = columnHeaderRepository.findByColumntypesProjectsId(projectId);
+				rowHeaderList = rowHeaderRepository.findByRowtypesProjectsId(projectId);
+				componentList = componentsRepository.findByProjectsId(projectId);
+				
 				Map<String, Long> orderMap = new LinkedHashMap<String, Long>();
 				
 				Projects currentProject = projectRepository.findOne(projectId);
@@ -126,11 +172,7 @@ public class ImportManager implements Runnable
 							}
 							if (null == currentRowHeader)
 							{
-								List<Rowheaders> list = rowHeaderRepository.findByCodeAndRowtypesIdAndRowtypesProjectsId(rowCode, rowTypes.get(rowCounter).getId(), currentProject.getId());
-								if (list.size() > 0)
-								{
-									currentRowHeader = list.get(0);
-								}
+								currentRowHeader = findRowheaders(rowCode, rowTypes.get(rowCounter).getId());
 							}
 							if (null == currentRowHeader)
 							{
@@ -168,11 +210,7 @@ public class ImportManager implements Runnable
 						}
 						if (null == currentColumnHeader)
 						{
-							List<Columnheaders> list = columnHeaderRepository.findByCodeAndColumntypesProjectsId(columnCode, currentProject.getId());
-							if (list.size() > 0)
-							{
-								currentColumnHeader = list.get(0);
-							}
+							currentColumnHeader = findColumnheaders(columnCode);
 						}
 						if (null == currentColumnHeader)
 						{
@@ -196,7 +234,7 @@ public class ImportManager implements Runnable
 					}
 					if (null == currentComponent)
 					{
-						currentComponent = componentsRepository.findByCodeAndProjectsCode(component.getCode(), currentProject.getCode());
+						currentComponent = findComponents(component.getCode());
 					}
 					if (null == currentComponent)
 					{
