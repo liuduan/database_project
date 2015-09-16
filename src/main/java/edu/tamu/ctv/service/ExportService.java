@@ -55,15 +55,12 @@ public class ExportService
 	@Autowired
 	private ResultsRepository resultsRepository;
 	
-	
-	
 	private int _columnSize = 0;
 	private int _rowSize = 0;
 	private int _verticalOffset = 0;
 	private int _horizontalOffset = 0;
 	
 	private List<List<String>> _resultMap = new ArrayList<List<String>>();
-	
 	
 	//Hibernate mapping
 	private Map<Long, Components> componentsMapper = new HashMap<Long, Components>();
@@ -79,11 +76,6 @@ public class ExportService
 	private List<Long> componentPosition = new ArrayList<Long>();
 	private List<Long> rowTypePosition = new ArrayList<Long>();
 	private List<Long> columnTypePosition = new ArrayList<Long>();
-	
-	public void ExportByProject(Long projectId)
-	{
-		
-	}
 	
 	private StringBuffer getStringByIndex(int index)
 	{
@@ -160,8 +152,6 @@ public class ExportService
 				}
 			}
 		}
-		
-		
 		value.set(elemPos, element);
 	}
 	
@@ -195,22 +185,10 @@ public class ExportService
 			rowHeaderMapper.put(rowHeader.getId(), rowHeader);
 		}
 	}
-
+	
 	public void ExportByProject(Projects project, HttpServletResponse response) throws IOException
 	{
-		if (_resultMap != null) _resultMap.clear();
-		if (componentsMapper != null) componentsMapper.clear();
-		if (ordersMapper != null) ordersMapper.clear();
-		if (resultsMapper != null) resultsMapper.clear();
-		if (orderIndexMap != null) orderIndexMap.clear();
-		if (componentPosition != null) componentPosition.clear();
-		if (rowTypePosition != null) rowTypePosition.clear();
-		if (rowHeaderMapper != null) rowHeaderMapper.clear();
-		if (columnHeaderMapper != null) columnHeaderMapper.clear();
-		if (columnIndexMap != null) columnIndexMap.clear();
-		
-		
-	
+		ClearResources();
 		
 		Long projectId = project.getId();
 		
@@ -295,7 +273,23 @@ public class ExportService
 		{
 			logger.error(e.getMessage(), e);
 		}
-
-
+		finally
+		{
+			ClearResources();	
+		}
+	}
+	
+	private void ClearResources()
+	{
+		if (_resultMap != null) _resultMap.clear();
+		if (componentsMapper != null) componentsMapper.clear();
+		if (ordersMapper != null) ordersMapper.clear();
+		if (resultsMapper != null) resultsMapper.clear();
+		if (orderIndexMap != null) orderIndexMap.clear();
+		if (componentPosition != null) componentPosition.clear();
+		if (rowTypePosition != null) rowTypePosition.clear();
+		if (rowHeaderMapper != null) rowHeaderMapper.clear();
+		if (columnHeaderMapper != null) columnHeaderMapper.clear();
+		if (columnIndexMap != null) columnIndexMap.clear();
 	}
 }
