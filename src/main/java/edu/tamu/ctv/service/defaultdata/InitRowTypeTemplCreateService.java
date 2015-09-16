@@ -23,9 +23,10 @@ public class InitRowTypeTemplCreateService
 		if (0 == rowTypesTemplRepository.findByProjecttypeId(projectType.getId()).size())
 		{
 			int counter = 1;
-			list.add(new Rowtypestempl(null, projectType, "SOURCE", "Source", counter++));
-			list.add(new Rowtypestempl(null, projectType, "CASRN", "CASR Number", counter++));
-			list.add(new Rowtypestempl(null, projectType, "CHEMICAL", "Chemical", counter++));
+			
+			list.add(new Rowtypestempl(null, projectType, "chemical_source_sid", "Source", counter++));
+			list.add(new Rowtypestempl(null, projectType, "casrn", "CASR Number", counter++));
+			list.add(new Rowtypestempl(null, projectType, "chemical_name", "Chemical Name", counter++));
 		}
 		
 		projectType = projectTypesRepository.findByCode("INVITRO").get(0);

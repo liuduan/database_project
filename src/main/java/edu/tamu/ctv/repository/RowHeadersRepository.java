@@ -19,4 +19,6 @@ public interface RowHeadersRepository extends CrudRepository<Rowheaders, Long>
 	List<Rowheaders> findByRowTypesProjectsId(@Param("id")Long id);
 
 	List<Rowheaders> findByRowtypesProjectsId(Long id);
+	
+	List<Rowheaders> findByCodeAndRowtypesIdAndRowtypesProjectsId(String code, Long rowTypeId, Long projectId);
 }

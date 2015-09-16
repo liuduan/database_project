@@ -19,4 +19,6 @@ public interface ColumnHeadersRepository extends CrudRepository<Columnheaders, L
 	List<Columnheaders> findByHeaderTypesProjectsId(@Param("id")Long id);
 	
 	List<Columnheaders> findByColumntypesProjectsId(Long id);
+	
+	List<Columnheaders> findByCodeAndColumntypesProjectsId(String code, Long projectId);
 }

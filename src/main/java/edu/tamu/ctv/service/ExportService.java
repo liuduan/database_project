@@ -2,16 +2,21 @@ package edu.tamu.ctv.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
 
 import edu.tamu.ctv.entity.Columnheaders;
 import edu.tamu.ctv.entity.Columntypes;
@@ -53,11 +58,27 @@ public class ExportService
 	@Autowired
 	private ResultsRepository resultsRepository;
 	
-	private List<List<String>> resultMap = null;
-	private Map<String, Integer> rowPosition = null;
-	private Map<String, Integer> columnPosition = null;
-	private int columnSize = 0;
-	private int rowSize = 0;
+	
+	
+	private int _columnSize = 0;
+	private int _rowSize = 0;
+	private int _verticalOffset = 0;
+	private int _horizontalOffset = 0;
+	
+	private List<List<String>> _resultMap = new ArrayList<List<String>>();
+	
+	
+	//Hibernate mapping
+	private Map<Long, Components> componentsMapper = new HashMap<Long, Components>();
+	private Map<Long, List<Orders>> ordersMapper  = new HashMap<Long, List<Orders>>();
+	private Map<Long, Results> resultsMapper  = new HashMap<Long, Results>();
+	private Map<Long, Rowheaders> rowHeaderMapper = new HashMap<Long, Rowheaders>();
+	
+	//Index mapping
+	private Map<Long, Integer> orderIndexMap = new HashMap<Long, Integer>();
+	private List<Long> componentPosition = new ArrayList<Long>();
+	private List<Long> rowTypePosition = new ArrayList<Long>();
+	private List<Long> columnTypePosition = new ArrayList<Long>();
 	
 	public void ExportByProject(Long projectId)
 	{
@@ -67,28 +88,97 @@ public class ExportService
 	private StringBuffer getStringByIndex(int index)
 	{
 		StringBuffer sb = new StringBuffer();
-		for (String str : resultMap.get(index))
+		for (String str : _resultMap.get(index))
 		{
-			sb.append(str).append(",");
+			if (StringUtils.isBlank(str))
+			{
+				sb.append(",");			
+			}
+			else
+			{
+				sb.append('"').append(str).append('"').append(",");	
+			}
+			
 		}
-		sb.deleteCharAt(sb.length());
+		sb.deleteCharAt(sb.length() - 1);
 		sb.append("\n");
 		return sb;
 	}
 	
 	private void addElementToMap(Long key, String element, Integer position)
 	{
-		List<String> value = resultMap.get(key.intValue());
-		if (null == value)
+		boolean addRowElements = false;
+		Integer orderPos = orderIndexMap.get(key);
+		if (null == orderPos)
 		{
-			value = new ArrayList<String>(columnSize);
-			resultMap.set(key.intValue(), value);
+			orderPos = orderIndexMap.size() + _verticalOffset;
+			orderIndexMap.put(key, orderPos);
+			addRowElements = true;
 		}
-		value.set(position, element);
+		List<String> value = _resultMap.get(orderPos);
+
+		if (addRowElements)
+		{
+			List<Orders> order = ordersMapper.get(key);
+
+			Rowheaders rh = null;
+			value.set(0, String.valueOf(key));
+			for (Orders o : order)
+			{
+				rh = rowHeaderMapper.get(o.getRowheaders().getId());
+				int rowTypePos = rowTypePosition.indexOf(rh.getRowtypes().getId()) + 1;
+				value.set(rowTypePos, rh.getCode());
+			}
+		}
+		
+		int elemPos = position + _horizontalOffset;
+		value.set(elemPos, element);
 	}
 	
+	private void fillOrderMapper(List<Orders> orderList)
+	{
+		List<Orders> ol = null;
+		for (Orders order : orderList)
+		{
+			ol = ordersMapper.get(order.getOrderId());
+			if (null == ol)
+			{
+				ol = new ArrayList<Orders>();
+				ordersMapper.put(order.getOrderId(), ol);
+			}
+			ol.add(order);
+		}
+	}
+	
+	private void fillResultMapper(List<Results> results)
+	{
+		for (Results result : results)
+		{
+			resultsMapper.put(result.getId(), result);
+		}
+	}
+	
+	private void fillRowHeaderMapper(List<Rowheaders> rowHeaderList)
+	{
+		for (Rowheaders rowHeader : rowHeaderList)
+		{
+			rowHeaderMapper.put(rowHeader.getId(), rowHeader);
+		}
+	}
+
 	public void ExportByProject(Projects project, HttpServletResponse response) throws IOException
 	{
+		if (_resultMap != null) _resultMap.clear();
+		if (componentsMapper != null) componentsMapper.clear();
+		if (ordersMapper != null) ordersMapper.clear();
+		if (resultsMapper != null) resultsMapper.clear();
+		if (orderIndexMap != null) orderIndexMap.clear();
+		if (componentPosition != null) componentPosition.clear();
+		if (rowTypePosition != null) rowTypePosition.clear();
+		if (rowHeaderMapper != null) rowHeaderMapper.clear();
+		
+	
+		
 		Long projectId = project.getId();
 		
 		String reportName = project.getCode() + ".csv";
@@ -96,64 +186,74 @@ public class ExportService
 		response.setHeader("Content-disposition", "attachment;filename=" + reportName);
 		
 		
-		
-
-		
-/*		if (rowPosition != null) rowPosition.clear();
-		rowPosition = new HashMap<String, Integer>();
-		
-		if (columnPosition != null) columnPosition.clear();
-		columnPosition = new HashMap<String, Integer>();
-		
 		List<Rowtypes> rowTypeList = rowTypesRepository.findByProjectsId(projectId);
+		List<Columntypes> columnTypeList = columnTypesRepository.findByProjectsId(projectId);
+		List<Rowheaders> rowHeaderList = rowHeadersRepository.findByRowtypesProjectsId(projectId);
+		List<Columnheaders> columnHeaderList = columnHeadersRepository.findByColumntypesProjectsId(projectId);
+		List<Results> results = resultsRepository.findByProjectsId(projectId);
+		List<Components> componentList = componentsRepository.findByProjectsId(projectId);
+		List<Orders> orderList = ordersRepository.findOrdersByRowheadersRowtypesProjectsId(projectId);
+		
+		fillOrderMapper(orderList);
+		//fillResultMapper(results);
+		fillRowHeaderMapper(rowHeaderList);
+		
+		Collections.sort(rowTypeList, new Comparator<Rowtypes>()
+		{
+			public int compare(Rowtypes o1, Rowtypes o2)
+			{
+				return o1.getShoworder() - o2.getShoworder();
+			}
+		});
 		for (Rowtypes rowtypes : rowTypeList)
 		{
-			rowPosition.put(rowtypes.getCode(), rowtypes.getShoworder());
+			rowTypePosition.add(rowtypes.getId());
 		}
-		List<Rowheaders> rowHeaderList = rowHeadersRepository.findByRowHeadersProjectsId(projectId);
-		
-		List<Columntypes> columnTypeList = columnTypesRepository.findByProjectsId(projectId);
+		for (Components comp : componentList)
+		{
+			componentPosition.add(comp.getId());
+			componentsMapper.put(comp.getId(), comp);
+		}
+
 		Columntypes child = null;
 		for (Columntypes columntypes : columnTypeList)
 		{
 			if (columntypes.getColumntypeses().isEmpty())
 			{
 				child = columntypes;
+				while(child.getColumntypes() != null)
+				{
+					columnTypePosition.add(child.getId());
+					child = child.getColumntypes();
+				}
+				columnTypePosition = Lists.reverse(columnTypePosition); 
 				break;
 			}
 		}
-		int position = 1;
-		while(child.getColumntypes() != null)
-		{
-			columnPosition.put(child.getCode(), position++);
-			child = child.getColumntypes();
-		}
-		
-		List<Columnheaders> columnHeaderList = columnHeadersRepository.findByColumntypesProjectsId(projectId);
-		List<Orders> orderList = ordersRepository.findOrdersByRowheadersRowtypesProjectsId(projectId);*/
-		
 
 		
-		List<Rowtypes> rowTypeList = rowTypesRepository.findByProjectsId(projectId);
-		List<Columntypes> columnTypeList = columnTypesRepository.findByProjectsId(projectId);
+		_verticalOffset = columnTypeList.size() + 1;
+		_horizontalOffset = rowTypeList.size() + 1;
+		_rowSize = _verticalOffset + ordersMapper.size();
+		_columnSize = _horizontalOffset + componentList.size();
+		_resultMap = new ArrayList<List<String>>();
 		
-		List<Components> componentList = componentsRepository.findByProjectsId(projectId);
-		List<Results> results = resultsRepository.findByProjectsId(projectId);
-		
-		int verticalOffset = columnTypeList.size();
-		int horizontalOffset = rowTypeList.size();
-		
-		rowSize = verticalOffset + results.size();
-		columnSize = horizontalOffset + componentList.size();
-		
-		if (resultMap != null) resultMap.clear();
-		resultMap = new ArrayList<List<String>>(results.size());
-		
+		//TODO: Change
+		for (int i = 0; i < _rowSize; i++)
+		{
+			List<String> row = new ArrayList<String>();
+			row.addAll(Collections.nCopies(_columnSize,""));
+			_resultMap.add(row);
+		}
+
+		Long componentId = null;
 		for (Results result : results)
 		{
-			addElementToMap(result.getOrderId() + verticalOffset, result.getStrresult(), componentList.indexOf(result.getComponents()) + verticalOffset);
+			componentId = result.getComponents().getId();
+			addElementToMap(result.getOrderId(), result.getStrresult(), componentPosition.indexOf(componentId));
 		}
-		for (int count = 0; count < resultMap.size(); count++)
+
+		for (int count = 0; count < _resultMap.size(); count++)
 		{
 			response.getOutputStream().print(getStringByIndex(count).toString());
 		}

@@ -1,6 +1,7 @@
 package edu.tamu.ctv.utils.importdata;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,9 +115,10 @@ public class ImportManager implements Runnable
 						{
 							Rowheaders currentRowHeader = null;
 							String rowCode = result.getRows().get(rowCounter);
+
 							for (Rowheaders rh : rowHeaderList)
 							{
-								if (rowCode.equals(rh.getCode()))
+								if (rowCode.equals(rh.getCode()) && rh.getRowtypes().getId().equals(rowTypes.get(rowCounter).getId()))
 								{
 									currentRowHeader = rh;
 									continue;
@@ -124,7 +126,7 @@ public class ImportManager implements Runnable
 							}
 							if (null == currentRowHeader)
 							{
-								List<Rowheaders> list = rowHeaderRepository.findByCodeAndRowTypesProjectsCode(rowCode, currentProject.getCode());
+								List<Rowheaders> list = rowHeaderRepository.findByCodeAndRowtypesIdAndRowtypesProjectsId(rowCode, rowTypes.get(rowCounter).getId(), currentProject.getId());
 								if (list.size() > 0)
 								{
 									currentRowHeader = list.get(0);
@@ -166,7 +168,7 @@ public class ImportManager implements Runnable
 						}
 						if (null == currentColumnHeader)
 						{
-							List<Columnheaders> list = columnHeaderRepository.findByCodeAndHeaderTypesProjectsCode(columnCode, currentProject.getCode());
+							List<Columnheaders> list = columnHeaderRepository.findByCodeAndColumntypesProjectsId(columnCode, currentProject.getId());
 							if (list.size() > 0)
 							{
 								currentColumnHeader = list.get(0);
