@@ -97,6 +97,17 @@ public class ExportService
 		return sb;
 	}
 	
+	private void addRowHeaderToMap(List<Rowtypes> rowTypeList)
+	{
+		List<String> value = _resultMap.get(_verticalOffset - 1);
+		value.set(0, "row_order");
+		for (int i = 0; i < rowTypeList.size(); i++)
+		{
+			value.set(i + 1, rowTypeList.get(i).getCode());
+		}
+
+	}
+	
 	private void addElementToMap(Long key, String element, Long componentId)
 	{
 		Components component = null;
@@ -216,6 +227,7 @@ public class ExportService
 				return o1.getShoworder() - o2.getShoworder();
 			}
 		});
+		
 		for (Rowtypes rowtypes : rowTypeList)
 		{
 			rowTypePosition.add(rowtypes.getId());
@@ -259,6 +271,7 @@ public class ExportService
 		
 		try
 		{
+			addRowHeaderToMap(rowTypeList);
 			for (Results result : results)
 			{
 				addElementToMap(result.getOrderId(), result.getStrresult(), result.getComponents().getId());

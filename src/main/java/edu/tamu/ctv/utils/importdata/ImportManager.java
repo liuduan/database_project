@@ -1,6 +1,8 @@
 package edu.tamu.ctv.utils.importdata;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,21 +123,28 @@ public class ImportManager implements Runnable
 			
 			if (data != null)
 			{
+				Projects currentProject = projectRepository.findOne(projectId);
+				
+				//TODO: throw Exception
+				if (currentProject == null) return;
+
 				Users currentUser = projectAuthentication.getCurrentUser();
 				Units currentUnit = projectAuthentication.getDefaultUnit();
 				
 				columnHeaderList = columnHeaderRepository.findByColumntypesProjectsId(projectId);
 				rowHeaderList = rowHeaderRepository.findByRowtypesProjectsId(projectId);
-				componentList = componentsRepository.findByProjectsId(projectId);
-				
+				componentList = componentsRepository.findByProjectsId(projectId);			
 				Map<String, Long> orderMap = new LinkedHashMap<String, Long>();
 				
-				Projects currentProject = projectRepository.findOne(projectId);
-				
-				//TODO: throw Exception
-				if (currentProject == null) return;
-				
 				List<Rowtypes> rowTypes = new ArrayList<Rowtypes>(currentProject.getRowtypeses());
+				Collections.sort(rowTypes, new Comparator<Rowtypes>()
+				{
+					public int compare(Rowtypes o1, Rowtypes o2)
+					{
+						return o1.getShoworder() - o2.getShoworder();
+					}
+				});
+				
 				List<Columntypes> columnTypes = new ArrayList<Columntypes>(currentProject.getColumntypeses());
 
 				List<Rowheaders> rowHeaderList = new ArrayList<Rowheaders>();
