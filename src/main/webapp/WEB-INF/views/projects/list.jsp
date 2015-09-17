@@ -27,8 +27,8 @@
 			<thead>
 				<tr>
 					<th>#ID</th>
-					<th>Name</th>
 					<th>Code</th>
+					<th>Name</th>
 				</tr>
 			</thead>
 

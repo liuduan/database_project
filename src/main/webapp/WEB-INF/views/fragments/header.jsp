@@ -28,8 +28,8 @@
 <spring:url value="/projects" var="urlListProject" />
 <spring:url value="/projects/add" var="urlAddProject" />
 
-<spring:url value="/upload" var="urlImport" />
-<spring:url value="/downloadcsv?projectId=1" var="urlExport" />
+<spring:url value="/import" var="urlImport" />
+<spring:url value="/export" var="urlExport" />
 
 <spring:url value="/analysis/${projectId}" var="urlDisplayAnalysis" />
 <spring:url value="/profile" var="urlProfile" />
