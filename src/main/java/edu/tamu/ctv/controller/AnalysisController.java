@@ -51,21 +51,25 @@ public class AnalysisController
 		} 
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 //		String json = ow.writeValueAsString(analysis.results);
-		String json = ow.writeValueAsString(analysis.results);
+		String json = ow.writeValueAsString(analysis.getResults());
 //		ObjectMapper objectMapper = new ObjectMapper();
 //		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 //		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 //		String json = ow.writeValueAsString(analysis);
 //		 ObjectWriter w = objectMapper.writerWithView(Analysis.class);
-		ObjectMapper mapper = new ObjectMapper();
+//		ObjectMapper mapper = new ObjectMapper();
 //		Object jsono = mapper.readValue(json, Object.class);
 		model.addAttribute("results",  json);
 		
 //		json = ow.writeValueAsString(analysis.columns); 
 //		model.addAttribute("columns",  analysis.columns);
-		model.addAttribute("columnheaders",  analysis.columnheaders);
-		model.addAttribute("components",  analysis.components);
-		model.addAttribute("rowTypes",  analysis.rowTypes);
+		model.addAttribute("columnheaders",  analysis.getColumnHeaders());
+		model.addAttribute("components",  analysis.getComponents());
+		model.addAttribute("rowTypes",  analysis.getRowTypes());
+		model.addAttribute("columnTypes",  analysis.getColumnTypes());
+		
+		json = ow.writeValueAsString(analysis.getColumnHeaderResults());
+		model.addAttribute("columnHeaderResults",  json);
 		
 		return "analysis/show";
 

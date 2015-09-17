@@ -3,6 +3,7 @@ package edu.tamu.ctv.entity.customdefined;
 import java.util.Map;
 
 import edu.tamu.ctv.entity.Columnheaders;
+import edu.tamu.ctv.entity.Columntypes;
 import edu.tamu.ctv.entity.Components;
 import edu.tamu.ctv.entity.Rowtypes;
 
@@ -11,21 +12,26 @@ import java.util.List;
 
 public class Analysis
 {
-	public Map<String, String>[] results;	
-	public String[] columns;
-	public ArrayList<ArrayList<Columnheaders>> columnheaders;	
-	public List<Components> components;
-	public List<Rowtypes> rowTypes;
+	private Map<String, String>[] results;	
+	private Map<String, String>[] columnHeaderResults;
+	private String[] columns;
+	private ArrayList<ArrayList<Columnheaders>> columnheaders;	
+	private List<Components> components;
+	private List<Rowtypes> rowTypes;
+	private List<Columntypes> columnTypes;
+	
 	public Analysis()
 	{}
 	
-	public Analysis( Map<String, String>[] results, String[] columns, ArrayList<ArrayList<Columnheaders>> columnheaders, List<Components> components, List<Rowtypes> rowTypes)
+	public Analysis( Map<String, String>[] results, String[] columns, ArrayList<ArrayList<Columnheaders>> columnheaders, List<Components> components, List<Rowtypes> rowTypes, Map<String, String>[] columnHeaderResults, List<Columntypes> columnTypes)
 	{
 		this.results = results;
+		this.columnHeaderResults = columnHeaderResults;
 		this.columns = columns;
 		this.columnheaders = columnheaders;
 		this.components = components;
 		this.rowTypes = rowTypes;
+		this.columnTypes = columnTypes;
 	}
 
 	public Map<String, String>[] getResults()
@@ -36,6 +42,16 @@ public class Analysis
 	public void setResults(Map<String, String>[] results)
 	{
 		this.results = results;
+	}	
+	
+	public Map<String, String>[] getColumnHeaderResults()
+	{
+		return columnHeaderResults;
+	}
+
+	public void setColumnHeaderResults(Map<String, String>[] columnHeaderResults)
+	{
+		this.columnHeaderResults = columnHeaderResults;
 	}	
 	
 	public String[] getColumns()
@@ -73,5 +89,15 @@ public class Analysis
 	public void setRowTypes(List<Rowtypes> rowTypes)
 	{
 		this.rowTypes = rowTypes;
+	}
+	
+	public List<Columntypes> getColumnTypes()
+	{
+		return columnTypes;
+	}
+
+	public void setColumnTypes(List<Columntypes> columnTypes)
+	{
+		this.columnTypes = columnTypes;
 	}
 }

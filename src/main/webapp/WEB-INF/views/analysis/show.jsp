@@ -16,7 +16,7 @@
 <spring:url value="/scripts/js/analysis.js" var="analysisJs" />
 <script src="${analysisJs}"></script>
 <link href="${analysisCss}" rel="stylesheet" />
-<div class="container">
+
 
 	<c:if test="${not empty msg}">
 		<div class="alert alert-${css} alert-dismissible" role="alert">
@@ -29,6 +29,7 @@
 
 
 	 <script>
+var	 gridRefreshed = false;
 var columns = [
 <c:forEach items="${components}" var="component" varStatus="status">  
     {component: '${component.code}',
@@ -72,7 +73,7 @@ var columnheaders = [
 		$("#gridContainer").dxDataGrid({
 			allowColumnReordering: true,
 		    allowColumnResizing: true,
-		    columnAutoWidth: true,
+// 		    columnAutoWidth: true,
 // 		    columnChooser: {
 // 		        enabled: true
 // 		    },
@@ -91,13 +92,7 @@ var columnheaders = [
 		    columns: 	
 		    [
 
-// <c:forEach items="${rowTypes}" var="component">  
-// {dataField: "${component.code}",
-// 	caption: '${component.code}',
-// 	width: 150,
-//     fixed: true}
-//  ,
-// </c:forEach> 
+
 <c:forEach items="${rowTypes}" var="component">  
  {dataField:"${component.code}",fixed: true}
 ,
@@ -113,6 +108,100 @@ var columnheaders = [
 		    ],
 		    rowAlternationEnabled: true,
 		    onContentReady : 	ddd
+		});
+		
+		$("#componentsGrid").dxDataGrid({
+			allowColumnReordering: true,
+		    allowColumnResizing: true,
+		    columnAutoWidth: true,
+		    filterRow: {
+		        visible: true,
+		        applyFilter: "auto"
+		    },
+		    searchPanel: {
+		        visible: true,
+		        width: 240,
+		        placeholder: 'Search...'
+		    },
+		    headerFilter: {
+		        visible: true
+		    },
+		    selection: {
+		        mode: 'multiple'
+		    },
+		    hoverStateEnabled: true,
+		    dataSource: ${results},
+
+		    paging: {
+		        pageSize: 10
+		    },
+		    pager: {
+		        showPageSizeSelector: true,
+		        allowedPageSizes: [5, 10, 20]
+		    },
+		    columns: 	
+		    [
+
+<c:forEach items="${rowTypes}" var="component" varStatus="status">  
+ {dataField:"${component.code}", caption:"${component.code}"}
+ <c:if test="${!status.last}">    
+ ,    
+</c:if> 
+</c:forEach> 
+
+		    ],
+		    rowAlternationEnabled: true,
+		    onSelectionChanged: function (selecteditems) {
+		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
+		    }
+		    
+		});
+		
+		$("#chemicalsGrid").dxDataGrid({
+			allowColumnReordering: true,
+		    allowColumnResizing: true,
+		    columnAutoWidth: true,
+		    filterRow: {
+		        visible: true,
+		        applyFilter: "auto"
+		    },
+		    searchPanel: {
+		        visible: true,
+		        width: 240,
+		        placeholder: 'Search...'
+		    },
+		    headerFilter: {
+		        visible: true
+		    },
+		    selection: {
+		        mode: 'multiple'
+		    },
+		    hoverStateEnabled: true,
+		    dataSource: ${columnHeaderResults},
+
+		    paging: {
+		        pageSize: 10
+		    },
+		    pager: {
+		        showPageSizeSelector: true,
+		        allowedPageSizes: [5, 10, 20]
+		    },
+		    columns: 	
+		    [
+
+<c:forEach items="${columnTypes}" var="component" varStatus="status">  
+ {dataField:"${component.code}", caption:"${component.code}"}
+ <c:if test="${!status.last}">    
+ ,    
+</c:if> 
+</c:forEach> 
+
+		    ],
+		    rowAlternationEnabled: true,
+		    onSelectionChanged: function (selecteditems) {
+		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
+		    }
+		    
 		});
 	});
 	
@@ -192,44 +281,101 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
     		columnNewOrder = levels;
     	 tr1 += '</tr>';
     	 headers.push(tr1);
-//     	 var tr = $("#gridContainer").find('.dx-header-row')[0];
 
-//          ele = document.getElementById("headerId" + i);
-//          if (tr && !ele) $(tr1).insertBefore(tr.parentElement);
  	}
+
      for(i = columnheaders.length - 1; i >= 0; i--) 
   	{
      
      var tr = $("#gridContainer").find('.dx-header-row')[0];
      var ele = document.getElementById("headerId" + i);
      if (tr && !ele) $(headers[i]).insertBefore(tr.parentElement);
- 	
   	}
  
- 
-//      var tr1 = '<tr id="headerId" class="dx-row dx-column-lines" >';        
-//      tr1 += '       <td class="dx-datagrid-action" colspan="1">11</td>';
-//      tr1 += '       <td class="dx-datagrid-action" colspan="1">Some text header</td>';
-//      tr1 += '</tr>'
+//      <c:forEach items="${rowTypes}" var="component">  
+//      dataGridInstance.columnOption("${component.code}","fixed", true);
 
-//      var tr = $("#gridContainer").find('.dx-header-row')[0];
-//      var ele = document.getElementById("headerId");
-//      if (tr && !ele) $(tr1).insertBefore(tr.parentElement);
-     
-     
+//      </c:forEach> 
+
+
 
 }
   setTimeout(function () {
-// 	  ddd();
+
 }, 100); 
+  
+  
+  
+    
+//   jQuery(function($) {
+// 	  $('#componentsGrid')
+// 	    .bind('beforeShow', function() {
+// 	      alert('beforeShow');
+// 	      var dataGridInstance = $("#componentsGrid").dxDataGrid("instance");
+// 	      dataGridInstance.pageSize(20);
+// 	      dataGridInstance.refresh();
+// 	      dataGridInstance.repaint();
+// 	    }) 
+// 	    .bind('afterShow', function() {
+// 	      alert('afterShow');
+// 	      var dataGridInstance = $("#componentsGrid").dxDataGrid("instance");
+// 	      dataGridInstance.pageSize(5);
+// 	      dataGridInstance.refresh();
+// 	      dataGridInstance.repaint();
+// 	    })
+// 	    .show(1000, function() {
+// 	      alert('in show callback');
+// 	      var dataGridInstance = $("#componentsGrid").dxDataGrid("instance");
+// 	      dataGridInstance.pageSize(10);
+// 	      dataGridInstance.refresh();
+// 	      dataGridInstance.repaint();
+// 	    })
+// 	    .show();
+// 	});
  </script> 
 	
 
-</div>
-<h1>THIS IS A TEST GRID:</h1>
-<div id="gridContainer"></div>
+<div class="tabs widget">
+					<ul class="nav nav-tabs widget">
+						<li class="active"><a data-toggle="tab" href="#profile-tab"> Full View <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
+						<li class=""><a data-toggle="tab" href="#member-tab">	Detailed View <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
+					</ul>
+					
+					<div class="tab-content">
+						<div id="profile-tab" class="tab-pane active">
 
+								<div id="gridContainer"></div>
+						</div>
+					
+
+						<div id="member-tab" class="tab-pane">
+							
+							<div class = "row">	
+								<div id="componentsGrid"></div>
+								<div id="chemicalsGrid"></div>
+							</div>
+							
+						</div>
+					
+					</div>
+			</div>	
+			
+			 <script>
+			$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  var target = $(e.target).attr("href") // activated tab
+  if (target =="#member-tab" && !gridRefreshed){
+	      var dataGridInstance = $("#componentsGrid").dxDataGrid("instance");
+	      dataGridInstance.refresh();
+	      
+	      dataGridInstance = $("#chemicalsGrid").dxDataGrid("instance");
+	      dataGridInstance.refresh();
+	      
+	      gridRefreshed = true;
+
+  }
+});
+ </script>
 <jsp:include page="../fragments/footer.jsp" />
 
-</body>
+
 </html>

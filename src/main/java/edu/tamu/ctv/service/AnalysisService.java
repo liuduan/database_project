@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Date;
 
 import org.hamcrest.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,11 +123,22 @@ public class AnalysisService
 
 			ArrayList<ArrayList<Columnheaders>> arrmColumnHeaders  = new ArrayList<ArrayList<Columnheaders>>();
 			ArrayList<Columnheaders> arrmColumnHeader  = new ArrayList<Columnheaders>();
-
+			ArrayList<Map<String, String>> arrmColumnHeaderResults  = new ArrayList<Map<String, String>>();
+			
 			for(Components component : components) 
 			{	
-
-				arrmColumnHeader.add(component.getColumnheaders());
+				Columnheaders columnHeader = component.getColumnheaders();
+				arrmColumnHeader.add(columnHeader);
+				
+				//Column headers results for split second grid
+				Map<String, String> columnResult = new HashMap<String, String>();
+				columnResult.put("COMPONENT", component.getCode());
+				while (columnHeader != null)
+				{
+					columnResult.put(columnHeader.getColumntypes().getCode(), columnHeader.getCode());
+					columnHeader = columnHeader.getColumnheaders();
+				}
+				arrmColumnHeaderResults.add(columnResult);
 			}
 			arrmColumnHeaders.add(arrmColumnHeader);
 			
@@ -139,16 +151,24 @@ public class AnalysisService
 			    }
 			    arrmColumnHeaders.add(arrmColumnHeader);
 			}
+			
+			
+			
+			
+			
 
 			analysis.setResults(arrmResults.toArray((Map<String, String>[]) new Map[arrmResults.size()]));
 		
-
+			analysis.setColumnHeaderResults(arrmColumnHeaderResults.toArray((Map<String, String>[]) new Map[arrmColumnHeaderResults.size()]));
 			
 			analysis.setColumnHeaders(arrmColumnHeaders);
 			
 			analysis.setComponents(components);
 			
 			analysis.setRowTypes(rowTypes);
+			
+			columnTypes.add(0, new Columntypes(new Long(0), null, null, "COMPONENT", "COMPONENT", new Date()));
+			analysis.setColumnTypes(columnTypes);
 			
 		}
 		
