@@ -10,17 +10,22 @@ import java.util.HashMap;
 import java.util.Date;
 
 import org.hamcrest.Matchers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import edu.tamu.ctv.entity.Columnheaders;
 import edu.tamu.ctv.entity.Columntypes;
 import edu.tamu.ctv.entity.Components;
 import edu.tamu.ctv.entity.Orders;
+import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.entity.Results;
 import edu.tamu.ctv.entity.Rowheaders;
 import edu.tamu.ctv.entity.Rowtypes;
 import edu.tamu.ctv.entity.customdefined.Analysis;
+import edu.tamu.ctv.entity.customdefined.AnalysisResults;
 import edu.tamu.ctv.repository.ColumnHeadersRepository;
 import edu.tamu.ctv.repository.ColumnTypesRepository;
 import edu.tamu.ctv.repository.ComponentsRepository;
@@ -37,6 +42,8 @@ import static ch.lambdaj.Lambda.select;
 @Service("analysisService")
 public class AnalysisService
 {	
+	private final Logger logger = LoggerFactory.getLogger(AnalysisService.class);
+	
 	@Autowired
 	private ResultsRepository resultsRepository;
 	
@@ -176,4 +183,113 @@ public class AnalysisService
 		
 		return analysis;
 	}	
+	
+	public AnalysisResults getResultsForAnalysis(List<Long> orderid, List<Long> componentid)
+	{
+		AnalysisResults result = new AnalysisResults();
+		
+		List<Results> results = null;
+	
+		List<Long> projectIdList = new ArrayList<Long>();
+		
+		if (orderid.size() > 0 && componentid.size() > 0)
+		{
+			results = resultsRepository.findByOrderIdInAndComponentsIdIn(orderid, componentid);
+		}
+		else if (orderid.size() > 0)
+		{
+			results = resultsRepository.findByOrderIdIn(orderid);
+		}
+		else if (componentid.size() > 0)
+		{
+			results = resultsRepository.findByComponentsIdIn(componentid);
+		}
+		
+		if (results != null)
+		{
+			List<Rowtypes> rowTypeList = null;
+			List<Columntypes> columnTypeList = null;
+			Map<Long, Rowheaders> rowHeaderMapper = new HashMap<Long, Rowheaders>();
+			Map<Long, Components> componentsMapper = new HashMap<Long, Components>();
+			
+			
+			for (Results res : results)
+			{
+				if (!projectIdList.contains(res.getProjects().getId()))
+				{
+					projectIdList.add(res.getProjects().getId());					
+				}
+			}
+
+			for (Components comp : componentsRepository.findByProjectsIdIn(projectIdList))
+			{
+				componentsMapper.put(comp.getId(), comp);
+			}
+			for (Rowheaders rh : rowHeadersRepository.findByRowtypesProjectsIdIn(projectIdList))
+			{
+				rowHeaderMapper.put(rh.getId(), rh);
+			}
+
+			columnTypeList = columnTypesRepository.findByProjectsIdIn(projectIdList);
+			rowTypeList = rowTypesRepository.findByProjectsIdIn(projectIdList);
+			Collections.sort(rowTypeList, new Comparator<Rowtypes>()
+			{
+		        public int compare(Rowtypes o1, Rowtypes o2)
+		        {
+		        	int project = o1.getProjects().getId().compareTo(o2.getProjects().getId());
+		        	if (0 != project)
+		        	{
+		        		return project;
+		        	}
+		            return o1.getShoworder() - o2.getShoworder();
+		        }
+		    });
+			
+			result.getColumnCodeList().add("id");
+			for (Rowtypes rt : rowTypeList)
+			{
+				result.getColumnCodeList().add(rt.getCode());
+			}
+			//TODO: Change the code
+			result.getColumnCodeList().add("Component");
+			result.getColumnCodeList().add("Value");
+			
+			Map<String, String> resMap = null;
+			List<Map<String, String>> resultsList = result.getResultValueList();
+			for (Results res : results)
+			{
+				resMap = new HashMap<String, String>();
+				resMap.put("id", String.valueOf(res.getId()));
+				resMap.put("Component", componentsMapper.get(res.getComponents().getId()).getCode());
+				resMap.put("Value", res.getStrresult());
+				
+				for (Rowtypes rt : rowTypeList)
+				{
+					//TODO
+					resMap.put(rt.getCode(), "");
+				}
+				
+				resultsList.add(resMap);
+			}
+		}
+
+		
+		return result;
+	}
+	
+	public boolean updateResultById(Long id, String value)
+	{
+		Results result = resultsRepository.findOne(id);
+		if (result != null)
+		{
+			result.setStrresult(value);
+			resultsRepository.save(result);
+		}
+		else
+		{
+			return false;
+		}
+
+		return true;
+	}
 }

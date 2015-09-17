@@ -55,6 +55,11 @@ public class Users implements Serializable
 		return null == id;
 	}
 	
+	public String getFullName()
+	{
+		return firstname + " " + lastname;
+	}
+	
 	public Users()
 	{
 	}

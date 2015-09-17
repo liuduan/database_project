@@ -130,10 +130,10 @@
 			                </c:forEach>
 			                <c:choose>
 			                    <c:when test="${isSelected}">
-			                        <option value="${user.id}" selected="selected">${user.firstname}</option>
+			                        <option value="${user.id}" selected="selected">${user.getFullName()}</option>
 			                    </c:when>
 			                    <c:otherwise>
-			                        <option value="${user.id}">${user.firstname}</option>
+			                        <option value="${user.id}">${user.getFullName()}</option>
 			                    </c:otherwise>
 			                </c:choose>
 						</c:forEach>
@@ -157,10 +157,10 @@
 			                </c:forEach>
 			                <c:choose>
 			                    <c:when test="${isSelected}">
-			                        <option value="${user.id}" selected="selected">${user.firstname}</option>
+			                        <option value="${user.id}" selected="selected">${user.getFullName()}</option>
 			                    </c:when>
 			                    <c:otherwise>
-			                        <option value="${user.id}">${user.firstname}</option>
+			                        <option value="${user.id}">${user.getFullName()}</option>
 			                    </c:otherwise>
 			                </c:choose>
 						</c:forEach>
@@ -184,10 +184,10 @@
 			                </c:forEach>
 			                <c:choose>
 			                    <c:when test="${isSelected}">
-			                        <option value="${user.id}" selected="selected">${user.firstname}</option>
+			                        <option value="${user.id}" selected="selected">${user.getFullName()}</option>
 			                    </c:when>
 			                    <c:otherwise>
-			                        <option value="${user.id}">${user.firstname}</option>
+			                        <option value="${user.id}">${user.getFullName()}</option>
 			                    </c:otherwise>
 			                </c:choose>
 						</c:forEach>

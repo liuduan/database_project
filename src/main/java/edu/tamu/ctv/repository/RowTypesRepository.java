@@ -1,5 +1,6 @@
 package edu.tamu.ctv.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -12,4 +13,5 @@ public interface RowTypesRepository extends CrudRepository<Rowtypes, Long>
 {
 	List<Rowtypes> findByProjectsCode(String pCode);
 	List<Rowtypes> findByProjectsId(Long id);
+	List<Rowtypes> findByProjectsIdIn(Collection<Long> ids);
 }

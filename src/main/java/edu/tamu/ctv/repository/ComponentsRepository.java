@@ -1,5 +1,6 @@
 package edu.tamu.ctv.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -11,5 +12,6 @@ import edu.tamu.ctv.entity.Components;
 public interface ComponentsRepository extends CrudRepository<Components, Long>
 {
 	List<Components> findByProjectsId(Long id);
+	List<Components> findByProjectsIdIn(Collection<Long> ids);
 	Components findByCodeAndProjectsCode(String code, String pCode);
 }
