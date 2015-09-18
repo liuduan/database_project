@@ -241,7 +241,7 @@ public class AnalysisService
 			}
 
 			List<Components> components = (componentid.size() > 0) ? componentsRepository.findByIdIn(componentid) : componentsRepository.findByProjectsIdIn(projectIdList);
-			List<Orders> orderList = ordersRepository.findByIdIn(orderid);
+			List<Orders> orderList = ordersRepository.findByOrderIdIn(orderid);
 			
 			fillOrderMapper(ordersMapper, orderList);
 			

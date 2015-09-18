@@ -14,7 +14,7 @@ import edu.tamu.ctv.entity.Results;
 @Repository
 public interface OrdersRepository extends CrudRepository<Orders, Long>
 {
-	List<Orders> findByIdIn(Collection<Long> ids);
+	List<Orders> findByOrderIdIn(Collection<Long> ids);
 
 	@Query("SELECT r FROM Results r WHERE r.orderId = :id")
 	List<Results> getResultsByOrderId(@Param("id")Long id);
