@@ -192,6 +192,16 @@ public class AnalysisService
 	
 		List<Long> projectIdList = new ArrayList<Long>();
 		
+		if (null == orderid)
+		{
+			orderid = new ArrayList<Long>();
+		}
+		
+		if (null == componentid)
+		{
+			componentid = new ArrayList<Long>();
+		}
+		
 		if (orderid.size() > 0 && componentid.size() > 0)
 		{
 			results = resultsRepository.findByOrderIdInAndComponentsIdIn(orderid, componentid);

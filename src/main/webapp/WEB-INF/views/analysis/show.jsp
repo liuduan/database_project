@@ -73,6 +73,7 @@ var columnheaders = [
 		$("#gridContainer").dxDataGrid({
 			allowColumnReordering: true,
 		    allowColumnResizing: true,
+		    columnAutoWidth: true,
 // 		    columnAutoWidth: true,
 // 		    columnChooser: {
 // 		        enabled: true
@@ -169,10 +170,11 @@ var columnheaders = [
 		    	
 		    	$.ajax({
 		    		   url: '/ctvproject/results/get',
-		    		   data: {"orderid[]" : [1, 2, 3],  "componentid[]" : [3, 2, 1]},
+		    		   data:{"orderid[]" : currentOrders , "componentid[]" : currentComponents},
+// 		    		   data: {"orderid[]" : [1, 2, 3],  "componentid[]" : [3, 2, 1]},
 		    		   success: function(response) {
-		    			   resultGridData = response.getResultValueList(); 
-		    			   resultGridHeader = response.getColumnCodeList();
+		    			   resultGridData = response.resultValueList; 
+		    			   resultGridHeader = response.columnCodeList;
 		    		   },
 		    		   error: function() {
 		    			   alert("An error has occurred");
@@ -227,15 +229,14 @@ var columnheaders = [
 		    ],
 		    rowAlternationEnabled: true,
 		    onSelectionChanged: function (selecteditems) {
-		    	currentComponents = 
-		    		[
-		    	<c:forEach items="${selecteditems.selectedRowsData}" var="component" varStatus="status">  
-		    	 "${component.id}"
-		    	 <c:if test="${!status.last}">    
-		    	 ,    
-		    	</c:if> 
-		    	</c:forEach>
-		    	]; 
+		    	 
+		    		 currentComponents = []; 
+		    	for(i = 0; i < selecteditems.selectedRowsData.length; i++) 
+		    	 { 
+		   	     
+		    		currentComponents.push(selecteditems.selectedRowsData[i].id);
+		   	     
+		        }	
 		    	
 		    	$.ajax({
 		    		   url: '/ctvproject/results/get',
@@ -252,6 +253,59 @@ var columnheaders = [
 // 		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
 		    }
 		    
+		});
+		
+		$("#gridResults").dxDataGrid({
+			allowColumnReordering: true,
+		    allowColumnResizing: true,
+		    columnAutoWidth: true,
+// 		    columnAutoWidth: true,
+// 		    columnChooser: {
+// 		        enabled: true
+// 		    },
+// 		    columnFixing: { 
+// 		        enabled: true
+// 		    }, 
+editing: {
+        editMode: 'row',
+        editEnabled: true,
+        removeEnabled: true,
+//         insertEnabled: true
+    }, 
+		    dataSource: resultGridData,
+//		    showRowLines: true,
+		    paging: {
+		        pageSize: 10
+		    },
+		    pager: {
+		        showPageSizeSelector: true,
+		        allowedPageSizes: [5, 10, 20]
+		    },
+		    columns: 	
+		    [
+// for(i = 0; i < resultGridHeader.length; i++) 
+// { 
+// 	eval("resultGridHeader[i]");
+// 	if (i!= resultGridHeader.length-1)
+// 		{
+// 		eval(",");
+// 		}
+   
+// }	
+resultGridHeader
+// <c:forEach items="${components}" var="component" varStatus="status">  
+//  "${component.code}"
+
+// <c:if test="${!status.last}">    
+//   ,    
+// </c:if>  
+// </c:forEach> 
+		    ],
+		    onRowUpdated: function(e) {
+		        logEvent('RowUpdated');
+		    },
+		    rowAlternationEnabled: true
+		
 		});
 	});
 	
@@ -404,6 +458,7 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 							<div class = "row">	
 								<div id="componentsGrid"></div>
 								<div id="chemicalsGrid"></div>
+								<div id="gridResults"></div>
 							</div>
 							
 						</div>
@@ -419,6 +474,9 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 	      dataGridInstance.refresh();
 	      
 	      dataGridInstance = $("#chemicalsGrid").dxDataGrid("instance");
+	      dataGridInstance.refresh();
+	      
+	      dataGridInstance = $("#gridResults").dxDataGrid("instance");
 	      dataGridInstance.refresh();
 	      
 	      gridRefreshed = true;
