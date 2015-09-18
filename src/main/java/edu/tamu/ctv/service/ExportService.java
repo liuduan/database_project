@@ -129,7 +129,7 @@ public class ExportService
 		{
 			List<Orders> order = ordersMapper.get(key);
 			Rowheaders rh = null;
-			value.set(0, String.valueOf(key));
+			value.set(0, String.valueOf(orderPos - _verticalOffset + 1));
 			for (Orders o : order)
 			{
 				rh = rowHeaderMapper.get(o.getRowheaders().getId());

@@ -66,8 +66,60 @@ public class AnalysisService
 	@Autowired
 	private OrdersRepository ordersRepository;
 	
+	private Map<Long, Rowtypes> rowTypesMapper = new HashMap<Long, Rowtypes>();
+	private Map<Long, Rowheaders> rowHeaderMapper = new HashMap<Long, Rowheaders>();
+	private Map<Long, Columntypes> columnTypesMapper = new HashMap<Long, Columntypes>();
+	private Map<Long, Columnheaders> columnHeaderMapper = new HashMap<Long, Columnheaders>();
+	private Map<Long, Components> componentsMapper = new HashMap<Long, Components>();
+	
+	
+	private void fillColumnTypeMapper(List<Columntypes> columnTypesList)
+	{
+		for (Columntypes columnType : columnTypesList)
+		{
+			columnTypesMapper.put(columnType.getId(), columnType);
+		}
+	}
+	
+	private void fillColumnHeaderMapper(List<Columnheaders> columnHeaderList)
+	{
+		for (Columnheaders columnHeader : columnHeaderList)
+		{
+			columnHeaderMapper.put(columnHeader.getId(), columnHeader);
+		}
+	}
+	
+	private void fillRowHeaderMapper(List<Rowheaders> rowHeaderList)
+	{
+		for (Rowheaders rowHeader : rowHeaderList)
+		{
+			rowHeaderMapper.put(rowHeader.getId(), rowHeader);
+		}
+	}
+	
+	private void fillRowTypeMapper(List<Rowtypes> rowTypeList)
+	{
+		for (Rowtypes rowType : rowTypeList)
+		{
+			rowTypesMapper.put(rowType.getId(), rowType);
+		}
+	}
+	
+	private void fillComponentsMapper(List<Components> componentsList)
+	{
+		for (Components component : componentsList)
+		{
+			componentsMapper.put(component.getId(), component);
+		}
+	}
+	
 	public Analysis findResultsByProject(Long id)
 	{
+		if (rowTypesMapper != null) rowTypesMapper.clear();
+		if (rowHeaderMapper != null) rowHeaderMapper.clear();
+		if (columnTypesMapper != null) columnTypesMapper.clear();
+		if (columnHeaderMapper != null) columnHeaderMapper.clear();
+		if (componentsMapper != null) componentsMapper.clear();
 		
 		Analysis analysis = new Analysis();
 		List<Results> results = resultsRepository.findByProjectsId(id);
@@ -77,12 +129,17 @@ public class AnalysisService
 		List<Rowtypes> rowTypes = rowTypesRepository.findByProjectsId(id);
 		List<Rowheaders> rowHeaders = rowHeadersRepository.findByRowTypesProjectsId(id);
 		List<Orders> orders = ordersRepository.findByRowHeadersRowTypesProjectsId(id);
+		
+		fillColumnTypeMapper(columnTypes);
+		fillColumnHeaderMapper(columnHeaders);
+		fillRowTypeMapper(rowTypes);
+		fillRowHeaderMapper(rowHeaders);
+		fillComponentsMapper(components);
+		
 		int levelCount = (columnTypes!=null && columnTypes.size() > 0) ? columnTypes.size() : 0;
 		
 		if (results.size() > 0 && components.size() > 0)
 		{
-			
-			
 			Collections.sort(results, new Comparator<Results>() {
 	
 		        public int compare(Results o1, Results o2) {
@@ -100,7 +157,9 @@ public class AnalysisService
 			List<Orders> filteredOrders = select(orders, having(on(Orders.class).getOrderId(), Matchers.equalTo(ordId)));
 			for(Orders order : filteredOrders)
 			{//filteredOrders.get(1).getRowheaders().getCode();
-				mResults.put(order.getRowheaders().getRowtypes().getCode(), order.getRowheaders().getCode());
+				Rowheaders rh = rowHeaderMapper.get(order.getRowheaders().getId());
+				Rowtypes rt = rowTypesMapper.get(rh.getRowtypes().getId());
+				mResults.put(rt.getCode(), rh.getCode());
 			}
 			for(Results result : results) 
 			{				
@@ -114,17 +173,20 @@ public class AnalysisService
 					filteredOrders = select(orders, having(on(Orders.class).getOrderId(), Matchers.equalTo(ordId)));
 					for(Orders order : filteredOrders)
 					{
-						String str = order.getRowheaders().getCode();						
+						Rowheaders rh = rowHeaderMapper.get(order.getRowheaders().getId());
+						String str = rh.getCode();						
 //						mResults.put(order.getRowheaders().getRowtypes().getCode(), str);
 						
 						List<Rowheaders> filteredRowHeaders = select(rowHeaders, having(on(Rowheaders.class).getCode(), Matchers.equalTo(str)));
 						if (filteredRowHeaders.size() > 0)
 						{
-							mResults.put(filteredRowHeaders.get(0).getRowtypes().getCode(), str);
+							Rowtypes rt = rowTypesMapper.get(filteredRowHeaders.get(0).getRowtypes().getId());
+							mResults.put(rt.getCode(), str);
 						}
 					}
 				}
-				mResults.put(result.getComponents().getCode(), result.getStrresult());
+				Components c = componentsMapper.get(result.getComponents().getId());
+				mResults.put(c.getCode(), result.getStrresult());
 			}
 			arrmResults.add(mResults);
 			
@@ -135,7 +197,7 @@ public class AnalysisService
 			
 			for(Components component : components) 
 			{	
-				Columnheaders columnHeader = component.getColumnheaders();
+				Columnheaders columnHeader = columnHeaderMapper.get(component.getColumnheaders().getId());
 				arrmColumnHeader.add(columnHeader);
 				
 				//Column headers results for split second grid
@@ -144,8 +206,17 @@ public class AnalysisService
 				columnResult.put("id", component.getId().toString());
 				while (columnHeader != null)
 				{
-					columnResult.put(columnHeader.getColumntypes().getCode(), columnHeader.getCode());
-					columnHeader = columnHeader.getColumnheaders();
+					Columntypes ct = columnTypesMapper.get(columnHeader.getColumntypes().getId());
+					columnResult.put(ct.getCode(), columnHeader.getCode());
+					if (columnHeader.getColumnheaders() != null)
+					{
+						columnHeader = columnHeaderMapper.get(columnHeader.getColumnheaders().getId());	
+					}
+					else
+					{
+						columnHeader = null;
+					}
+					
 				}
 				arrmColumnHeaderResults.add(columnResult);
 			}
@@ -155,8 +226,8 @@ public class AnalysisService
 			{
 				arrmColumnHeader  = new ArrayList<Columnheaders>();
 				for(Columnheaders Columnheader : arrmColumnHeaders.get(i)) 
-				{				        
-			        arrmColumnHeader.add(Columnheader.getColumnheaders());			        
+				{
+			        arrmColumnHeader.add(columnHeaderMapper.get(Columnheader.getColumnheaders().getId()));			        
 			    }
 			    arrmColumnHeaders.add(arrmColumnHeader);
 			}
