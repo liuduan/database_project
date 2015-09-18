@@ -93,7 +93,7 @@ public class AnalysisController
 	}
 	
 	@RequestMapping(value = "/results/update/byid", method = RequestMethod.POST)
-	public String updateResultById(@PathVariable("id") Long id, @PathVariable("value") String value)
+	public String updateResultById(@RequestParam("id") Long id, @RequestParam("value") String value)
 	{
 		logger.debug("updateResultById() : {}", id, value);
 
@@ -102,9 +102,9 @@ public class AnalysisController
 	}
 	
 	@RequestMapping(value = "/results/update/byunique", method = RequestMethod.POST)
-	public String updateResultByUnique(@PathVariable("rows") String[] rows, @PathVariable("column") String column, @PathVariable("value") String value)
+	public String updateResultByUnique(@RequestParam("rows[]") List<String> rows, @RequestParam("column") String column, @RequestParam("value") String value)
 	{
-		logger.debug("updateResultById() : {}", new Object[] {StringUtils.join(rows) , column, value});
+		logger.debug("updateResultByUnique() : {}");
 
 		//analysisService.updateResultById(id, value);
 		return value;
