@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.common.css" />
 <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.dark.css" />
 <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.spa.css" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/font-awesome/css/font-awesome.min.css" />   
+<!-- <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/font-awesome/css/font-awesome.min.css" />    -->
 <!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/dx.chartjs.js"></script> -->
 <!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular.js"></script> -->
 <!--     <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular-sanitize.js"></script> -->
