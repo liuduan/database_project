@@ -159,7 +159,7 @@ var columnheaders = [
 		    ],
 		    rowAlternationEnabled: true,
 		    onSelectionChanged: function (selecteditems) {
-		    	currentOrders = []; 
+		    	currentOrders = [];
 		    	for(i = 0; i < selecteditems.selectedRowsData.length; i++) 
 		    	 { 
 		   	     
@@ -167,25 +167,35 @@ var columnheaders = [
 		   	     
 		        }	
 		    
-		    	
-		    	$.ajax({
-		    		   url: '/ctvproject/results/get',
-		    		   data:{"orderid[]" : currentOrders , "componentid[]" : currentComponents},
-// 		    		   data: {"orderid[]" : [1, 2, 3],  "componentid[]" : [3, 2, 1]},
-		    		   success: function(response) {
-		    			   resultGridData = response.resultValueList; 
-		    			   resultGridHeader = response.columnCodeList;
-		    		   },
-		    		   error: function() {
-		    			   alert("An error has occurred");
-		    		   },		    		   
-		    		   type: 'GET'
-		    		});
- 		    	alert(resultGridData);
- 		    	alert(resultGridHeader);
+		    	getResultsFunction();
 		    }
 		    
 		});
+		
+		var getResultsFunction = function(){
+			var a = function(callback)
+	    	{
+	    	$.ajax({
+	    		   url: '/ctvproject/results/get',
+	    		   data:{"orderid[]" : currentOrders , "componentid[]" : currentComponents},
+	    		   async: false,
+	    	       success: callback,	    		   
+	    		   type: 'GET'
+	    		});
+	    	};
+
+
+	    	a(function(response) 
+	    	{
+	    		resultGridData = response.resultValueList; 
+    			resultGridHeader = response.columnCodeList;
+	    	});
+
+		    	var dataGridResults = $("#gridResults").dxDataGrid("instance");
+		    	dataGridResults.option("dataSource", resultGridData);
+		    	dataGridResults.option("columns", resultGridHeader);
+		        dataGridResults.columnOption("id", "visible", false);
+		}
 		
 		$("#chemicalsGrid").dxDataGrid({
 			allowColumnReordering: true,
@@ -229,8 +239,8 @@ var columnheaders = [
 		    ],
 		    rowAlternationEnabled: true,
 		    onSelectionChanged: function (selecteditems) {
-		    	 
-		    		 currentComponents = []; 
+		    	currentComponents = [];
+		    		  
 		    	for(i = 0; i < selecteditems.selectedRowsData.length; i++) 
 		    	 { 
 		   	     
@@ -238,19 +248,12 @@ var columnheaders = [
 		   	     
 		        }	
 		    	
-		    	$.ajax({
-		    		   url: '/ctvproject/results/get',
-		    		   data: {"orderid[]" : [1, 2, 3],  "componentid[]" : [3,2,1]},
-		    		   success: function(response) {
-		    			   resultGridData = response.getResultValueList(); 
-		    			   resultGridHeader = response.getColumnCodeList();
-		    		   },
-		    		   error: function() {
-		    			   alert("An error has occurred");
-		    		   },		    		   
-		    		   type: 'GET'
-		    		});
-// 		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
+		    	getResultsFunction();
+		    },
+		    onContentReady : 	function()
+		    {
+		    	var dataGridComponents = $("#chemicalsGrid").dxDataGrid("instance");
+		    	dataGridComponents.columnOption("id", "visible", false);
 		    }
 		    
 		});
@@ -272,7 +275,7 @@ editing: {
         removeEnabled: true,
 //         insertEnabled: true
     }, 
-		    dataSource: resultGridData,
+// 		    dataSource: resultGridData,
 //		    showRowLines: true,
 		    paging: {
 		        pageSize: 10
@@ -281,8 +284,8 @@ editing: {
 		        showPageSizeSelector: true,
 		        allowedPageSizes: [5, 10, 20]
 		    },
-		    columns: 	
-		    [
+// 		    columns: 	
+// 		    [
 // for(i = 0; i < resultGridHeader.length; i++) 
 // { 
 // 	eval("resultGridHeader[i]");
@@ -292,7 +295,7 @@ editing: {
 // 		}
    
 // }	
-resultGridHeader
+// resultGridHeader
 // <c:forEach items="${components}" var="component" varStatus="status">  
 //  "${component.code}"
 
@@ -300,7 +303,7 @@ resultGridHeader
 //   ,    
 // </c:if>  
 // </c:forEach> 
-		    ],
+// 		    ],
 		    onRowUpdated: function(e) {
 		        logEvent('RowUpdated');
 		    },
@@ -409,7 +412,7 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 }, 100); 
   
   
-  
+
   
     
 //   jQuery(function($) {

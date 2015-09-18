@@ -141,6 +141,7 @@ public class AnalysisService
 				//Column headers results for split second grid
 				Map<String, String> columnResult = new HashMap<String, String>();
 				columnResult.put("COMPONENT", component.getCode());
+				columnResult.put("id", component.getId().toString());
 				while (columnHeader != null)
 				{
 					columnResult.put(columnHeader.getColumntypes().getCode(), columnHeader.getCode());
