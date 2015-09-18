@@ -110,6 +110,12 @@ var columnheaders = [
 		    onContentReady : 	ddd
 		});
 		
+		
+		var resultGridData, resultGridHeader,
+		currentOrders = [],     
+	     currentComponents = []; 
+		
+		
 		$("#componentsGrid").dxDataGrid({
 			allowColumnReordering: true,
 		    allowColumnResizing: true,
@@ -152,7 +158,29 @@ var columnheaders = [
 		    ],
 		    rowAlternationEnabled: true,
 		    onSelectionChanged: function (selecteditems) {
-		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
+		    	currentOrders = []; 
+		    	for(i = 0; i < selecteditems.selectedRowsData.length; i++) 
+		    	 { 
+		   	     
+		    		currentOrders.push(selecteditems.selectedRowsData[i].id);
+		   	     
+		        }	
+		    
+		    	
+		    	$.ajax({
+		    		   url: '/ctvproject/results/get',
+		    		   data:JSON.stringify({"orderid" : [ "1", "2", "3" ] }),
+		    		   success: function(response) {
+		    			   resultGridData = response.getResultValueList(); 
+		    			   resultGridHeader = response.getColumnCodeList();
+		    		   },
+		    		   error: function() {
+		    			   alert("An error has occurred");
+		    		   },		    		   
+		    		   type: 'GET'
+		    		});
+ 		    	alert(resultGridData);
+ 		    	alert(resultGridHeader);
 		    }
 		    
 		});
@@ -199,7 +227,29 @@ var columnheaders = [
 		    ],
 		    rowAlternationEnabled: true,
 		    onSelectionChanged: function (selecteditems) {
-		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
+		    	currentComponents = 
+		    		[
+		    	<c:forEach items="${selecteditems.selectedRowsData}" var="component" varStatus="status">  
+		    	 "${component.id}"
+		    	 <c:if test="${!status.last}">    
+		    	 ,    
+		    	</c:if> 
+		    	</c:forEach>
+		    	]; 
+		    	
+		    	$.ajax({
+		    		   url: '/ctvproject/results/get',
+		    		   data:{orderid : currentOrders , componentid : currentComponents},
+		    		   success: function(response) {
+		    			   resultGridData = response.getResultValueList(); 
+		    			   resultGridHeader = response.getColumnCodeList();
+		    		   },
+		    		   error: function() {
+		    			   alert("An error has occurred");
+		    		   },		    		   
+		    		   type: 'GET'
+		    		});
+// 		    	alert(eval("selecteditems.selectedRowsData[0].CASRN"));
 		    }
 		    
 		});
@@ -303,6 +353,7 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
   setTimeout(function () {
 
 }, 100); 
+  
   
   
   
