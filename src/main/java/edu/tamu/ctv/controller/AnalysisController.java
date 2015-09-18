@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -84,9 +85,9 @@ public class AnalysisController
 	}
 	
 	@RequestMapping(value = "/results/get", method = RequestMethod.GET)
-	public @ResponseBody AnalysisResults getResults(@ModelAttribute("orderid") ArrayList<Long> orderid, @ModelAttribute("componentid") ArrayList<Long> componentid, Model model)
+	public @ResponseBody AnalysisResults getResults(@RequestParam(value = "orderid[]", required = false) List<Long> orderid, @RequestParam(value = "componentid[]", required = false) List<Long> componentid, Model model)
 	{
-		logger.debug("updateResultById() : {}", new Object[] {StringUtils.join(orderid) , StringUtils.join(componentid)});
+		logger.debug("getResults() : {}");
 
 		return analysisService.getResultsForAnalysis(orderid, componentid);
 	}

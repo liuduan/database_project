@@ -169,7 +169,7 @@ var columnheaders = [
 		    	
 		    	$.ajax({
 		    		   url: '/ctvproject/results/get',
-		    		   data:JSON.stringify({"orderid" : [ "1", "2", "3" ] }),
+		    		   data: {"orderid[]" : [1, 2, 3],  "componentid[]" : [3, 2, 1]},
 		    		   success: function(response) {
 		    			   resultGridData = response.getResultValueList(); 
 		    			   resultGridHeader = response.getColumnCodeList();
@@ -239,7 +239,7 @@ var columnheaders = [
 		    	
 		    	$.ajax({
 		    		   url: '/ctvproject/results/get',
-		    		   data:{orderid : currentOrders , componentid : currentComponents},
+		    		   data: {"orderid[]" : [1, 2, 3],  "componentid[]" : [3,2,1]},
 		    		   success: function(response) {
 		    			   resultGridData = response.getResultValueList(); 
 		    			   resultGridHeader = response.getColumnCodeList();
