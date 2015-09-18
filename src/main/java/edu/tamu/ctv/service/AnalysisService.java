@@ -163,8 +163,8 @@ public class AnalysisService
 			}
 			for(Results result : results) 
 			{				
-				if (result.getOrderId() != ordId)
-				{					
+				if (!result.getOrderId().equals(ordId))
+				{		 
 					arrmResults.add(mResults);
 					mResults = new HashMap<String, String>();
 					ordId = result.getOrderId();
