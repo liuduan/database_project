@@ -10,16 +10,7 @@
 
         
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
-<script type="text/javascript" src="/ctvproject/scripts/external/dx/js/dx.webappjs.js"></script>
-<!--  <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/15.1.6/js/dx.webappjs.js"></script> -->
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.common.css" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.dark.css" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.spa.css" />
-<!-- <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/font-awesome/css/font-awesome.min.css" />    -->
-<!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/dx.chartjs.js"></script> -->
-<!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular.js"></script> -->
-<!--     <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular-sanitize.js"></script> -->
-    <script type="text/javascript" src="/ctvproject/scripts/external/dx/js/dx.all.js"></script>
+
 <link rel="shortcut icon" href="/ctvproject/img/favicon.png" type="image/x-icon" sizes="64x64">
 </head>
 

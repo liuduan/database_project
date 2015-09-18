@@ -10,7 +10,16 @@
 
 <jsp:include page="../fragments/header.jsp" />
 
-        
+        <script type="text/javascript" src="/ctvproject/scripts/external/dx/js/dx.webappjs.js"></script>
+<!--  <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/15.1.6/js/dx.webappjs.js"></script> -->
+<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.common.css" />
+<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.dark.css" />
+<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.spa.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/font-awesome/css/font-awesome.min.css" />    -->
+<!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/dx.chartjs.js"></script> -->
+<!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular.js"></script> -->
+<!--     <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular-sanitize.js"></script> -->
+    <script type="text/javascript" src="/ctvproject/scripts/external/dx/js/dx.all.js"></script>
         
 <spring:url value="/scripts/css/analysis.css" var="analysisCss" />
 <spring:url value="/scripts/js/analysis.js" var="analysisJs" />
