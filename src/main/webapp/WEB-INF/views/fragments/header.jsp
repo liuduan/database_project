@@ -4,11 +4,9 @@
 <title>Web ToxPi</title>
 
 <link href="/ctvproject/scripts/external/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<link href="/ctvproject/scripts/css/hello.css" rel="stylesheet" />
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
-
-        
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
 
 <link rel="shortcut icon" href="/ctvproject/img/favicon.png" type="image/x-icon" sizes="64x64">
