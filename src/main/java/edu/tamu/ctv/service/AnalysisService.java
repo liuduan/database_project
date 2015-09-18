@@ -33,6 +33,7 @@ import edu.tamu.ctv.repository.OrdersRepository;
 import edu.tamu.ctv.repository.ResultsRepository;
 import edu.tamu.ctv.repository.RowHeadersRepository;
 import edu.tamu.ctv.repository.RowTypesRepository;
+import edu.tamu.ctv.utils.Constant;
 
 import static ch.lambdaj.Lambda.*;
 import static ch.lambdaj.Lambda.having;
@@ -268,7 +269,7 @@ public class AnalysisService
 		        }
 		    });
 			
-			result.getColumnCodeList().add("id");
+			result.getColumnCodeList().add(Constant.ID);
 			for (Rowtypes rt : rowTypeList)
 			{
 				result.getColumnCodeList().add(rt.getCode());
@@ -283,7 +284,7 @@ public class AnalysisService
 			for (Results res : results)
 			{
 				resMap = new HashMap<String, String>();
-				resMap.put("id", String.valueOf(res.getId()));
+				resMap.put(Constant.ID, String.valueOf(res.getId()));
 				resMap.put("Component", componentsMapper.get(res.getComponents().getId()).getCode());
 				resMap.put("Value", res.getStrresult());
 				
@@ -318,21 +319,5 @@ public class AnalysisService
 			}
 			ol.add(order);
 		}
-	}
-	
-	public boolean updateResultById(Long id, String value)
-	{
-		Results result = resultsRepository.findOne(id);
-		if (result != null)
-		{
-			result.setStrresult(value);
-			resultsRepository.save(result);
-		}
-		else
-		{
-			return false;
-		}
-
-		return true;
 	}
 }

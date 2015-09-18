@@ -15,6 +15,8 @@ public interface ResultsRepository extends CrudRepository<Results, Long>
 	
 	List<Results> findByOrderId(Long id);
 	
+	List<Results> findByOrderIdAndComponentsCode(Long id, String componentCode);
+	
 	List<Results> findByOrderIdIn(Collection<Long> orderid);
 	
 	List<Results> findByComponentsIdIn(Collection<Long> componentid);

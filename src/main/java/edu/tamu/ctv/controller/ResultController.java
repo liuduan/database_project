@@ -22,20 +22,26 @@ public class ResultController
 	private ResultService resultService;
 	
 	@RequestMapping(value = "/results/update/byid", method = RequestMethod.POST)
-	public String updateResultById(@RequestParam("id") Long id, @RequestParam("value") String value)
+	public Boolean updateResultById(@RequestParam("id") Long id, @RequestParam("value") String value)
 	{
 		logger.debug("updateResultById() : {}", id, value);
 
-		//resultService.updateResultById(id, value);
-		return value;
+		return resultService.updateResultById(id, value);
+	}
+	
+	@RequestMapping(value = "/results/update/byorderid", method = RequestMethod.POST)
+	public Boolean updateResultByOrderId(@RequestParam("orderid") Long orderid, @RequestParam("column") String column, @RequestParam("value") String value)
+	{
+		logger.debug("updateResultByOrderId() : {}");
+
+		return resultService.updateResultByOrderId(orderid, column, value);
 	}
 	
 	@RequestMapping(value = "/results/update/byunique", method = RequestMethod.POST)
-	public String updateResultByUnique(@RequestParam("rows[]") List<String> rows, @RequestParam("column") String column, @RequestParam("value") String value)
+	public Boolean updateResultByUnique(@RequestParam("rows[]") List<String> rows, @RequestParam("column") String column, @RequestParam("value") String value)
 	{
 		logger.debug("updateResultByUnique() : {}");
 
-		//analysisService.updateResultById(id, value);
-		return value;
+		return resultService.updateResultByUnique(rows, column, value);
 	}
 }
