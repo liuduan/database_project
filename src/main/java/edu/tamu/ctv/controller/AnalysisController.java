@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.neo4j.cypher.internal.compiler.v2_1.planner.logical.steps.join;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,13 +86,8 @@ public class AnalysisController
 	@RequestMapping(value = "/results/get", method = RequestMethod.GET)
 	public @ResponseBody AnalysisResults getResults(@ModelAttribute("orderid") ArrayList<Long> orderid, @ModelAttribute("componentid") ArrayList<Long> componentid, Model model)
 	{
-		logger.debug("updateResultById() : {}");
-		orderid.add(1l);
-		orderid.add(2l);
-		orderid.add(3l);
-		componentid.add(1l);
-		componentid.add(2l);
-		componentid.add(3l);
+		logger.debug("updateResultById() : {}", new Object[] {StringUtils.join(orderid) , StringUtils.join(componentid)});
+
 		return analysisService.getResultsForAnalysis(orderid, componentid);
 	}
 	

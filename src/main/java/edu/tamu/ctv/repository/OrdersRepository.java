@@ -1,5 +1,6 @@
 package edu.tamu.ctv.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,8 @@ import edu.tamu.ctv.entity.Results;
 @Repository
 public interface OrdersRepository extends CrudRepository<Orders, Long>
 {
+	List<Orders> findByIdIn(Collection<Long> ids);
+
 	@Query("SELECT r FROM Results r WHERE r.orderId = :id")
 	List<Results> getResultsByOrderId(@Param("id")Long id);
 	

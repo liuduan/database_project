@@ -205,14 +205,15 @@ public class AnalysisService
 			results = resultsRepository.findByComponentsIdIn(componentid);
 		}
 		
-		if (results != null)
+		if (results != null && results.size() > 0)
 		{
 			List<Rowtypes> rowTypeList = null;
-			List<Columntypes> columnTypeList = null;
+			//List<Columntypes> columnTypeList = null;
+			Map<Long, List<Orders>> ordersMapper  = new HashMap<Long, List<Orders>>();
+			Map<Long, Rowtypes> rowTypeMapper = new HashMap<Long, Rowtypes>();
 			Map<Long, Rowheaders> rowHeaderMapper = new HashMap<Long, Rowheaders>();
 			Map<Long, Components> componentsMapper = new HashMap<Long, Components>();
-			
-			
+
 			for (Results res : results)
 			{
 				if (!projectIdList.contains(res.getProjects().getId()))
@@ -220,8 +221,20 @@ public class AnalysisService
 					projectIdList.add(res.getProjects().getId());					
 				}
 			}
+			if (orderid.size() == 0)
+			{
+				for (Results res : results)
+				{
+					orderid.add(res.getOrderId());
+				}
+			}
 
-			for (Components comp : componentsRepository.findByProjectsIdIn(projectIdList))
+			List<Components> components = (componentid.size() > 0) ? componentsRepository.findByIdIn(componentid) : componentsRepository.findByProjectsIdIn(projectIdList);
+			List<Orders> orderList = ordersRepository.findByIdIn(orderid);
+			
+			fillOrderMapper(ordersMapper, orderList);
+			
+			for (Components comp : components)
 			{
 				componentsMapper.put(comp.getId(), comp);
 			}
@@ -230,7 +243,7 @@ public class AnalysisService
 				rowHeaderMapper.put(rh.getId(), rh);
 			}
 
-			columnTypeList = columnTypesRepository.findByProjectsIdIn(projectIdList);
+			//columnTypeList = columnTypesRepository.findByProjectsIdIn(projectIdList);
 			rowTypeList = rowTypesRepository.findByProjectsIdIn(projectIdList);
 			Collections.sort(rowTypeList, new Comparator<Rowtypes>()
 			{
@@ -249,6 +262,7 @@ public class AnalysisService
 			for (Rowtypes rt : rowTypeList)
 			{
 				result.getColumnCodeList().add(rt.getCode());
+				rowTypeMapper.put(rt.getId(), rt);
 			}
 			//TODO: Change the code
 			result.getColumnCodeList().add("Component");
@@ -263,18 +277,37 @@ public class AnalysisService
 				resMap.put("Component", componentsMapper.get(res.getComponents().getId()).getCode());
 				resMap.put("Value", res.getStrresult());
 				
-				for (Rowtypes rt : rowTypeList)
+				List<Orders> tmpOrders = ordersMapper.get(res.getOrderId());
+				if (tmpOrders != null)
 				{
-					//TODO
-					resMap.put(rt.getCode(), "");
+					for (Orders order : tmpOrders)
+					{
+						Rowheaders rh = order.getRowheaders();
+						resMap.put(rowTypeMapper.get(rh.getRowtypes().getId()).getCode(), rowHeaderMapper.get(rh.getId()).getCode());
+					}
 				}
-				
+
 				resultsList.add(resMap);
 			}
 		}
 
 		
 		return result;
+	}
+	
+	private void fillOrderMapper(Map<Long, List<Orders>> ordersMapper, List<Orders> orderList)
+	{
+		List<Orders> ol = null;
+		for (Orders order : orderList)
+		{
+			ol = ordersMapper.get(order.getOrderId());
+			if (null == ol)
+			{
+				ol = new ArrayList<Orders>();
+				ordersMapper.put(order.getOrderId(), ol);
+			}
+			ol.add(order);
+		}
 	}
 	
 	public boolean updateResultById(Long id, String value)
