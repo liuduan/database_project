@@ -14,7 +14,7 @@
             <column name="columnheader_id" />
         </many-to-one>
         <many-to-one name="projects" class="edu.tamu.ctv.entity.Projects" fetch="select">
-            <column name="project_id" not-null="true" />
+            <column name="project_id" not-null="true" index="components_project_id_idx"/>
         </many-to-one>
         <many-to-one name="units" class="edu.tamu.ctv.entity.Units" fetch="select">
             <column name="unit" not-null="true" />

@@ -13,6 +13,8 @@ import edu.tamu.ctv.entity.Rowheaders;
 @Repository
 public interface RowHeadersRepository extends CrudRepository<Rowheaders, Long>
 {
+	List<Rowheaders> findByIdIn(Collection<Long> ids);
+	
 	@Query("from Rowheaders as res inner join res.rowtypes rt inner join rt.projects p where res.code = :code and p.code = :projectCode")
 	List<Rowheaders> findByCodeAndRowTypesProjectsCode(@Param("code")String code, @Param("projectCode")String projectCode);
 	
@@ -21,6 +23,8 @@ public interface RowHeadersRepository extends CrudRepository<Rowheaders, Long>
 
 	List<Rowheaders> findByRowtypesProjectsId(Long id);
 	List<Rowheaders> findByRowtypesProjectsIdIn(Collection<Long> ids);
+	List<Rowheaders> findByRowtypesIdIn(Collection<Long> ids);
+	List<Rowheaders> findByOrdersesIdIn(Collection<Long> ids);
 	
 	List<Rowheaders> findByCodeAndRowtypesIdAndRowtypesProjectsId(String code, Long rowTypeId, Long projectId);
 }

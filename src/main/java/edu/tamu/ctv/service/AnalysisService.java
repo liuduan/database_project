@@ -308,7 +308,7 @@ public class AnalysisService
 			{
 				for (Results res : results)
 				{
-					orderid.add(res.getOrderId());
+					if (!orderid.contains(res.getOrderId())) orderid.add(res.getOrderId());
 				}
 			}
 
@@ -321,13 +321,22 @@ public class AnalysisService
 			{
 				componentsMapper.put(comp.getId(), comp);
 			}
-			for (Rowheaders rh : rowHeadersRepository.findByRowtypesProjectsIdIn(projectIdList))
+			List<Long> tmpRHIds = new ArrayList<Long>();
+			for (Orders orders : orderList)
 			{
-				rowHeaderMapper.put(rh.getId(), rh);
+				tmpRHIds.add(orders.getRowheaders().getId());
 			}
-
+			List<Long> tmpRTIds = new ArrayList<Long>();
+			List<Rowheaders> tmpRHList = rowHeadersRepository.findByIdIn(tmpRHIds);
+			for (Rowheaders rh : tmpRHList)
+			{
+				tmpRTIds.add(rh.getRowtypes().getId());
+				rowHeaderMapper.put(rh.getId(), rh);
+				
+			}
+			
 			//columnTypeList = columnTypesRepository.findByProjectsIdIn(projectIdList);
-			rowTypeList = rowTypesRepository.findByProjectsIdIn(projectIdList);
+			rowTypeList = rowTypesRepository.findByIdIn(tmpRTIds);
 			Collections.sort(rowTypeList, new Comparator<Rowtypes>()
 			{
 		        public int compare(Rowtypes o1, Rowtypes o2)
@@ -340,7 +349,9 @@ public class AnalysisService
 		            return o1.getShoworder() - o2.getShoworder();
 		        }
 		    });
-			
+
+
+
 			result.getColumnCodeList().add(Constant.ID);
 			for (Rowtypes rt : rowTypeList)
 			{
@@ -365,8 +376,10 @@ public class AnalysisService
 				{
 					for (Orders order : tmpOrders)
 					{
-						Rowheaders rh = order.getRowheaders();
-						resMap.put(rowTypeMapper.get(rh.getRowtypes().getId()).getCode(), rowHeaderMapper.get(rh.getId()).getCode());
+						Long rhid = order.getRowheaders().getId();
+						Rowheaders rh = rowHeaderMapper.get(rhid);
+						resMap.put(rowTypeMapper.get(rh.getRowtypes().getId()).getCode(), rowHeaderMapper.get(rhid).getCode());
+						
 					}
 				}
 

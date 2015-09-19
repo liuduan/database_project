@@ -19,8 +19,8 @@ public class Columnheaders implements java.io.Serializable
 	private String notes;
 	private Integer color;
 	private Date registereddt;
-	private Set columnheaderses = new HashSet(0);
-	private Set componentses = new HashSet(0);
+	private Set<Columnheaders> columnheaderses = new HashSet<Columnheaders>(0);
+	private Set<Components> componentses = new HashSet<Components>(0);
 
 	public Columnheaders()
 	{
@@ -36,8 +36,8 @@ public class Columnheaders implements java.io.Serializable
 		this.registereddt = registereddt;
 	}
 
-	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, String notes, Integer color, Date registereddt, Set columnheaderses,
-			Set componentses)
+	public Columnheaders(Long id, Columnheaders columnheaders, Columntypes columntypes, String code, String name, String notes, Integer color, Date registereddt, Set<Columnheaders> columnheaderses,
+			Set<Components> componentses)
 	{
 		this.id = id;
 		this.columnheaders = columnheaders;
@@ -131,22 +131,22 @@ public class Columnheaders implements java.io.Serializable
 		this.registereddt = registereddt;
 	}
 
-	public Set getColumnheaderses()
+	public Set<Columnheaders> getColumnheaderses()
 	{
 		return this.columnheaderses;
 	}
 
-	public void setColumnheaderses(Set columnheaderses)
+	public void setColumnheaderses(Set<Columnheaders> columnheaderses)
 	{
 		this.columnheaderses = columnheaderses;
 	}
 
-	public Set getComponentses()
+	public Set<Components> getComponentses()
 	{
 		return this.componentses;
 	}
 
-	public void setComponentses(Set componentses)
+	public void setComponentses(Set<Components> componentses)
 	{
 		this.componentses = componentses;
 	}

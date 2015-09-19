@@ -18,7 +18,7 @@ public class Rowheaders implements java.io.Serializable
 	private String notes;
 	private Integer color;
 	private Date registereddt;
-	private Set orderses = new HashSet(0);
+	private Set<Orders> orderses = new HashSet<Orders>(0);
 
 	public Rowheaders()
 	{
@@ -33,7 +33,7 @@ public class Rowheaders implements java.io.Serializable
 		this.registereddt = registereddt;
 	}
 
-	public Rowheaders(Long id, Rowtypes rowtypes, String code, String name, String notes, Integer color, Date registereddt, Set orderses)
+	public Rowheaders(Long id, Rowtypes rowtypes, String code, String name, String notes, Integer color, Date registereddt, Set<Orders> orderses)
 	{
 		this.id = id;
 		this.rowtypes = rowtypes;
@@ -115,12 +115,12 @@ public class Rowheaders implements java.io.Serializable
 		this.registereddt = registereddt;
 	}
 
-	public Set getOrderses()
+	public Set<Orders> getOrderses()
 	{
 		return this.orderses;
 	}
 
-	public void setOrderses(Set orderses)
+	public void setOrderses(Set<Orders> orderses)
 	{
 		this.orderses = orderses;
 	}

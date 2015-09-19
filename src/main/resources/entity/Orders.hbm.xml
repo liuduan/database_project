@@ -15,7 +15,7 @@
             <column name="rowheader_id" />
         </many-to-one>
         <property name="orderId" type="long">
-            <column name="order_id" not-null="true" />
+            <column name="order_id" not-null="true" index="orders_order_id_idx"/>
         </property>
     </class>
 </hibernate-mapping>

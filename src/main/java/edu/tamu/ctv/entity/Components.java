@@ -21,7 +21,7 @@ public class Components implements java.io.Serializable
 	private String notes;
 	private Integer color;
 	private Date updateddt;
-	private Set resultses = new HashSet(0);
+	private Set<Results> resultses = new HashSet<Results>(0);
 
 	public Components()
 	{
@@ -38,7 +38,7 @@ public class Components implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Components(Long id, Columnheaders columnheaders, Projects projects, Units units, Users users, String code, String name, String notes, Integer color, Date updateddt, Set resultses)
+	public Components(Long id, Columnheaders columnheaders, Projects projects, Units units, Users users, String code, String name, String notes, Integer color, Date updateddt, Set<Results> resultses)
 	{
 		this.id = id;
 		this.columnheaders = columnheaders;
@@ -153,12 +153,12 @@ public class Components implements java.io.Serializable
 		this.updateddt = updateddt;
 	}
 
-	public Set getResultses()
+	public Set<Results> getResultses()
 	{
 		return this.resultses;
 	}
 
-	public void setResultses(Set resultses)
+	public void setResultses(Set<Results> resultses)
 	{
 		this.resultses = resultses;
 	}
