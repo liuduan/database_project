@@ -93,11 +93,11 @@ var columnheaders = [
 		    dataSource: ${results},
 //		    showRowLines: true,
 		    paging: {
-		        pageSize: 10
+		        pageSize: 15
 		    },
 		    pager: {
 		        showPageSizeSelector: true,
-		        allowedPageSizes: [5, 10, 20]
+		        allowedPageSizes: [10, 15, 20]
 		    },
 		    columns: 	
 		    [
@@ -149,11 +149,11 @@ var columnheaders = [
 		    dataSource: ${results},
 
 		    paging: {
-		        pageSize: 10
+		        pageSize: 15
 		    },
 		    pager: {
 		        showPageSizeSelector: true,
-		        allowedPageSizes: [5, 10, 20]
+		        allowedPageSizes: [10, 15, 20]
 		    },
 		    columns: 	
 		    [
@@ -229,11 +229,11 @@ var columnheaders = [
 		    dataSource: ${columnHeaderResults},
 
 		    paging: {
-		        pageSize: 10
+		        pageSize: 15
 		    },
 		    pager: {
 		        showPageSizeSelector: true,
-		        allowedPageSizes: [5, 10, 20]
+		        allowedPageSizes: [10, 15, 20]
 		    },
 		    columns: 	
 		    [
@@ -287,11 +287,11 @@ editing: {
 // 		    dataSource: resultGridData,
 //		    showRowLines: true,
 		    paging: {
-		        pageSize: 10
+		        pageSize: 15
 		    },
 		    pager: {
 		        showPageSizeSelector: true,
-		        allowedPageSizes: [5, 10, 20]
+		        allowedPageSizes: [10, 15, 20]
 		    },
 // 		    columns: 	
 // 		    [

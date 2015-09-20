@@ -38,15 +38,8 @@
 		<div class="col-sm-10">${project.code}</div>
 	</div>
 	
-	<spring:url value="/upload" var="importActionUrl" />
-
-	<form:form class="form-horizontal" method="post" action="${importActionUrl}">
-		<fieldset>
-			<input	type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<input	type="hidden" name="projectId" value="${project.id}" />
-			<button type="submit" class="btn-lg btn-primary pull-right">Import</button>
-		</fieldset>
-	</form:form>
+	<spring:url value="/upload?projectId=${project.id}" var="importActionUrl" />
+	<button data-toggle="tooltip" class="btn btn-primary" onclick="location.href='${importActionUrl}'" title="Import" style="float: right;"><span class="glyphicon glyphicon-import"></span> Import</button>
 </div>
 
 <jsp:include page="../fragments/footer.jsp" />

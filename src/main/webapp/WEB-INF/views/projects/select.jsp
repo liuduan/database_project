@@ -39,15 +39,11 @@
 					<td>${project.code}</td>
 					<td>${project.name}</td>
 					<td>
-						<spring:url value="/projects/${project.id}" var="projectUrl" />
-						<spring:url value="/projects/delete/${project.id}" var="deleteUrl" /> 
-						<spring:url value="/projects/update/${project.id}" var="updateUrl" />
-						<spring:url value="/projects/select/${project.id}" var="selectUrl" />
-
-						<button class="btn btn-info" onclick="location.href='${projectUrl}'">Query</button>
-						<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
-						<button class="btn btn-primary" onclick="location.href='${selectUrl}'">Select</button>
-						<%-- <button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}')">Delete</button></td> --%>
+						<form method="post" action="${selectUrl}">
+							<spring:url value="/projects/select/${project.id}" var="selectUrl"/>
+							<input	type="hidden" name="TODOAction" value="${TODOAction}" />
+							<button type="submit" class="btn btn-primary">Select</button>
+						</form>
 				</tr>
 			</c:forEach>
 		</table>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.tamu.ctv.utils.importdata.ImportManager;
 
@@ -35,8 +36,9 @@ public class FileUploadController
 	}
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("projectId") String projectId)
+	public String uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("projectId") String projectId, final RedirectAttributes redirectAttributes)
 	{
+		String returnString = "";
 		if (!file.isEmpty() && StringUtils.isNotBlank(projectId))
 		{
 			Long prjId = Long.valueOf(projectId);
@@ -59,17 +61,23 @@ public class FileUploadController
 				
 				logger.info("Server File Location=" + serverFile.getAbsolutePath());
 
-				return "You successfully uploaded file=" + name;
+				redirectAttributes.addFlashAttribute("css", "success");
+				returnString = "You successfully uploaded file=" + name + ". File is processing.";
 			}
 			catch (Exception e)
 			{
-				return "You failed to upload " + name + " => " + e.getMessage();
+				redirectAttributes.addFlashAttribute("css", "error");
+				returnString = "You failed to upload " + name + " => " + e.getMessage();
 			}
 		}
 		else
 		{
-			return "You failed to upload " + name + " because the file was empty.";
+			redirectAttributes.addFlashAttribute("css", "warning");
+			returnString = "You failed to upload " + name + " because the file was empty.";
 		}
+		
+		redirectAttributes.addFlashAttribute("msg", returnString);
+		return "redirect:/projects/" + projectId;
 	}
 
 	@RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST)

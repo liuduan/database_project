@@ -67,7 +67,7 @@
 				
 				<li class="active"><a href="${urlContact}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a></li>	
 				<li class="active"><a href="${urlProfile}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Page</a></li>			
-				<li class="not-active"><a href="#" id="proj">         selected project: ${projectId}	</a></li>	
+				<li class="not-active"><a id="proj">Selected project: ${projectCode}</a></li>	
 			</ul>
 		</div>
 	</div>

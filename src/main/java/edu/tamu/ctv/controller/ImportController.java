@@ -1,5 +1,7 @@
 package edu.tamu.ctv.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,9 +15,20 @@ public class ImportController
 	private final Logger logger = LoggerFactory.getLogger(ImportController.class);
 
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
-	public String export(Model model)
+	public String export(Model model, HttpServletRequest request)
 	{
-		logger.debug("export()");
-		return "import/import";
+		logger.debug("import()");
+		Object projectIdObj = request.getSession().getAttribute("projectId");
+		
+		if (projectIdObj != null)
+		{
+			return "redirect:/upload?projectId="+projectIdObj;
+		}
+		else
+		{
+			model.addAttribute("TODOAction", "/upload?projectId=");
+			return "redirect:/projects";
+		}
+		
 	}
 }

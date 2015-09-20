@@ -2,8 +2,10 @@ package edu.tamu.ctv.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,20 @@ public class ExportController
 	private ProjectsRepository projectRepository;
 	
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public String export(Model model)
+	public String export(Model model, HttpServletRequest request)
 	{
 		logger.debug("export()");
-		return "export/export";
+		
+		Object projectIdObj = request.getSession().getAttribute("projectId");
+		if (projectIdObj != null)
+		{
+			return "redirect:/export/"+projectIdObj;
+		}
+		else
+		{
+			model.addAttribute("TODOAction", "/export/");
+			return "redirect:/projects";
+		}
 	}
 
 	@RequestMapping(value = "/export/{id}", method = RequestMethod.GET)

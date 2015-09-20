@@ -165,6 +165,13 @@ public class ProjectController
 
 	}
 
+	@RequestMapping(value = "/projects/select", method = RequestMethod.GET)
+	public String selectProject(Model model, HttpServletRequest request)
+	{
+		model.addAttribute("projects", projectRepository.findAll());
+		return "projects/select";
+	}
+	
 	@RequestMapping(value = "/projects/select/{id}", method = RequestMethod.GET)
 	public String selectProject(@PathVariable("id") Long id, Model model, HttpServletRequest request)
 	{
@@ -172,9 +179,15 @@ public class ProjectController
 		model.addAttribute("projectForm", project);
 		HttpSession session = request.getSession();
 		session.setAttribute("projectId", id);
+		session.setAttribute("currentProjectCode", project.getCode());
 		
 		populateDefaultModel(model, project);
-		return "projects/projectform";
+		Object action = request.getAttribute("TODOAction"); 
+		if (action != null)
+		{
+			return action.toString();
+		}
+		return "projects/show";
 	}
 
 	private void populateDefaultModel(Model model, Projects project)
