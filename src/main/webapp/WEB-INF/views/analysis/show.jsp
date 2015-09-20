@@ -104,7 +104,7 @@ var columnheaders = [
 
 
 <c:forEach items="${rowTypes}" var="component">  
- {dataField:"${component.code}",fixed: true}
+ {dataField:"${component.code}",/*fixed: true*/}
 ,
 </c:forEach> 
 
@@ -204,6 +204,13 @@ var columnheaders = [
 		    	dataGridResults.option("dataSource", resultGridData);
 		    	dataGridResults.option("columns", resultGridHeader);
 		        dataGridResults.columnOption("id", "visible", false);
+// 		        dataGridResults.columnOption("value", "allowEditing", true);
+		        
+		        for(i = 0; i < resultGridHeader.length; i++) 
+		    	{ 
+		        	if (resultGridHeader[i] != "Value")
+		        	dataGridResults.columnOption(resultGridHeader[i], "allowEditing", false);
+		    	}
 		}
 		
 		$("#chemicalsGrid").dxDataGrid({
@@ -279,9 +286,9 @@ var columnheaders = [
 // 		        enabled: true
 // 		    }, 
 editing: {
-        editMode: 'row',
-        editEnabled: true,
-        removeEnabled: true,
+	editMode: 'cell',
+    editEnabled: true
+//         removeEnabled: true,
 //         insertEnabled: true
     }, 
 // 		    dataSource: resultGridData,
@@ -314,7 +321,40 @@ editing: {
 // </c:forEach> 
 // 		    ],
 		    onRowUpdated: function(e) {
-		        logEvent('RowUpdated');
+		    	
+		  
+// 		    	          $.post("/ctvproject/results/update/byid", //Required URL of the page on server
+// 		    	    		  { // Data Sending With Request To Server
+// 		    	    	  id:e.key["id"],
+// 		    	    	  value:e.key["Value"]
+// 		    	    		  },
+// 		    	    		  function(response,status){ // Required Callback Function
+// 		    	    		  alert("*----Received Data----*\n\nResponse : " + response+"\n\nStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
+		    	    		  
+// 		    	    		  });
+// var header = $("meta[name='_csrf_header']").attr("content");
+// var token = $("meta[name='_csrf']").attr("content");
+   var token = $("meta[name='_csrf']").attr("content");
+   var header = $("meta[name='_csrf_header']").attr("content");
+		    	$.ajax({
+		            url: '/ctvproject/results/update/byid',
+		            type: 'POST',
+		            beforeSend: function(xhr){
+		                xhr.setRequestHeader(header, token);
+		            },
+		            dataType:"json",
+		            data: {id:e.key["id"], value:e.key["Value"]} ,
+// 		            contentType: 'application/json; charset=utf-8',
+
+
+		            success: function (response) {
+		                //your success code
+		            },
+		            error: function () {
+		                //your error code
+		            }
+		        });
+		    	
 		    },
 		    rowAlternationEnabled: true
 		
@@ -408,10 +448,10 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
      if (tr && !ele) $(headers[i]).insertBefore(tr.parentElement);
   	}
  
-//      <c:forEach items="${rowTypes}" var="component">  
-//      dataGridInstance.columnOption("${component.code}","fixed", true);
+     <c:forEach items="${rowTypes}" var="component">  
+     dataGridInstance.columnOption("${component.code}","fixed", true);
 
-//      </c:forEach> 
+     </c:forEach> 
 
 
 
@@ -450,8 +490,9 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 // 	    .show();
 // 	});
  </script> 
-	
-
+	<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- <sec:csrfMetaTags/> -->
 <div class="tabs widget">
 					<ul class="nav nav-tabs widget">
 						<li class="active"><a data-toggle="tab" href="#profile-tab"> Full View <span class="menu-active"><i class="fa fa-caret-up"></i></span></a></li>
