@@ -27,10 +27,11 @@ public class InitProjectCreateService
 		project.setStatus(Status.NEW);
 		project.setAccess(Access.PRIVATE);
 		project.setProjecttypes(projectTypesRepository.findOne(1l));
-		project.setUsers(usersRepository.findOne(1l));
+		project.setCreatedby(usersRepository.findOne(1l));
+		project.setLastmodifiedby(usersRepository.findOne(1l));
 		project.setRegistereddt(ProjectAuthentication.getCurrentDate());
 		project.setLastupdatedt(ProjectAuthentication.getCurrentDate());
-		
+		project.setVersion(1l);
 		
 		projectService.createDefaultColumnsAndTypes(project);
 		

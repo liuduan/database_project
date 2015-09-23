@@ -45,7 +45,9 @@ public class ProjectService
 	
 	private void InitDefaultValues(Projects entity)
 	{
-		entity.setUsers(projectAuthentication.getCurrentUser());
+		entity.setVersion(1l);
+		entity.setCreatedby(projectAuthentication.getCurrentUser());
+		entity.setLastmodifiedby(projectAuthentication.getCurrentUser());
 		entity.setRegistereddt(ProjectAuthentication.getCurrentDate());
 		entity.setLastupdatedt(ProjectAuthentication.getCurrentDate());
 		

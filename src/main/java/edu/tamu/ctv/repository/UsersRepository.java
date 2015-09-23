@@ -12,5 +12,4 @@ public interface UsersRepository extends CrudRepository<Users, Long>
 {
 	List<Users> findByLogin(String login);
 	List<Users> findUserByFirstnameLikeOrLastnameLikeOrLoginLike(String firstname, String lastname, String login);
-	
 }

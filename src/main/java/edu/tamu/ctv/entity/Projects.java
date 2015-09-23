@@ -11,7 +11,6 @@ public class Projects implements java.io.Serializable
 {
 	private Long id;
 	private Projecttypes projecttypes;
-	private Users users;
 	private String code;
 	private String name;
 	private Access access;
@@ -19,8 +18,12 @@ public class Projects implements java.io.Serializable
 	private Date starts;
 	private Date ends;
 	private Status status;
+	
+	private Users createdby;
+	private Users lastmodifiedby;
 	private Date registereddt;
 	private Date lastupdatedt;
+	private Long version;
 	
 	private Set<Users> projectmanagerses = new HashSet<Users>(0);
 	private Set<Users> projectreviewerses = new HashSet<Users>(0);
@@ -35,25 +38,27 @@ public class Projects implements java.io.Serializable
 	{
 	}
 
-	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, Access access, Status status, Date registereddt, Date lastupdatedt)
+	public Projects(Long id, Projecttypes projecttypes, Users createdby, Users lastmodifiedby, String code, String name, Access access, Status status, Date registereddt, Date lastupdatedt, Long version)
 	{
 		this.id = id;
 		this.projecttypes = projecttypes;
-		this.users = users;
+		this.createdby = createdby;
+		this.lastmodifiedby = lastmodifiedby;
 		this.code = code;
 		this.name = name;
 		this.access = access;
 		this.status = status;
 		this.registereddt = registereddt;
 		this.lastupdatedt = lastupdatedt;
+		this.version = version;
 	}
 
-	public Projects(Long id, Projecttypes projecttypes, Users users, String code, String name, Access access, Status status, String notes, Date registereddt, Date lastupdatedt, Set<Rowtypes> rowtypeses,
-			Set<Components> componentses, Set<Columntypes> columntypeses, Set<Results> resultses)
+	public Projects(Long id, Projecttypes projecttypes, Users createdby, String code, String name, Access access, Status status, String notes, Date registereddt, Date lastupdatedt, Set<Rowtypes> rowtypeses,
+			Set<Components> componentses, Set<Columntypes> columntypeses, Set<Results> resultses, Long version)
 	{
 		this.id = id;
 		this.projecttypes = projecttypes;
-		this.users = users;
+		this.createdby = createdby;
 		this.code = code;
 		this.name = name;
 		this.access = access;
@@ -66,6 +71,7 @@ public class Projects implements java.io.Serializable
 		this.columntypeses = columntypeses;
 		this.resultses = resultses;
 		this.resultses = resultses;
+		this.version = version;
 	}
 	
 	public boolean isNew()
@@ -91,16 +97,6 @@ public class Projects implements java.io.Serializable
 	public void setProjecttypes(Projecttypes projecttypes)
 	{
 		this.projecttypes = projecttypes;
-	}
-
-	public Users getUsers()
-	{
-		return this.users;
-	}
-
-	public void setUsers(Users users)
-	{
-		this.users = users;
 	}
 
 	public String getCode()
@@ -141,26 +137,6 @@ public class Projects implements java.io.Serializable
 	public void setNotes(String notes)
 	{
 		this.notes = notes;
-	}
-
-	public Date getRegistereddt()
-	{
-		return this.registereddt;
-	}
-
-	public void setRegistereddt(Date registereddt)
-	{
-		this.registereddt = registereddt;
-	}
-
-	public Date getLastupdatedt()
-	{
-		return this.lastupdatedt;
-	}
-
-	public void setLastupdatedt(Date lastvisitdt)
-	{
-		this.lastupdatedt = lastvisitdt;
 	}
 
 	public Set<Users> getProjectmanagerses()
@@ -261,6 +237,56 @@ public class Projects implements java.io.Serializable
 	public void setResultses(Set<Results> resultses)
 	{
 		this.resultses = resultses;
+	}
+
+	public Users getCreatedby()
+	{
+		return createdby;
+	}
+
+	public void setCreatedby(Users createdby)
+	{
+		this.createdby = createdby;
+	}
+
+	public Users getLastmodifiedby()
+	{
+		return lastmodifiedby;
+	}
+
+	public void setLastmodifiedby(Users lastmodifiedby)
+	{
+		this.lastmodifiedby = lastmodifiedby;
+	}
+
+	public Date getRegistereddt()
+	{
+		return registereddt;
+	}
+
+	public void setRegistereddt(Date registereddt)
+	{
+		this.registereddt = registereddt;
+	}
+
+	public Date getLastupdatedt()
+	{
+		return lastupdatedt;
+	}
+
+	public void setLastupdatedt(Date lastupdatedt)
+	{
+		this.lastupdatedt = lastupdatedt;
+	}
+
+	public Long getVersion()
+	{
+		return version;
+	}
+
+	public void setVersion(Long version)
+	{
+		this.version = version;
 	}
 
 }

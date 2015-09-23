@@ -145,7 +145,7 @@
         </set>
         <set name="projectses" table="projects" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="owner" not-null="true" />
+                <column name="createdby" not-null="true" />
             </key>
             <one-to-many class="edu.tamu.ctv.entity.Projects" />
         </set>

@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-
 import edu.tamu.ctv.entity.Columnheaders;
 import edu.tamu.ctv.entity.Columntypes;
 import edu.tamu.ctv.entity.Components;
@@ -249,7 +247,7 @@ public class ExportService
 					columnTypePosition.add(child.getId());
 					child = child.getColumntypes();
 				}
-				columnTypePosition = Lists.reverse(columnTypePosition); 
+				Collections.reverse(columnTypePosition);
 				break;
 			}
 		}
