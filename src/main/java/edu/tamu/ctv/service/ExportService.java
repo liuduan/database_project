@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
 import edu.tamu.ctv.entity.Columnheaders;
@@ -52,6 +53,8 @@ public class ExportService
 	private OrdersRepository ordersRepository;
 	@Autowired
 	private ResultsRepository resultsRepository;
+	@Autowired
+	private ResultService resultService;
 	
 	private int _columnSize = 0;
 	private int _rowSize = 0;
@@ -210,7 +213,8 @@ public class ExportService
 		List<Columntypes> columnTypeList = columnTypesRepository.findByProjectsId(projectId);
 		List<Rowheaders> rowHeaderList = rowHeadersRepository.findByRowtypesProjectsId(projectId);
 		List<Columnheaders> columnHeaderList = columnHeadersRepository.findByColumntypesProjectsId(projectId);
-		List<Results> results = resultsRepository.findByProjectsId(projectId);
+		//List<Results> results = resultsRepository.findByProjectsId(projectId);
+		SqlRowSet results = resultService.findResultsForExportByProjectId(projectId);
 		List<Components> componentList = componentsRepository.findByProjectsId(projectId);
 		List<Orders> orderList = ordersRepository.findOrdersByRowheadersRowtypesProjectsId(projectId);
 		
@@ -270,9 +274,11 @@ public class ExportService
 		try
 		{
 			addRowHeaderToMap(rowTypeList);
-			for (Results result : results)
+			//for (Object[] result : results)
+			while (results.next())
 			{
-				addElementToMap(result.getOrderId(), result.getStrresult(), result.getComponents().getId());
+				//addElementToMap(result.getOrderId(), result.getStrresult(), result.getComponents().getId());
+				addElementToMap(results.getLong("order_id") , results.getString("strresult"), results.getLong("component_id"));
 			}
 
 			for (int count = 0; count < _resultMap.size(); count++)
