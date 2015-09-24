@@ -8,6 +8,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import edu.tamu.ctv.entity.Users;
+import edu.tamu.ctv.service.UsersService;
 
 @Component
 public class UserFormValidator implements Validator {
@@ -15,6 +16,9 @@ public class UserFormValidator implements Validator {
 	@Autowired
 	@Qualifier("emailValidator")
 	EmailValidator emailValidator;
+	
+	@Autowired
+	UsersService usersService;
 	
 	public boolean supports(Class<?> clazz) {
 		return Users.class.equals(clazz);
@@ -49,6 +53,11 @@ public class UserFormValidator implements Validator {
 		}
 		if (!user.getPassword().equals(user.getConfirmPassword())) {
 			errors.rejectValue("confirmPassword", "Diff.userform.confirmPassword");
+		}
+		
+		if (usersService.findByLogin(user.getLogin()) != null)
+		{
+			errors.rejectValue("login", "Diff.userform.exist");
 		}
 	}
 

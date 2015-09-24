@@ -10,6 +10,6 @@ import edu.tamu.ctv.entity.Projects;
 @Repository
 public interface ProjectsRepository extends CrudRepository<Projects, Long>
 {
-	List<Projects> findByCode(String code);
+	Projects findTopByCode(String code);
 	List<Projects> findByCreatedbyId(Long id);
 }

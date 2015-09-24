@@ -13,7 +13,7 @@ public class InitProjectCreateService
 {
 	public InitProjectCreateService(ProjectService projectService, ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
 	{
-		if (0 == projectsRepository.findByCode("ProjectCode").size())
+		if (projectsRepository.findTopByCode("ProjectCode") != null)
 		{
 			createDefault(projectService, projectsRepository, usersRepository, projectTypesRepository);			
 		}

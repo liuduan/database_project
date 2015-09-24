@@ -74,3 +74,5 @@
 		</div>
 	</div>
 </nav>
+
+<jsp:include page="../fragments/alert.jsp" />

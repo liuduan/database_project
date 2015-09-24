@@ -36,7 +36,6 @@ import edu.tamu.ctv.repository.ProjectsRepository;
 import edu.tamu.ctv.repository.UsersRepository;
 import edu.tamu.ctv.service.ProjectService;
 import edu.tamu.ctv.service.validator.ProjectFormValidator;
-import edu.tamu.ctv.service.validator.UserFormValidator;
 
 @Controller
 public class ProjectController
@@ -178,7 +177,7 @@ public class ProjectController
 	public String selectProject(@PathVariable("id") Long id, @RequestParam(value = "todoaction", required = false) String TODOAction, Model model, HttpServletRequest request)
 	{
 		Projects project = projectRepository.findOne(id);
-		model.addAttribute("projectForm", project);
+
 		HttpSession session = request.getSession();
 		session.setAttribute("projectId", id);
 		session.setAttribute("currentProjectCode", project.getCode());
@@ -200,32 +199,11 @@ public class ProjectController
 
 	private void populateDefaultModel(Model model, Projects project)
 	{
-	}
-
-	@ModelAttribute("usersCache")
-	public List<Users> getUsers()
-	{
-		List<Users> users = (List<Users>) userRepository.findAll();
-		return users;
-	}
-
-	@ModelAttribute("projectTypesCache")
-	public List<Projecttypes> getProjectTypes()
-	{
-		List<Projecttypes> projecttypes = (List<Projecttypes>) projectTypesRepository.findAll();
-		return projecttypes;
-	}
-	
-	@ModelAttribute("accessList")
-	public Access[] getAccessList()
-	{
-		return Access.values();
-	}
-	
-	@ModelAttribute("statusList")
-	public Status[] getStatusList()
-	{
-		return Status.values();
+		model.addAttribute("projectForm", project);
+		model.addAttribute("usersCache", (List<Users>) userRepository.findAll());
+		model.addAttribute("projectTypesCache", (List<Projecttypes>) projectTypesRepository.findAll());
+		model.addAttribute("accessList", Access.values());
+		model.addAttribute("statusList", Status.values());
 	}
 
 	@InitBinder

@@ -1,5 +1,8 @@
 function post(path, params, method)
 {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
 	method = method || "post"; 
 
 	var form = document.createElement("form");
@@ -20,3 +23,21 @@ function post(path, params, method)
 	document.body.appendChild(form);
 	form.submit();
 }
+
+
+function delete_record(_url)
+{
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$.ajax(
+	{
+        url: _url,
+        type: 'POST',
+        beforeSend: function(xhr)
+        {
+            xhr.setRequestHeader(header, token);
+        }
+    });
+}
+

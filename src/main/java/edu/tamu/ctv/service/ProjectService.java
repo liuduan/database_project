@@ -1,5 +1,6 @@
 package edu.tamu.ctv.service;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class ProjectService
 	private RowTypeService rowTypeService;
 	@Autowired
 	private ProjectAuthentication projectAuthentication;
+	
+	public Projects findByCode(String code)
+	{
+		return projectRepository.findTopByCode(code);
+	}
 	
 	public void save(Projects entity)
 	{
