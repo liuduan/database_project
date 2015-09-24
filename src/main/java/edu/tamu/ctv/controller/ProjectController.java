@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -166,14 +167,15 @@ public class ProjectController
 	}
 
 	@RequestMapping(value = "/projects/select", method = RequestMethod.GET)
-	public String selectProject(Model model, HttpServletRequest request)
+	public String selectProject(Model model, @RequestParam(value = "todoaction", required = false) String TODOAction, HttpServletRequest request)
 	{
+		model.addAttribute("todoaction", TODOAction);
 		model.addAttribute("projects", projectRepository.findAll());
 		return "projects/select";
 	}
 	
 	@RequestMapping(value = "/projects/select/{id}", method = RequestMethod.GET)
-	public String selectProject(@PathVariable("id") Long id, Model model, HttpServletRequest request)
+	public String selectProject(@PathVariable("id") Long id, @RequestParam(value = "todoaction", required = false) String TODOAction, Model model, HttpServletRequest request)
 	{
 		Projects project = projectRepository.findOne(id);
 		model.addAttribute("projectForm", project);
@@ -182,10 +184,16 @@ public class ProjectController
 		session.setAttribute("currentProjectCode", project.getCode());
 		
 		populateDefaultModel(model, project);
-		Object action = request.getAttribute("TODOAction"); 
-		if (action != null)
+		if (TODOAction != null)
 		{
-			return action.toString();
+			if (TODOAction.equals("import"))
+			{
+				return "redirect:/upload?projectId=" + id;
+			}
+			else if (TODOAction.equals("export"))
+			{
+				return "redirect:/export/" + id;
+			}
 		}
 		return "projects/show";
 	}

@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +36,12 @@ public class ExportController
 		Object projectIdObj = request.getSession().getAttribute("projectId");
 		if (projectIdObj != null)
 		{
-			return "redirect:/export/"+projectIdObj;
+			return "redirect:/export/" + projectIdObj;
 		}
 		else
 		{
-			model.addAttribute("TODOAction", "/export/");
-			return "redirect:/projects";
+			model.addAttribute("todoaction", "export");
+			return "redirect:/projects/select";
 		}
 	}
 

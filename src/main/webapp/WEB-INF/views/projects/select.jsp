@@ -9,7 +9,6 @@
 <jsp:include page="../fragments/header.jsp" />
 <script type="text/javascript" src="/ctvproject/scripts/js/deletePost.js"></script>
 <body>
-
 	<div class="container">
 
 		<c:if test="${not empty msg}">
@@ -39,10 +38,11 @@
 					<td>${project.code}</td>
 					<td>${project.name}</td>
 					<td>
-						<form method="post" action="${selectUrl}">
-							<spring:url value="/projects/select/${project.id}" var="selectUrl"/>
-							<input	type="hidden" name="TODOAction" value="${TODOAction}" />
-							<button type="submit" class="btn btn-primary">Select</button>
+						<spring:url value="/projects/select/${project.id}" var="selectUrl"/>
+						<form method="GET" action="${selectUrl}">
+						 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<input type="hidden" name="todoaction" value="${todoaction}" />
+							<input type="submit" value="Select"	class="btn btn-primary">
 						</form>
 				</tr>
 			</c:forEach>

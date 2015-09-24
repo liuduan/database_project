@@ -26,8 +26,8 @@ public class ImportController
 		}
 		else
 		{
-			model.addAttribute("TODOAction", "/upload?projectId=");
-			return "redirect:/projects";
+			model.addAttribute("todoaction", "import");
+			return "redirect:/projects/select";
 		}
 		
 	}
