@@ -13,29 +13,28 @@ public class InitProjectCreateService
 {
 	public InitProjectCreateService(ProjectService projectService, ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
 	{
-		if (projectsRepository.findTopByCode("ProjectCode") != null)
-		{
-			createDefault(projectService, projectsRepository, usersRepository, projectTypesRepository);			
-		}
+		createDefault(projectService, projectsRepository, usersRepository, projectTypesRepository);
 	}
 
 	private void createDefault(ProjectService projectService, ProjectsRepository projectsRepository, UsersRepository usersRepository, ProjectTypesRepository projectTypesRepository)
 	{
-		Projects project = new Projects();
-		project.setCode("ProjectCode");
-		project.setName("ProjectName");
-		project.setStatus(Status.NEW);
-		project.setAccess(Access.PRIVATE);
-		project.setProjecttypes(projectTypesRepository.findOne(1l));
-		project.setCreatedby(usersRepository.findOne(1l));
-		project.setLastmodifiedby(usersRepository.findOne(1l));
-		project.setRegistereddt(ProjectAuthentication.getCurrentDate());
-		project.setLastupdatedt(ProjectAuthentication.getCurrentDate());
-		project.setVersion(1l);
-		
-		projectService.createDefaultColumnsAndTypes(project);
-		
-		projectsRepository.save(project);
+		if (null == projectsRepository.findTopByCode("ProjectCode"))
+		{
+			Projects project = new Projects();
+			project.setCode("ProjectCode");
+			project.setName("ProjectName");
+			project.setStatus(Status.NEW);
+			project.setAccess(Access.PRIVATE);
+			project.setProjecttypes(projectTypesRepository.findOne(1l));
+			project.setCreatedby(usersRepository.findOne(1l));
+			project.setLastmodifiedby(usersRepository.findOne(1l));
+			project.setRegistereddt(ProjectAuthentication.getCurrentDate());
+			project.setLastupdatedt(ProjectAuthentication.getCurrentDate());
+			project.setVersion(1l);
 
+			projectService.createDefaultColumnsAndTypes(project);
+
+			projectsRepository.save(project);
+		}
 	}
 }
