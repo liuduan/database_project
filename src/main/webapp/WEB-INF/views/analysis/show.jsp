@@ -38,6 +38,37 @@
 
 
 	 <script>
+	 
+	 var resultGridData, resultGridHeader,
+		currentOrders = [],     
+	     currentComponents = []; 
+	 function exportcsv()
+	 {
+	 // $.ajax({
+//	  	   url: '/ctvproject/export/byparams',
+//	  	   data: { "projectid" : 1, "orderid[]" : currentOrders , "componentid[]" : currentComponents },
+//	  	   async: false,
+//	  	   type: 'GET'
+//	  	});
+	 	
+	 var b = function(callback)
+	 {
+	 $.ajax({
+	 	   url: '/ctvproject/export/byparams',
+	 	   data: { "projectid" : 1, "orderid[]" : currentOrders , "componentid[]" : currentComponents },
+	 	   async: false,
+	 	   success: callback,	    	
+	 	   type: 'GET'
+	 	});
+	 };
+
+
+	 b(function(response) 
+	 {
+	 	resultGridData22 = response;	
+	 });
+	 };
+	 
 var	 gridRefreshed = false;
 var columns = [
 <c:forEach items="${components}" var="component" varStatus="status">  
@@ -121,9 +152,7 @@ var columnheaders = [
 		});
 		
 		
-		var resultGridData, resultGridHeader,
-		currentOrders = [],     
-	     currentComponents = []; 
+		
 		
 		
 		$("#componentsGrid").dxDataGrid({
@@ -539,17 +568,7 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
  </script>
  
  <button class="btn btn-primary" onclick="exportcsv()" title="Export"><span class="glyphicon glyphicon-export"></span></button>
-<script>
-function exportcsv()
-{
-$.ajax({
-	   url: '/ctvproject/export/byparams',
-	   data: { "projectid" : ${projectId}, "orderid[]" : currentOrders , "componentid[]" : currentComponents },
-	   async: false,
-	   type: 'GET'
-	});
-};
-</script>
+
 <jsp:include page="../fragments/footer.jsp" />
 
 

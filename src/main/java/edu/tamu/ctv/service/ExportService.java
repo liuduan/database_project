@@ -131,12 +131,16 @@ public class ExportService
 			List<Orders> order = ordersMapper.get(key);
 			Rowheaders rh = null;
 			value.set(0, String.valueOf(orderPos - _verticalOffset + 1));
-			for (Orders o : order)
+			if (order != null)
 			{
-				rh = rowHeaderMapper.get(o.getRowheaders().getId());
-				int rowTypePos = rowTypePosition.indexOf(rh.getRowtypes().getId()) + 1;
-				value.set(rowTypePos, rh.getCode());
+				for (Orders o : order)
+				{
+					rh = rowHeaderMapper.get(o.getRowheaders().getId());
+					int rowTypePos = rowTypePosition.indexOf(rh.getRowtypes().getId()) + 1;
+					value.set(rowTypePos, rh.getCode());
+				}
 			}
+
 		}
 		
 		//Columns
@@ -296,8 +300,13 @@ public class ExportService
 			//for (Object[] result : results)
 			while (results.next())
 			{
+				Long tmpOrdId = results.getLong("order_id");
+				Long tmpCompId = results.getLong("component_id");
+				if (orderList.contains(tmpOrdId) && componentList.contains(tmpCompId))
+				{
+					addElementToMap(tmpOrdId , results.getString("strresult"), tmpCompId);
+				}
 				//addElementToMap(result.getOrderId(), result.getStrresult(), result.getComponents().getId());
-				addElementToMap(results.getLong("order_id") , results.getString("strresult"), results.getLong("component_id"));
 			}
 
 			for (int count = 0; count < _resultMap.size(); count++)
