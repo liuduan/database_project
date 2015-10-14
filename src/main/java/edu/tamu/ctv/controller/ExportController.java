@@ -1,6 +1,7 @@
 package edu.tamu.ctv.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.tamu.ctv.entity.Projects;
 import edu.tamu.ctv.repository.ProjectsRepository;
@@ -36,7 +38,7 @@ public class ExportController
 		Object projectIdObj = request.getSession().getAttribute("projectId");
 		if (projectIdObj != null)
 		{
-			return "redirect:/export/" + projectIdObj;
+			return "redirect:/export/byproject/" + projectIdObj;
 		}
 		else
 		{
@@ -45,15 +47,15 @@ public class ExportController
 		}
 	}
 
-	@RequestMapping(value = "/export/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/export/byproject/{id}", method = RequestMethod.GET)
 	public void export(@PathVariable("id") Long id, HttpServletResponse response) throws IOException
 	{
-		logger.debug("export() id: {}", id);
+		logger.debug("export() projectid: {}", id);
 		
 		Projects project = projectRepository.findOne(id);
 		if (project != null)
 		{
-			exportService.ExportByProject(project, response);
+			exportService.ExportByProject(project, null, null, response);
 		}
 		else
 		{
@@ -63,4 +65,29 @@ public class ExportController
 		}
 		response.getOutputStream().flush();
 	}
+	
+	@RequestMapping(value = "/export/byparams", method = RequestMethod.GET)
+	public void selectProject(Model model,
+			@RequestParam(value = "projectid") Long projectid,
+			@RequestParam(value = "orderid[]", required = false) List<Long> orderid,
+			@RequestParam(value = "componentid[]", required = false) List<Long> componentid,
+			HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		
+		logger.debug("export() projectid: {}", projectid);
+		
+		Projects project = projectRepository.findOne(projectid);
+		if (project != null)
+		{
+			exportService.ExportByProject(project, orderid, componentid, response);
+		}
+		else
+		{
+			String reportName = "error.csv";
+			response.setContentType("text/csv");
+			response.setHeader("Content-disposition", "attachment;filename=" + reportName);
+		}
+		response.getOutputStream().flush();
+	}
+
 }

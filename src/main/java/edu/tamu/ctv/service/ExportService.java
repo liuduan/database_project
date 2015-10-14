@@ -198,7 +198,7 @@ public class ExportService
 		}
 	}
 	
-	public void ExportByProject(Projects project, HttpServletResponse response) throws IOException
+	public void ExportByProject(Projects project, List<Long> orderidfilter, List<Long> componentidfilter, HttpServletResponse response) throws IOException
 	{
 		ClearResources();
 		
@@ -215,8 +215,27 @@ public class ExportService
 		List<Columnheaders> columnHeaderList = columnHeadersRepository.findByColumntypesProjectsId(projectId);
 		//List<Results> results = resultsRepository.findByProjectsId(projectId);
 		SqlRowSet results = resultService.findResultsForExportByProjectId(projectId);
-		List<Components> componentList = componentsRepository.findByProjectsId(projectId);
-		List<Orders> orderList = ordersRepository.findOrdersByRowheadersRowtypesProjectsId(projectId);
+
+		List<Components> componentList = null;
+		if (componentidfilter != null && componentidfilter.size() > 0)
+		{
+			componentList = componentsRepository.findByIdIn(componentidfilter);
+		}
+		else
+		{
+			componentList = componentsRepository.findByProjectsId(projectId);			
+		}
+		
+		List<Orders> orderList = null;
+		if (orderidfilter != null && orderidfilter.size() > 0)
+		{
+			orderList = ordersRepository.findByOrderIdIn(orderidfilter);
+		}
+		else
+		{
+			orderList = ordersRepository.findOrdersByRowheadersRowtypesProjectsId(projectId);
+		}
+
 		
 		fillOrderMapper(orderList);
 		fillRowHeaderMapper(rowHeaderList);

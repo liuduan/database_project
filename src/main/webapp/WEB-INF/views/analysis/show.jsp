@@ -537,6 +537,19 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
   }
 });
  </script>
+ 
+ <button class="btn btn-primary" onclick="exportcsv()" title="Export"><span class="glyphicon glyphicon-export"></span></button>
+<script>
+function exportcsv()
+{
+$.ajax({
+	   url: '/ctvproject/export/byparams',
+	   data: { "projectid" : ${projectId}, "orderid[]" : currentOrders , "componentid[]" : currentComponents },
+	   async: false,
+	   type: 'GET'
+	});
+};
+</script>
 <jsp:include page="../fragments/footer.jsp" />
 
 
