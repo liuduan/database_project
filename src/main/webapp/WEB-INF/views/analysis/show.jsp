@@ -542,7 +542,8 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 								<div id="chemicalsGrid"></div>
 								<div id="gridResults"></div>
 							</div>
-							
+							<script type="text/javascript" src="/ctvproject/scripts/js/deletePost.js"></script>
+ 							<button class="btn btn-primary" onclick="var data = {'orderid[]' : currentOrders , 'componentid[]' : currentComponents }; post('/ctvproject/export/byparams', data, 'GET', '${_csrf.parameterName}', '${_csrf.token}')" title="Export"><span class="glyphicon glyphicon-export"></span></button>
 						</div>
 					
 					</div>
@@ -567,8 +568,7 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 });
  </script>
  
- <button class="btn btn-primary" onclick="exportcsv()" title="Export"><span class="glyphicon glyphicon-export"></span></button>
-
+ 
 <jsp:include page="../fragments/footer.jsp" />
 
 

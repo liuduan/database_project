@@ -68,25 +68,28 @@ public class ExportController
 	
 	@RequestMapping(value = "/export/byparams", method = RequestMethod.GET)
 	public void selectProject(Model model,
-			@RequestParam(value = "projectid") Long projectid,
+			@RequestParam(value = "projectid", required = false) Long projectid,
 			@RequestParam(value = "orderid[]", required = false) List<Long> orderid,
 			@RequestParam(value = "componentid[]", required = false) List<Long> componentid,
 			HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		
-		logger.debug("export() projectid: {}", projectid);
-		
-		Projects project = projectRepository.findOne(projectid);
-		if (project != null)
+		try
 		{
+			Projects project = null;
+			if (projectid != null)
+			{
+				project = projectRepository.findOne(projectid);
+			}
 			exportService.ExportByProject(project, orderid, componentid, response);
 		}
-		else
+		catch(Exception e)
 		{
 			String reportName = "error.csv";
 			response.setContentType("text/csv");
 			response.setHeader("Content-disposition", "attachment;filename=" + reportName);
+			response.getOutputStream().print(e.getMessage());
 		}
+
 		response.getOutputStream().flush();
 	}
 

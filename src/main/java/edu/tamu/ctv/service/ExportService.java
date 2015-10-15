@@ -206,6 +206,29 @@ public class ExportService
 	{
 		ClearResources();
 		
+		List<Components> componentList = null;
+		List<Orders> orderList = null;
+		
+		if (null == project)
+		{
+			componentList = componentsRepository.findByIdIn(componentidfilter);
+			if (componentList.size() > 0)
+			{
+				project = componentList.get(0).getProjects();
+			}
+			else
+			{
+				orderList = ordersRepository.findByOrderIdIn(orderidfilter);
+				if (orderList.size() > 0)
+				{
+					project = orderList.get(0).getRowheaders().getRowtypes().getProjects();
+				}
+				else
+				{
+					return;
+				}
+			}
+		}
 		Long projectId = project.getId();
 		
 		String reportName = project.getCode() + ".csv";
@@ -220,20 +243,26 @@ public class ExportService
 		//List<Results> results = resultsRepository.findByProjectsId(projectId);
 		SqlRowSet results = resultService.findResultsForExportByProjectId(projectId);
 
-		List<Components> componentList = null;
+		
 		if (componentidfilter != null && componentidfilter.size() > 0)
 		{
-			componentList = componentsRepository.findByIdIn(componentidfilter);
+			if (null == componentList)
+			{
+				componentList = componentsRepository.findByIdIn(componentidfilter);				
+			}
 		}
 		else
 		{
 			componentList = componentsRepository.findByProjectsId(projectId);			
 		}
 		
-		List<Orders> orderList = null;
+		
 		if (orderidfilter != null && orderidfilter.size() > 0)
 		{
-			orderList = ordersRepository.findByOrderIdIn(orderidfilter);
+			if (null == orderList)
+			{
+				orderList = ordersRepository.findByOrderIdIn(orderidfilter);				
+			}
 		}
 		else
 		{
@@ -302,7 +331,7 @@ public class ExportService
 			{
 				Long tmpOrdId = results.getLong("order_id");
 				Long tmpCompId = results.getLong("component_id");
-				if (orderList.contains(tmpOrdId) && componentList.contains(tmpCompId))
+				if (ordersMapper.containsKey(tmpOrdId) && componentsMapper.containsKey(tmpCompId))
 				{
 					addElementToMap(tmpOrdId , results.getString("strresult"), tmpCompId);
 				}

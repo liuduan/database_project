@@ -181,8 +181,8 @@ public class ProjectController
 		HttpSession session = request.getSession();
 		session.setAttribute("projectId", id);
 		session.setAttribute("currentProjectCode", project.getCode());
-		
-		populateDefaultModel(model, project);
+
+		model.addAttribute("projectForm", project);
 		if (TODOAction != null)
 		{
 			if (TODOAction.equals("import"))

@@ -14,17 +14,17 @@
 
 	<div class="row">
 		<label class="col-sm-2">ID</label>
-		<div class="col-sm-10">${project.id}</div>
+		<div class="col-sm-10">${projectForm.id}</div>
 	</div>
 
 	<div class="row">
 		<label class="col-sm-2">Name</label>
-		<div class="col-sm-10">${project.name}</div>
+		<div class="col-sm-10">${projectForm.name}</div>
 	</div>
 	
 	<div class="row">
 		<label class="col-sm-2">Code</label>
-		<div class="col-sm-10">${project.code}</div>
+		<div class="col-sm-10">${projectForm.code}</div>
 	</div>
 	
 	<spring:url value="/upload?projectId=${project.id}" var="importActionUrl" />

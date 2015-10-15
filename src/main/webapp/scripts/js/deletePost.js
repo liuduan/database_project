@@ -1,14 +1,17 @@
-function post(path, params, method)
+function post(path, params, method, csrf_key, csrf_value)
 {
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-
 	method = method || "post"; 
 
 	var form = document.createElement("form");
 	form.setAttribute("method", method);
 	form.setAttribute("action", path);
-
+	
+	var csrf = document.createElement("input");
+	csrf.setAttribute("type", "hidden");
+	csrf.setAttribute("name", csrf_key);
+	csrf.setAttribute("value", csrf_value);
+	form.appendChild(csrf);
+	
 	for ( var key in params) {
 		if (params.hasOwnProperty(key)) {
 			var hiddenField = document.createElement("input");
@@ -26,6 +29,22 @@ function post(path, params, method)
 
 
 function delete_record(_url)
+{
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$.ajax(
+	{
+        url: _url,
+        type: 'POST',
+        beforeSend: function(xhr)
+        {
+            xhr.setRequestHeader(header, token);
+        }
+    });
+}
+
+function exportFile(_url)
 {
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
