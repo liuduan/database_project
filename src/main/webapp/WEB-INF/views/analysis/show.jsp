@@ -10,16 +10,16 @@
 
 <jsp:include page="../fragments/header.jsp" />
 
-        <script type="text/javascript" src="/ctvproject/scripts/external/dx/js/dx.webappjs.js"></script>
+        <script type="text/javascript" src="/database_project/scripts/external/dx/js/dx.webappjs.js"></script>
 <!--  <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/15.1.6/js/dx.webappjs.js"></script> -->
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.common.css" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.dark.css" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/dx/css/dx.spa.css" />
-<!-- <link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/font-awesome/css/font-awesome.min.css" />    -->
+<link rel="stylesheet" type="text/css" href="/database_project/scripts/external/dx/css/dx.common.css" />
+<link rel="stylesheet" type="text/css" href="/database_project/scripts/external/dx/css/dx.dark.css" />
+<link rel="stylesheet" type="text/css" href="/database_project/scripts/external/dx/css/dx.spa.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/database_project/scripts/external/font-awesome/css/font-awesome.min.css" />    -->
 <!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/dx.chartjs.js"></script> -->
 <!-- <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular.js"></script> -->
 <!--     <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.2.6/js/angular-sanitize.js"></script> -->
-    <script type="text/javascript" src="/ctvproject/scripts/external/dx/js/dx.all.js"></script>
+    <script type="text/javascript" src="/database_project/scripts/external/dx/js/dx.all.js"></script>
         
 <spring:url value="/scripts/css/analysis.css" var="analysisCss" />
 <spring:url value="/scripts/js/analysis.js" var="analysisJs" />
@@ -45,7 +45,7 @@
 	 function exportcsv()
 	 {
 	 // $.ajax({
-//	  	   url: '/ctvproject/export/byparams',
+//	  	   url: '/database_project/export/byparams',
 //	  	   data: { "projectid" : 1, "orderid[]" : currentOrders , "componentid[]" : currentComponents },
 //	  	   async: false,
 //	  	   type: 'GET'
@@ -54,7 +54,7 @@
 	 var b = function(callback)
 	 {
 	 $.ajax({
-	 	   url: '/ctvproject/export/byparams',
+	 	   url: '/database_project/export/byparams',
 	 	   data: { "projectid" : 1, "orderid[]" : currentOrders , "componentid[]" : currentComponents },
 	 	   async: false,
 	 	   success: callback,	    	
@@ -214,7 +214,7 @@ var columnheaders = [
 			var a = function(callback)
 	    	{
 	    	$.ajax({
-	    		   url: '/ctvproject/results/get',
+	    		   url: '/database_project/results/get',
 	    		   data:{"orderid[]" : currentOrders , "componentid[]" : currentComponents},
 	    		   async: false,
 	    	       success: callback,	    		   
@@ -352,7 +352,7 @@ editing: {
 		    onRowUpdated: function(e) {
 		    	
 		  
-// 		    	          $.post("/ctvproject/results/update/byid", //Required URL of the page on server
+// 		    	          $.post("/database_project/results/update/byid", //Required URL of the page on server
 // 		    	    		  { // Data Sending With Request To Server
 // 		    	    	  id:e.key["id"],
 // 		    	    	  value:e.key["Value"]
@@ -366,7 +366,7 @@ editing: {
    var token = $("meta[name='_csrf']").attr("content");
    var header = $("meta[name='_csrf_header']").attr("content");
 		    	$.ajax({
-		            url: '/ctvproject/results/update/byid',
+		            url: '/database_project/results/update/byid',
 		            type: 'POST',
 		            beforeSend: function(xhr){
 		                xhr.setRequestHeader(header, token);
@@ -542,8 +542,8 @@ var tr1 = '<tr id="headerId0" class="dx-row dx-column-lines" >';
 								<div id="chemicalsGrid"></div>
 								<div id="gridResults"></div>
 							</div>
-							<script type="text/javascript" src="/ctvproject/scripts/js/deletePost.js"></script>
- 							<button class="btn btn-primary" onclick="var data = {'orderid[]' : currentOrders , 'componentid[]' : currentComponents }; post('/ctvproject/export/byparams', data, 'GET', '${_csrf.parameterName}', '${_csrf.token}')" title="Export"><span class="glyphicon glyphicon-export"></span></button>
+							<script type="text/javascript" src="/database_project/scripts/js/deletePost.js"></script>
+ 							<button class="btn btn-primary" onclick="var data = {'orderid[]' : currentOrders , 'componentid[]' : currentComponents }; post('/database_project/export/byparams', data, 'GET', '${_csrf.parameterName}', '${_csrf.token}')" title="Export"><span class="glyphicon glyphicon-export"></span></button>
 						</div>
 					
 					</div>

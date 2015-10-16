@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.tamu.ctv</groupId>
-	<artifactId>ctvproject</artifactId>
+	<artifactId>database_project</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ctvproject</name>
+	<name>database_project</name>
 
 
 	<properties>
@@ -269,7 +269,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>ctvproject</finalName>
+		<finalName>database_project</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="fragments/header.jsp" />
-<link rel="stylesheet" type="text/css" href="/ctvproject/scripts/external/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="/database_project/scripts/external/font-awesome/css/font-awesome.min.css" />
 <body>
 <spring:url value="/profile" var="urlProfile" />
 <spring:url value="/import" var="urlImport" />

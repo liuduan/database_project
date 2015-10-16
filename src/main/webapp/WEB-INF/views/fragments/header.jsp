@@ -5,13 +5,13 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Web ToxPi</title>
 
-<link href="/ctvproject/scripts/external/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/database_project/scripts/external/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
 
-<link rel="shortcut icon" href="/ctvproject/img/favicon.png" type="image/x-icon" sizes="64x64">
+<link rel="shortcut icon" href="/database_project/img/favicon.png" type="image/x-icon" sizes="64x64">
 </head>
 
 <spring:url value="/" var="urlHome" />
@@ -40,7 +40,7 @@
             </button>
 			<a class="navbar-brand" href="${urlHome}" style="padding: 5px;">
 				<!--  <span class="glyphicon glyphicon-home" aria-hidden="true">-->
-					<img src="/ctvproject/img/ctv_logo.png" alt="logo" height="40" width="150" style="display: inline-block; ">
+					<img src="/database_project/img/ctv_logo.png" alt="logo" height="40" width="150" style="display: inline-block; ">
 				<!--</span>-->
 			</a>
 		</div>

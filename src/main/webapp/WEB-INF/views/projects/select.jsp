@@ -7,7 +7,7 @@
 <html lang="en">
 
 <jsp:include page="../fragments/header.jsp" />
-<script type="text/javascript" src="/ctvproject/scripts/js/deletePost.js"></script>
+<script type="text/javascript" src="/database_project/scripts/js/deletePost.js"></script>
 <body>
 	<div class="container">
 

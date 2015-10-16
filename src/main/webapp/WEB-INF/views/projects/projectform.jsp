@@ -11,9 +11,9 @@
 <jsp:include page="../fragments/header.jsp" />
 
 
-<link href="/ctvproject/scripts/external/select2/css/select2.css" rel="stylesheet" />
-<script src="/ctvproject/scripts/external/select2/js/select2.js"></script>
-<script src="/ctvproject/scripts/external/ckeditor/ckeditor.js"></script>
+<link href="/database_project/scripts/external/select2/css/select2.css" rel="stylesheet" />
+<script src="/database_project/scripts/external/select2/js/select2.js"></script>
+<script src="/database_project/scripts/external/ckeditor/ckeditor.js"></script>
 
 <body>
 

@@ -8,7 +8,7 @@
 <html lang="en">
 <jsp:include page="../fragments/header.jsp" />
 
-<script src="/ctvproject/scripts/external/ckeditor/ckeditor.js"></script>
+<script src="/database_project/scripts/external/ckeditor/ckeditor.js"></script>
 
 <div class="container">
 

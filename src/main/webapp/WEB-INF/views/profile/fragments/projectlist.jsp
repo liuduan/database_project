@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<script type="text/javascript" src="/ctvproject/scripts/js/deletePost.js"></script>
+<script type="text/javascript" src="/database_project/scripts/js/deletePost.js"></script>
 
 <table class="table table-striped table-hover">
 	<thead>
@@ -20,7 +20,7 @@
 	<tbody>
 	<c:forEach var="project" items="${projectListFragment}" varStatus="loop">
 		<tr>
-			<spring:url value="/ctvproject/img/in_vitro.png" var="projectTypeImg" />
+			<spring:url value="/database_project/img/in_vitro.png" var="projectTypeImg" />
 			<c:choose>
 				<c:when test="${project.projecttypes.code=='INVITRO'}">
 					<c:set var="projectTypeImg" value="in_vitro.png" />
@@ -32,7 +32,7 @@
 			
 			
 			<td>${loop.index + 1}</td>
-			<td><img height="80" src="/ctvproject/img/${projectTypeImg}" alt="Project Type Image"></td>
+			<td><img height="80" src="/database_project/img/${projectTypeImg}" alt="Project Type Image"></td>
 			<td>${project.code}</td>
 			<td>${project.name}</td>
 			<td class="center">${project.starts}</td>
